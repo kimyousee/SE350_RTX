@@ -1,0 +1,161 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+N:\SE350\RTXP1\context_switching.uvproj
+Project File Date:  01/20/2016
+
+<h2>Output:</h2>
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(89): error:  #20: identifier "mem_blk" is undefined
+src\k_memory.c(89): error:  #29: expected an expression
+src\k_memory.c(89): error:  #65: expected a ";"
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(89): warning:  #223-D: function "malloc" declared implicitly
+src\k_memory.c(89): error:  #144: a value of type "struct mem_blk *" cannot be used to initialize an entity of type "struct mem_blk"
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(89): error:  #119: cast to type "struct mem_blk" is not allowed
+src\k_memory.c(89): warning:  #223-D: function "malloc" declared implicitly
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(89): warning:  #223-D: function "malloc" declared implicitly
+src\k_memory.c(90): error:  #513: a value of type "struct mem_blk **" cannot be assigned to an entity of type "struct mem_blk *"
+src\k_memory.c(91): error:  #513: a value of type "struct mem_blk **" cannot be assigned to an entity of type "struct mem_blk *"
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(89): warning:  #223-D: function "malloc" declared implicitly
+linking...
+Program Size: Code=4340 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=4340 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+linking...
+Program Size: Code=4340 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+linking...
+Program Size: Code=3772 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(89): warning:  #177-D: variable "new_blk" was declared but never referenced
+linking...
+Program Size: Code=3784 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+linking...
+Program Size: Code=3784 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+linking...
+Program Size: Code=3792 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+linking...
+Program Size: Code=3784 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+linking...
+Program Size: Code=3796 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+linking...
+Program Size: Code=3784 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+linking...
+Program Size: Code=3808 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+linking...
+Program Size: Code=3808 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
+linking...
+Program Size: Code=3812 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
+linking...
+Program Size: Code=3812 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
+linking...
+Program Size: Code=3816 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
+linking...
+Program Size: Code=3828 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
+linking...
+Program Size: Code=3828 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(58): warning:  #177-D: variable "b1" was declared but never referenced
+src\k_memory.c(127): error:  #20: identifier "gp_current_process" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(25): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(59): warning:  #177-D: variable "b1" was declared but never referenced
+src\k_memory.c(128): error:  #20: identifier "gp_current_process" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_rtx_init.c...
+compiling k_memory.c...
+src\k_memory.c(25): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(59): warning:  #177-D: variable "b1" was declared but never referenced
+compiling k_process.c...
+linking...
+Program Size: Code=3844 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
