@@ -7,6 +7,7 @@
 
 #include "k_memory.h"
 #include "k_process.h"
+#include "linkedList.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -18,11 +19,8 @@ U32 *gp_stack; /* The last allocated stack low address. 8 bytes aligned */
 	       /* stack grows down. Fully decremental stack */
 U32 *free_block; //points to available space
 U32 *end_block;  //points to end of the linked list
-struct mem_blk *head;
-struct mem_blk *tail;
-typedef struct mem_blk {
-	struct mem_blk *next_blk;
-};
+
+LinkedList *mem_blks;
 //PriorityQueue blocked_resource_q;
 
 /**
@@ -84,20 +82,11 @@ void memory_init(void)
   
 	/* allocate memory for heap, not implemented yet*/
 
+	mem_blks = initLinkedList(p_end+8);
 	
-	head = (struct mem_blk *)(gp_stack-8);
-	tail = (struct mem_blk *)(gp_stack-8);
-	printf("%x\n", tail);
 	for ( i = 0; i < 30; i++ ) {
-		tail->next_blk = (struct mem_blk *)(tail-150);
-		printf("%x\n", tail->next_blk);
-		tail = tail->next_blk;
-		//printf("%x\n", tail);
-		//printf("%x\n", head);
+		pushLinkedList(mem_blks, (Node *)(mem_blks->tail+150));
 	}
-	tail->next_blk = NULL;
-	printf("%x\n", head->next_blk);
-	printf("%x\n", head->next_blk->next_blk);
 }
 
 /**
@@ -124,22 +113,17 @@ U32 *alloc_stack(U32 size_b)
 
 
 void *k_request_memory_block(void) {
-	struct mem_blk *free_mem = head;
+	Node *free_mem = popLinkedList(mem_blks);
 	
-	//printf("%x\n", gp_current_process);
-	printf("%x\n", head->next_blk);
 #ifdef DEBUG_0 
 	printf("k_request_memory_block: entering...\n");
 #endif /* ! DEBUG_0 */
 	
-	while(head == NULL){
+	while(free_mem == NULL){
 		//blocked_resource_q.push(gp_current_process);
 		//gp_current_process.setState(PROC_STATE_E.BLK);
 		//k_release_processor();
 	}
-	printf("%x\n", head);
-	head = head->next_blk;
-	printf("%x\n", head);
 	printf("%x\n", (void *) (free_mem));
 	return (void *) (free_mem);
 }
@@ -158,9 +142,7 @@ int k_release_memory_block(void *p_mem_blk) {
 		//process.setMemory(p_mem_blk);
 		//process.setState(PROC_STATE_E.RDY);
 	//} else {
-		tail->next_blk = p_mem_blk;
-		((struct mem_blk*)p_mem_blk)->next_blk = NULL;
-		tail = p_mem_blk;
+		pushLinkedList(mem_blks, (Node *)(p_mem_blk));
 	//}
 	
 	return RTX_OK;

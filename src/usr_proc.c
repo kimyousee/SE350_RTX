@@ -62,7 +62,7 @@ void proc1(void)
 		}
 		
 		if (i%20 == 0){
-			//release_memory_block(mem);
+			release_memory_block(mem);
 		}
 	}
 }

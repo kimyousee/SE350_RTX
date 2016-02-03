@@ -9,153 +9,949 @@ Project File Date:  01/20/2016
 <h2>Output:</h2>
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(89): error:  #20: identifier "mem_blk" is undefined
-src\k_memory.c(89): error:  #29: expected an expression
-src\k_memory.c(89): error:  #65: expected a ";"
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(89): warning:  #223-D: function "malloc" declared implicitly
-src\k_memory.c(89): error:  #144: a value of type "struct mem_blk *" cannot be used to initialize an entity of type "struct mem_blk"
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(89): error:  #119: cast to type "struct mem_blk" is not allowed
-src\k_memory.c(89): warning:  #223-D: function "malloc" declared implicitly
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(89): warning:  #223-D: function "malloc" declared implicitly
-src\k_memory.c(90): error:  #513: a value of type "struct mem_blk **" cannot be assigned to an entity of type "struct mem_blk *"
-src\k_memory.c(91): error:  #513: a value of type "struct mem_blk **" cannot be assigned to an entity of type "struct mem_blk *"
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(89): warning:  #223-D: function "malloc" declared implicitly
-linking...
-Program Size: Code=4340 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=4340 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-linking...
-Program Size: Code=4340 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 0 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-linking...
-Program Size: Code=3772 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(89): warning:  #177-D: variable "new_blk" was declared but never referenced
-linking...
-Program Size: Code=3784 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-linking...
-Program Size: Code=3784 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-linking...
-Program Size: Code=3792 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-linking...
-Program Size: Code=3784 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-linking...
-Program Size: Code=3796 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-linking...
-Program Size: Code=3784 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-linking...
-Program Size: Code=3808 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-linking...
-Program Size: Code=3808 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 1 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
-linking...
-Program Size: Code=3812 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
-linking...
-Program Size: Code=3812 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
-linking...
-Program Size: Code=3816 RO-data=412 RW-data=68 ZI-data=676  
-"context_switching.axf" - 0 Error(s), 2 Warning(s).
-Build target 'Context Switching SIM'
-compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
+src\k_memory.c(25): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(60): warning:  #177-D: variable "b1" was declared but never referenced
 linking...
 Program Size: Code=3828 RO-data=412 RW-data=68 ZI-data=676  
 "context_switching.axf" - 0 Error(s), 2 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(57): warning:  #177-D: variable "b1" was declared but never referenced
+src\k_memory.c(25): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(60): warning:  #177-D: variable "b1" was declared but never referenced
 linking...
-Program Size: Code=3828 RO-data=412 RW-data=68 ZI-data=676  
+Program Size: Code=3888 RO-data=412 RW-data=68 ZI-data=676  
 "context_switching.axf" - 0 Error(s), 2 Warning(s).
 Build target 'Context Switching SIM'
 compiling k_memory.c...
-src\k_memory.c(24): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(58): warning:  #177-D: variable "b1" was declared but never referenced
-src\k_memory.c(127): error:  #20: identifier "gp_current_process" is undefined
-Target not created
-Build target 'Context Switching SIM'
-compiling k_memory.c...
 src\k_memory.c(25): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(59): warning:  #177-D: variable "b1" was declared but never referenced
-src\k_memory.c(128): error:  #20: identifier "gp_current_process" is undefined
-Target not created
-Build target 'Context Switching SIM'
-compiling k_rtx_init.c...
-compiling k_memory.c...
-src\k_memory.c(25): warning:  #375-D: declaration requires a typedef name
-src\k_memory.c(59): warning:  #177-D: variable "b1" was declared but never referenced
-compiling k_process.c...
+src\k_memory.c(60): warning:  #177-D: variable "b1" was declared but never referenced
 linking...
-Program Size: Code=3844 RO-data=412 RW-data=68 ZI-data=676  
+Program Size: Code=3880 RO-data=412 RW-data=68 ZI-data=676  
 "context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling usr_proc.c...
+linking...
+Program Size: Code=3904 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\k_memory.c(25): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(60): warning:  #177-D: variable "b1" was declared but never referenced
+linking...
+Program Size: Code=3876 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(2): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(2): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(4): error:  #20: identifier "Node" is undefined
+src\linkedList.c(7): error:  #65: expected a ";"
+src\linkedList.c(8): error:  #20: identifier "Node" is undefined
+src\linkedList.c(9): error:  #20: identifier "Node" is undefined
+src\linkedList.c(11): error:  #20: identifier "U8" is undefined
+src\linkedList.c(11): error:  #77-D: this declaration has no storage class or type specifier
+src\linkedList.c(11): error:  #168: a function type is not allowed here
+src\linkedList.c(11): error:  #65: expected a ";"
+src\linkedList.c(32): warning:  #12-D: parsing restarts here after previous syntax error
+src\linkedList.c(32): error: At end of source:  #40: expected an identifier
+src\linkedList.c(32): error: At end of source:  #65: expected a ";"
+Target not created
+Build target 'Context Switching SIM'
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(2): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(7): error:  #65: expected a ";"
+src\linkedList.c(11): error:  #20: identifier "U8" is undefined
+src\linkedList.c(11): error:  #77-D: this declaration has no storage class or type specifier
+src\linkedList.c(11): error:  #168: a function type is not allowed here
+src\linkedList.c(11): error:  #65: expected a ";"
+src\linkedList.c(32): warning:  #12-D: parsing restarts here after previous syntax error
+src\linkedList.c(32): error: At end of source:  #40: expected an identifier
+src\linkedList.c(32): error: At end of source:  #65: expected a ";"
+Target not created
+Build target 'Context Switching SIM'
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(2): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(11): error:  #20: identifier "U8" is undefined
+src\linkedList.c(11): error:  #77-D: this declaration has no storage class or type specifier
+src\linkedList.c(11): error:  #168: a function type is not allowed here
+src\linkedList.c(11): error:  #65: expected a ";"
+src\linkedList.c(32): warning:  #12-D: parsing restarts here after previous syntax error
+Target not created
+Build target 'Context Switching SIM'
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(2): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): error:  #77-D: this declaration has no storage class or type specifier
+src\linkedList.c(12): error:  #168: a function type is not allowed here
+src\linkedList.c(12): error:  #65: expected a ";"
+src\linkedList.c(33): warning:  #12-D: parsing restarts here after previous syntax error
+Target not created
+Build target 'Context Switching SIM'
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(2): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): error:  #18: expected a ")"
+src\linkedList.c(12): error:  #70: incomplete type is not allowed
+src\linkedList.c(12): error:  #65: expected a ";"
+src\linkedList.c(33): warning:  #12-D: parsing restarts here after previous syntax error
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(3): error:  #20: identifier "U8" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(14): error:  #144: a value of type "int" cannot be used to initialize an entity of type "struct LinkedList *"
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(3): error:  #20: identifier "U8" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(14): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #144: a value of type "int" cannot be used to initialize an entity of type "struct LinkedList *"
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(3): error:  #20: identifier "U8" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(14): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "l" is undefined
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(3): error:  #20: identifier "U8" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(13): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "l" is undefined
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(15): error:  #20: identifier "Node" is undefined
+src\linkedList.c(15): error:  #29: expected an expression
+src\linkedList.c(16): error:  #29: expected an expression
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(3): error:  #20: identifier "U8" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(13): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "l" is undefined
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(3): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.h(4): error:  #20: identifier "Node" is undefined
+src\linkedList.h(4): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.h(5): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(3): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.h(3): error:  #20: identifier "U8" is undefined
+src\linkedList.h(4): error:  #20: identifier "Node" is undefined
+src\linkedList.h(4): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.h(5): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(13): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "l" is undefined
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(3): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.h(4): error:  #20: identifier "Node" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(3): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.h(3): error:  #20: identifier "U8" is undefined
+src\linkedList.h(4): error:  #20: identifier "Node" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(13): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "l" is undefined
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(3): error:  #20: identifier "U8" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(13): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "l" is undefined
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(3): error:  #20: identifier "U8" is undefined
+src\linkedList.h(4): error:  #18: expected a ")"
+src\linkedList.h(5): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(5): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(14): error:  #20: identifier "LinkedList" is undefined
+src\linkedList.c(14): error:  #20: identifier "l" is undefined
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(7): error:  #18: expected a ")"
+src\linkedList.h(8): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(8): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(6): error:  #20: identifier "U8" is undefined
+src\linkedList.h(7): error:  #18: expected a ")"
+src\linkedList.h(8): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(8): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(14): error:  #144: a value of type "int" cannot be used to initialize an entity of type "LinkedList *"
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(7): error:  #18: expected a ")"
+src\linkedList.h(8): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(8): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(6): error:  #20: identifier "U8" is undefined
+src\linkedList.h(7): error:  #18: expected a ")"
+src\linkedList.h(8): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(8): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(14): error:  #144: a value of type "int" cannot be used to initialize an entity of type "LinkedList *"
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\rtx.h(22): error:  #101: "proc_init" has already been declared in the current scope
+src\rtx.h(28): error:  #256: invalid redeclaration of type name "PROC_INIT" (declared at line 52 of "src\k_rtx.h")
+src\linkedList.h(9): error:  #18: expected a ")"
+src\linkedList.h(10): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(10): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(8): error:  #20: identifier "U8" is undefined
+src\linkedList.h(9): error:  #18: expected a ")"
+src\linkedList.h(10): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(10): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\k_rtx.h(46): error:  #101: "proc_init" has already been declared in the current scope
+src\k_rtx.h(52): error:  #256: invalid redeclaration of type name "PROC_INIT" (declared at line 28 of "src\rtx.h")
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(14): error:  #144: a value of type "int" cannot be used to initialize an entity of type "LinkedList *"
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(9): error:  #18: expected a ")"
+src\linkedList.h(10): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(10): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(9): error:  #18: expected a ")"
+src\linkedList.h(10): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(10): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(14): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(14): error:  #144: a value of type "int" cannot be used to initialize an entity of type "LinkedList *"
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(26): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(31): error:  #18: expected a ")"
+src\linkedList.c(31): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(32): error:  #20: identifier "l" is undefined
+src\linkedList.c(32): error:  #20: identifier "n" is undefined
+src\linkedList.c(34): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(19): error:  #18: expected a ")"
+src\linkedList.h(20): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(20): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(19): error:  #18: expected a ")"
+src\linkedList.h(20): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(20): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(7): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(7): error:  #144: a value of type "int" cannot be used to initialize an entity of type "LinkedList *"
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+src\linkedList.c(27): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(19): error:  #18: expected a ")"
+src\linkedList.h(20): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(20): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(19): error:  #18: expected a ")"
+src\linkedList.h(20): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(20): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(7): warning:  #223-D: function "malloc" declared implicitly
+src\linkedList.c(7): error:  #144: a value of type "int" cannot be used to initialize an entity of type "LinkedList *"
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+src\linkedList.c(27): error:  #20: identifier "null" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(19): error:  #18: expected a ")"
+src\linkedList.h(20): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(20): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(19): error:  #18: expected a ")"
+src\linkedList.h(20): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(20): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(6): error:  #147-D: declaration is incompatible with "LinkedList *initLinkedList(int)" (declared at line 12 of "src\linkedList.h")
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #79: expected a type specifier
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #79: expected a type specifier
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #147-D: declaration is incompatible with "Node *pop(LinkedList, <error-type>)" (declared at line 13 of "src\linkedList.h")
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.h(14): error:  #18: expected a ")"
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(12): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(15): error:  #18: expected a ")"
+src\linkedList.c(15): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(16): error:  #20: identifier "l" is undefined
+src\linkedList.c(19): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(24): error:  #18: expected a ")"
+src\linkedList.c(24): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(25): error:  #20: identifier "l" is undefined
+src\linkedList.c(25): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(10): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(17): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(23): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(10): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(17): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(22): error:  #18: expected a ")"
+src\linkedList.c(22): error:  #147-D: declaration is incompatible with "void push(LinkedList, Node)" (declared at line 14 of "src\linkedList.h")
+src\linkedList.c(22): error:  #141-D: unnamed prototyped parameters not allowed when body is present
+src\linkedList.c(23): error:  #20: identifier "l" is undefined
+src\linkedList.c(23): error:  #20: identifier "n" is undefined
+Target not created
+Build target 'Context Switching SIM'
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(10): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(17): error:  #268: declaration may not appear after executable statement in block
+src\linkedList.c(23): error:  #513: a value of type "Node" cannot be assigned to an entity of type "struct NodeStruct *"
+Target not created
+Build target 'Context Switching SIM'
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(10): warning:  #1166-D: returning pointer to local variable
+linking...
+Program Size: Code=3876 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 5 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(13): error:  #18: expected a ")"
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(10): warning:  #1166-D: returning pointer to local variable
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(61): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(10): warning:  #1166-D: returning pointer to local variable
+src\linkedList.c(24): error:  #513: a value of type "Node **" cannot be assigned to an entity of type "struct NodeStruct *"
+Target not created
+Build target 'Context Switching SIM'
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(10): warning:  #1166-D: returning pointer to local variable
+linking...
+Program Size: Code=3876 RO-data=412 RW-data=68 ZI-data=676  
+"context_switching.axf" - 0 Error(s), 5 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(89): error:  #167: argument of type "U8 *" is incompatible with parameter of type "U8"
+src\k_memory.c(95): error:  #20: identifier "mem_blk" is undefined
+src\k_memory.c(62): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(10): warning:  #1166-D: returning pointer to local variable
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(95): error:  #20: identifier "mem_blk" is undefined
+src\k_memory.c(62): warning:  #177-D: variable "b1" was declared but never referenced
+compiling linkedList.c...
+src\linkedList.c(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\linkedList.c(2): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.c(10): warning:  #1166-D: returning pointer to local variable
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(62): warning:  #177-D: variable "b1" was declared but never referenced
+linking...
+Program Size: Code=3820 RO-data=412 RW-data=72 ZI-data=672  
+"context_switching.axf" - 0 Error(s), 4 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(62): warning:  #177-D: variable "b1" was declared but never referenced
+src\k_memory.c(162): error:  #167: argument of type "Node *" is incompatible with parameter of type "LinkedList *"
+src\k_memory.c(162): error:  #165: too few arguments in function call
+Target not created
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(62): warning:  #177-D: variable "b1" was declared but never referenced
+linking...
+Program Size: Code=3788 RO-data=412 RW-data=72 ZI-data=672  
+"context_switching.axf" - 0 Error(s), 4 Warning(s).
+Build target 'Context Switching SIM'
+compiling k_memory.c...
+src\linkedList.h(1): warning:  #14-D: extra text after expected end of preprocessing directive
+src\linkedList.h(14): warning:  #1-D: last line of file ends without a newline
+src\k_memory.c(26): warning:  #375-D: declaration requires a typedef name
+src\k_memory.c(62): warning:  #177-D: variable "b1" was declared but never referenced
+linking...
+Program Size: Code=3800 RO-data=412 RW-data=72 ZI-data=672  
+"context_switching.axf" - 0 Error(s), 4 Warning(s).
