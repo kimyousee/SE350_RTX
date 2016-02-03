@@ -16,6 +16,33 @@
 #define NULL 0
 #define NUM_TEST_PROCS 2
 
+#define HIGH		0
+#define MEDIUM  1
+#define LOW     2
+#define LOWEST  3
+
+/* Process IDs */
+#define PID_NULL 0
+#define PID_P1   1
+#define PID_P2   2
+#define PID_P3   3
+#define PID_P4   4
+#define PID_P5   5
+#define PID_P6   6
+#define PID_A    7
+#define PID_B    8
+#define PID_C    9
+#define PID_SET_PRIO     10
+#define PID_CLOCK        11
+#define PID_KCD          12
+#define PID_CRT          13
+#define PID_TIMER_IPROC  14
+#define PID_UART_IPROC   15
+
+/* Message Types */
+#define DEFAULT 0
+#define KCD_REG 1
+
 #ifdef DEBUG_0
 #define USR_SZ_STACK 0x200         /* user proc stack size 512B   */
 #else
@@ -39,6 +66,7 @@ typedef struct pcb
 	//struct pcb *mp_next;  /* next pcb, not used in this example */  
 	U32 *mp_sp;		/* stack pointer of the process */
 	U32 m_pid;		/* process id */
+	U32 m_priority;
 	PROC_STATE_E m_state;   /* state of the process */      
 } PCB;
 

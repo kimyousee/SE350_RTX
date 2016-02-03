@@ -17,6 +17,7 @@
 #include <system_LPC17xx.h>
 #include "uart_polling.h"
 #include "k_process.h"
+#include "priority_queue.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -33,6 +34,7 @@ U32 g_switch_flag = 0;          /* whether to continue to run the process before
 /* process initialization table */
 PROC_INIT g_proc_table[NUM_TEST_PROCS];
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
+PQUEUE *p_queue;
 
 /**
  * @biref: initialize all processes in the system
@@ -42,7 +44,8 @@ void process_init()
 {
 	int i;
 	U32 *sp;
-  
+	
+	printf("test");
         /* fill out the initialization table */
 	set_test_procs();
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
@@ -63,6 +66,7 @@ void process_init()
 		for ( j = 0; j < 6; j++ ) { // R0-R3, R12 are cleared with 0
 			*(--sp) = 0x0;
 		}
+		printf("x%x \n", sp);
 		(gp_pcbs[i])->mp_sp = sp;
 	}
 }

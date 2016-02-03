@@ -55,7 +55,7 @@ void memory_init(void)
 {
 	U8 *p_end = (U8 *)&Image$$RW_IRAM1$$ZI$$Limit;
 	int i;
-	struct mem_blk b1;
+	//struct mem_blk b1;
   
 	/* 4 bytes padding */
 	p_end += 4;
@@ -68,6 +68,15 @@ void memory_init(void)
 		gp_pcbs[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
 	}
+	
+	p_queue->pq_pcbs = (PCB **)p_end;
+	p_end += NUM_TEST_PROCS * sizeof(PCB *);
+  
+	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+		p_queue->pq_pcbs[i] = (PCB *)p_end;
+		p_end += sizeof(PCB); 
+	}
+	
 #ifdef DEBUG_0  
 	printf("gp_pcbs[0] = 0x%x \n", gp_pcbs[0]);
 	printf("gp_pcbs[1] = 0x%x \n", gp_pcbs[1]);
@@ -85,8 +94,10 @@ void memory_init(void)
 	mem_blks = initLinkedList(p_end+8);
 	
 	for ( i = 0; i < 30; i++ ) {
-		pushLinkedList(mem_blks, (Node *)(mem_blks->tail+150));
+		pushLinkedList(mem_blks, (Node *)(mem_blks->tail+128));
 	}
+	
+	printf("pend = 0x%x \n", p_end);
 }
 
 /**

@@ -1,13 +1,13 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html><head>
-<title>Static Call Graph - [N:\SE350\RTXP1\context_switching.axf]</title></head>
+<title>Static Call Graph - [N:\SE350_RTX\context_switching.axf]</title></head>
 <body><HR>
-<H1>Static Call Graph for image N:\SE350\RTXP1\context_switching.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Wed Feb 03 10:04:51 2016
+<H1>Static Call Graph for image N:\SE350_RTX\context_switching.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5.02 [Build 28]: Last Updated: Wed Feb 03 11:53:59 2016
 <BR><P>
 <H3>Maximum Stack Usage =        144 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-k_rtx_init &rArr; memory_init &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
+k_rtx_init &rArr; process_init &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
 <P>
 <H3>
 Functions with no stack information
@@ -467,6 +467,7 @@ Global Symbols
 <LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;proc2
 <LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_release_memory_block
 <LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_request_memory_block
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_init
 <LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memory_init
 <LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;c_UART0_IRQHandler
 </UL>
@@ -504,7 +505,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[33]"></a>k_rtx_init</STRONG> (Thumb, 50 bytes, Stack size 8 bytes, k_rtx_init.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = k_rtx_init &rArr; memory_init &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
+<BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = k_rtx_init &rArr; process_init &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
 </UL>
 <BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_init
 <LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memory_init
@@ -515,7 +516,7 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main_svc.o(.text)
 </UL>
-<P><STRONG><a name="[57]"></a>memory_init</STRONG> (Thumb, 122 bytes, Stack size 16 bytes, k_memory.o(.text))
+<P><STRONG><a name="[57]"></a>memory_init</STRONG> (Thumb, 160 bytes, Stack size 16 bytes, k_memory.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = memory_init &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;pushLinkedList
@@ -545,11 +546,12 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usr_proc.o(.text)
 </UL>
-<P><STRONG><a name="[58]"></a>process_init</STRONG> (Thumb, 172 bytes, Stack size 16 bytes, k_process.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = process_init
+<P><STRONG><a name="[58]"></a>process_init</STRONG> (Thumb, 186 bytes, Stack size 16 bytes, k_process.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 136<LI>Call Chain = process_init &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_test_procs
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_stack
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;tfp_printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[33]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_rtx_init
 </UL>
@@ -577,21 +579,6 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usr_proc.o(.text)
 </UL>
-<P><STRONG><a name="[59]"></a>initLinkedList</STRONG> (Thumb, 22 bytes, Stack size 12 bytes, linkedlist.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = initLinkedList
-</UL>
-<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memory_init
-</UL>
-
-<P><STRONG><a name="[5b]"></a>popLinkedList</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, linkedlist.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_request_memory_block
-</UL>
-
-<P><STRONG><a name="[5a]"></a>pushLinkedList</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, linkedlist.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_release_memory_block
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memory_init
-</UL>
-
 <P><STRONG><a name="[61]"></a>proc2</STRONG> (Thumb, 96 bytes, Stack size 0 bytes, usr_proc.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 120<LI>Call Chain = proc2 &rArr; tfp_printf &rArr; tfp_format &rArr; putchw
 </UL>
@@ -612,6 +599,21 @@ Global Symbols
 </UL>
 <P><STRONG><a name="[5c]"></a>set_test_procs</STRONG> (Thumb, 60 bytes, Stack size 0 bytes, usr_proc.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;process_init
+</UL>
+
+<P><STRONG><a name="[59]"></a>initLinkedList</STRONG> (Thumb, 22 bytes, Stack size 12 bytes, linkedlist.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = initLinkedList
+</UL>
+<BR>[Called By]<UL><LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memory_init
+</UL>
+
+<P><STRONG><a name="[5b]"></a>popLinkedList</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, linkedlist.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[35]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_request_memory_block
+</UL>
+
+<P><STRONG><a name="[5a]"></a>pushLinkedList</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, linkedlist.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[36]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;k_release_memory_block
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;memory_init
 </UL>
 
 <P><STRONG><a name="[88]"></a>__use_two_region_memory</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, heapauxi.o(.text), UNUSED)
