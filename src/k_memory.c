@@ -54,6 +54,7 @@ LinkedList *mem_blks;
 void memory_init(void)
 {
 	U8 *p_end = (U8 *)&Image$$RW_IRAM1$$ZI$$Limit;
+	U8 *c;
 	int i;
 	//struct mem_blk b1;
   
@@ -90,14 +91,17 @@ void memory_init(void)
 	}
   
 	/* allocate memory for heap, not implemented yet*/
-
-	mem_blks = initLinkedList(p_end+8);
+	
+	c = p_end+8;
+	mem_blks = initLinkedList(c);
+	c = c+128;
 	
 	for ( i = 0; i < 30; i++ ) {
-		pushLinkedList(mem_blks, (Node *)(mem_blks->tail+128));
+		c = c+128;
+		pushLinkedList(mem_blks, (Node *)(c));
 	}
 	
-	printf("pend = 0x%x \n", p_end);
+	//printf("pend = 0x%x \n", p_end);
 }
 
 /**

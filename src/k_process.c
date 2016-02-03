@@ -45,7 +45,7 @@ void process_init()
 	int i;
 	U32 *sp;
 	
-	printf("test");
+	//printf("test");
         /* fill out the initialization table */
 	set_test_procs();
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
@@ -66,7 +66,7 @@ void process_init()
 		for ( j = 0; j < 6; j++ ) { // R0-R3, R12 are cleared with 0
 			*(--sp) = 0x0;
 		}
-		printf("x%x \n", sp);
+		//printf("x%x \n", sp);
 		(gp_pcbs[i])->mp_sp = sp;
 	}
 }

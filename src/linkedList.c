@@ -2,12 +2,12 @@
 #include "k_rtx.h";
 
 LinkedList* initLinkedList(U8 *pointer) {
-	LinkedList l;
-	l.head = (Node *)(pointer);
-	l.tail = (Node *)(pointer);
-	l.head->next = NULL;
-	l.tail->next = NULL; 
-	return &l;
+	LinkedList *l = (LinkedList *)pointer;
+	l->head = (Node *)(pointer+128);
+	l->tail = (Node *)(pointer+128);
+	l->head->next = NULL;
+	l->tail->next = NULL; 
+	return l;
 }
 
 Node* popLinkedList(LinkedList *l) {

@@ -1,0 +1,4 @@
+*.o
+context_switch*[^uvproj]
+*.crf
+*.__i
