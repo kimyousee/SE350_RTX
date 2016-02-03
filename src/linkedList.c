@@ -3,11 +3,18 @@
 
 LinkedList* initLinkedList(U8 *pointer) {
 	LinkedList *l = (LinkedList *)pointer;
-	l->head = (Node *)(pointer+128);
-	l->tail = (Node *)(pointer+128);
+	l->head = (Node *)(pointer+MEMORY_BLOCK_SIZE);
+	l->tail = (Node *)(pointer+MEMORY_BLOCK_SIZE);
 	l->head->next = NULL;
 	l->tail->next = NULL; 
 	return l;
+}
+
+int linkedListHasNext(LinkedList *l) {
+	if (l->head == NULL) {
+		return 0;
+	}
+	return 1;
 }
 
 Node* popLinkedList(LinkedList *l) {

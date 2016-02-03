@@ -49,6 +49,10 @@
 #define USR_SZ_STACK 0x100         /* user proc stack size 218B  */
 #endif /* DEBUG_0 */
 
+/* Memory Constants */
+#define MEMORY_BLOCKS 30
+#define MEMORY_BLOCK_SIZE 128
+
 /*----- Types -----*/
 typedef unsigned char U8;
 typedef unsigned int U32;

@@ -94,10 +94,10 @@ void memory_init(void)
 	
 	c = p_end+8;
 	mem_blks = initLinkedList(c);
-	c = c+128;
+	c = c+MEMORY_BLOCK_SIZE;
 	
-	for ( i = 0; i < 30; i++ ) {
-		c = c+128;
+	for ( i = 0; i < MEMORY_BLOCKS-1; i++ ) {
+		c = c+MEMORY_BLOCK_SIZE;
 		pushLinkedList(mem_blks, (Node *)(c));
 	}
 	
@@ -128,27 +128,33 @@ U32 *alloc_stack(U32 size_b)
 
 
 void *k_request_memory_block(void) {
-	Node *free_mem = popLinkedList(mem_blks);
+	Node *free_mem;
+	//__disable_irq();
 	
 #ifdef DEBUG_0 
 	printf("k_request_memory_block: entering...\n");
 #endif /* ! DEBUG_0 */
 	
-	while(free_mem == NULL){
+	while(!linkedListHasNext(mem_blks)){
 		//blocked_resource_q.push(gp_current_process);
 		//gp_current_process.setState(PROC_STATE_E.BLK);
-		//k_release_processor();
+		//__enable_irq();
+		k_release_processor();
 	}
-	printf("%x\n", (void *) (free_mem));
+	free_mem = popLinkedList(mem_blks);
+	//printf("%x\n", (void *) (free_mem));
+	//__enable_irq();
 	return (void *) (free_mem);
 }
 
 int k_release_memory_block(void *p_mem_blk) {
+	//__disable_irq();
 #ifdef DEBUG_0 
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
 	
 	if (p_mem_blk == NULL) {
+		__enable_irq();
 		return RTX_ERR;
 	}
 	
@@ -159,6 +165,6 @@ int k_release_memory_block(void *p_mem_blk) {
 	//} else {
 		pushLinkedList(mem_blks, (Node *)(p_mem_blk));
 	//}
-	
+	//__enable_irq();
 	return RTX_OK;
 }

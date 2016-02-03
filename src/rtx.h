@@ -7,6 +7,7 @@
 
 /* ----- Definitations ----- */
 #define RTX_ERR -1
+#define RTX_OK  0
 #define NULL 0
 #define NUM_TEST_PROCS 2
 /* Process Priority. The bigger the number is, the lower the priority is*/
@@ -17,6 +18,10 @@
 
 /* ----- Types ----- */
 typedef unsigned int U32;
+
+/* Memory Constants */
+#define MEMORY_BLOCKS 30
+#define MEMORY_BLOCK_SIZE 128
 
 /* initialization table item */
 typedef struct proc_init
