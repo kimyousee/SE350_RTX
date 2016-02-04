@@ -40,7 +40,8 @@ void proc1(void)
 	int ret_val = 10;
 	int x = 0;
 	void *mem;
-
+	set_process_priority(1, 1);
+	
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart1_put_string("\n\r");
@@ -76,6 +77,8 @@ void proc2(void)
 	int i = 0;
 	int ret_val = 20;
 	int x = 0;
+	set_process_priority(1, 0);	
+	
 	while ( 1) {
 		if ( i != 0 && i%5 == 0 ) {
 			uart1_put_string("\n\r");

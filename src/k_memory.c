@@ -70,11 +70,11 @@ void memory_init(void)
 		p_end += sizeof(PCB); 
 	}
 	
-	p_queue->pq_pcbs = (PCB **)p_end;
+	p_queue = (PCB **)p_end;
 	p_end += NUM_TEST_PROCS * sizeof(PCB *);
   
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
-		p_queue->pq_pcbs[i] = (PCB *)p_end;
+		p_queue[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
 	}
 	

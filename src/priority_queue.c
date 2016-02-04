@@ -2,49 +2,55 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// use
-void pq_init (PQUEUE *pq, int num_pcb) {
-	pq->len = 0;
-}
-
-void pq_push (PQUEUE *pq, PCB *pcb) {
-	int i = pq->len + 1;
-	int j = i / 2;
-	while (i > 1 && pq->pq_pcbs[j]->m_priority > pcb->m_priority) {
-		pq->pq_pcbs[i] = pq->pq_pcbs[j];
+void pq_push (PCB *pcb) {
+	int i = p_queue_len;
+	int j = (i-1) / 2;
+	p_queue[i] = pcb;
+	
+	while (i >= 0 && p_queue[j]->m_priority > p_queue[i]->m_priority) {
+		PCB *temp = p_queue[i];
+		p_queue[i] = p_queue[j];
+		p_queue[j] = temp;
+		
 		i = j;
-		j = j / 2;
+		j = (j-1) / 2;
   }
-	pq->pq_pcbs[i] = pcb;
-	pq->len+=1;
+	p_queue_len+=1;
 }
 
-PCB *pq_pop (PQUEUE *pq) {
+PCB *pq_peak () {
+	return p_queue[0];
+}
+
+PCB *pq_pop () {
+	//NUM_TEST_PROCS
+	
 	int i,j,k;
 	PCB *ret;
-	if (pq->len <= 0) {
+	if (p_queue_len <= 0) {
 		return NULL;
 	}
-	ret = pq->pq_pcbs[0];
-	pq->pq_pcbs[0] = pq->pq_pcbs[pq->len];
-	pq->len--;
-	i = 1;
+	ret = p_queue[0];
+	p_queue[0] = p_queue[p_queue_len];
+	p_queue_len--;
+	
+	i = 0;
 	while(1) {
 		k = i;
 		j = 2 * i;
-		if (j <= pq->len && pq->pq_pcbs[j]->m_priority < pq->pq_pcbs[k]->m_priority) {
+		if (j <= p_queue_len && p_queue[j]->m_priority < p_queue[k]->m_priority) {
             k = j;
         }
-        if (j + 1 <= pq->len && pq->pq_pcbs[j + 1]->m_priority < pq->pq_pcbs[k]->m_priority) {
+        if (j + 1 <= p_queue_len && p_queue[j + 1]->m_priority < p_queue[k]->m_priority) {
             k = j + 1;
         }
         if (k == i) {
             break;
         }
-        pq->pq_pcbs[i] = pq->pq_pcbs[k];
+        p_queue[i] = p_queue[k];
         i = k;
 	}
-	pq->pq_pcbs[i] = pq->pq_pcbs[pq->len + 1];
+	p_queue[i] = p_queue[p_queue_len + 1];
 	return ret;
 	
 }
