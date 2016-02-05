@@ -8,10 +8,10 @@
  * abcde
  * 01234
  * fghij
+ * proc1 end of testing
  * 56789
  * 01234
  * 56789
- * proc1 end of testing
  * proc2 end of testing
  *
  * 
@@ -44,6 +44,11 @@ void set_test_procs() {
 	g_test_procs[1].mpf_start_pc = &proc2;
 	g_test_procs[1].m_priority   = MEDIUM;
 
+	g_test_procs[2].mpf_start_pc = &proc3;
+	g_test_procs[2].m_priority   = MEDIUM;
+	
+	g_test_procs[3].mpf_start_pc = &proc4;
+	g_test_procs[3].m_priority   = MEDIUM;
 }
 
 /**
@@ -119,6 +124,20 @@ void proc2(void)
 	}
 	c = "proc2 end of testing\n\r";
 	uart0_put_string(c);
+	while ( 1 ) {
+		release_processor();
+	}
+}
+
+void proc3(void)
+{
+	while ( 1 ) {
+		release_processor();
+	}
+}
+
+void proc4(void)
+{
 	while ( 1 ) {
 		release_processor();
 	}

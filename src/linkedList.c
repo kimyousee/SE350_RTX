@@ -1,5 +1,5 @@
-#include "linkedList.h";
-#include "k_rtx.h";
+#include "linkedList.h"
+#include "k_rtx.h"
 
 LinkedList* initLinkedList(U8 *pointer) {
 	LinkedList *l = (LinkedList *)pointer;

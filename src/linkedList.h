@@ -1,4 +1,4 @@
-#include "k_rtx.h";
+#include "k_rtx.h"
 
 typedef struct NodeStruct {
 	struct NodeStruct *next;
@@ -12,3 +12,4 @@ typedef struct LinkedListStruct {
 LinkedList* initLinkedList(U8 *pointer);
 Node* popLinkedList(LinkedList *l);
 void pushLinkedList(LinkedList *l, Node *n);
+int linkedListHasNext(LinkedList *l);

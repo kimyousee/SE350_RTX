@@ -8,6 +8,7 @@ typedef struct PriQ {
 void pq_push (PQ *pq, PCB *pcb);
 PCB *pq_pop (PQ *pq);
 PCB *pq_peak (PQ *pq);
+void pq_sort (PQ *pq);
 
 
 

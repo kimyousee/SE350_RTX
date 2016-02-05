@@ -161,11 +161,17 @@ void *k_request_memory_block(void) {
 		pq_push(blocked_memory_q, gp_current_process);
 		gp_current_process->m_state = BLK;
 		//__enable_irq();
+		#ifdef DEBUG_0 
+			printf("k_request_memory_block: blocked process %d\n", gp_current_process->m_pid);
+		#endif /* ! DEBUG_0 */
 		k_release_processor();
 	}
 	free_mem = popLinkedList(mem_blks);
 	//printf("%x\n", (void *) (free_mem));
 	//__enable_irq();
+	#ifdef DEBUG_0 
+	printf("k_request_memory_block: return memory %d\n", free_mem);
+	#endif /* ! DEBUG_0 */
 	return (void *) (free_mem);
 }
 
@@ -184,6 +190,9 @@ int k_release_memory_block(void *p_mem_blk) {
 		PCB *process = pq_pop(blocked_memory_q);
 		process->m_state = RDY;
 		pq_push(ready_queue, process);
+		pushLinkedList(mem_blks, (Node *)(p_mem_blk));
+		check_priority();
+		return RTX_OK;
 	}
 	pushLinkedList(mem_blks, (Node *)(p_mem_blk));
 	//__enable_irq();

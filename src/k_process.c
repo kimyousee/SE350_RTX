@@ -115,7 +115,9 @@ PCB *scheduler(void)
 int process_switch(PCB *p_pcb_old) 
 {
 	PROC_STATE_E state;
-	
+	#ifdef DEBUG_0 
+	printf("switching from process %d to process %d\n", p_pcb_old->m_pid, gp_current_process->m_pid);
+	#endif /* ! DEBUG_0 */
 	state = gp_current_process->m_state;
 
 	if (state == NEW) {
@@ -173,26 +175,50 @@ int k_release_processor(void)
 	return RTX_OK;
 }
 
-int k_get_process_priority(int pid){
+PCB* get_process(int pid, PCB **queue) {
 	int i;
+	
 	for (i = 0; i < NUM_TEST_PROCS; i++ ) {
-		if (gp_pcbs[i]->m_pid == pid){
-			return gp_pcbs[i]->m_priority;
+		if (queue[i]->m_pid == pid){
+			return queue[i];
 		}
 	}
-	return -1;
+	return NULL;
+}
+
+int k_get_process_priority(int pid){
+	int i;
+	PCB *p = get_process(pid, gp_pcbs);
+	#ifdef DEBUG_0 
+	printf("getting priority for process %d\n", p->m_pid);
+	#endif /* ! DEBUG_0 */
+	if (p == NULL) {
+		return -1;
+	}
+	return p->m_priority;
+}
+
+void check_priority(void){
+	if (gp_current_process->m_priority > pq_peak(ready_queue)->m_priority) {
+		#ifdef DEBUG_0 
+		printf("current process %d preempted\n", gp_current_process->m_pid);
+		#endif /* ! DEBUG_0 */
+		k_release_processor();
+	}
 }
 
 void k_set_process_priority(int pid, int prio){
 	int i;
 	
-	if (pid == gp_current_process->m_pid && gp_current_process->m_priority > pq_peak(ready_queue)->m_priority){
-		k_release_processor();
+	PCB *p = get_process(pid, gp_pcbs);
+	if (p != NULL) {
+		#ifdef DEBUG_0 
+		printf("setting process %d priority from %d to %d\n", p->m_pid, p->m_priority, prio);
+		#endif /* ! DEBUG_0 */
+		p->m_priority = prio;
 	}
 	
-	for (i = 0; i < NUM_TEST_PROCS; i++ ) {
-		if (gp_pcbs[i]->m_pid == pid){
-			gp_pcbs[i]->m_priority = prio;
-		}
-	}
+	pq_sort(ready_queue);
+	check_priority();
+	
 }

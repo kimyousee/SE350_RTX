@@ -1,25 +1,30 @@
 /**
  * @file:   usr_procA.c
- * @brief:  Three user processes: proc1...3 to do release memory priority check
+ * @brief:  Three user processes: proc1...4 to set priority low check
  * @author: G031
  * @date:   2016/02/03
  * NOTE: Each process is in an infinite loop. Processes never terminate.
  * Expected UART output:
- * ABCDE
- * abcde
- * FGHIJ01234
- * fghij
- * 56789abcde
- * ABCDE
- *
- * FGHIJ
- * proc3 end of testing
- * fghij
- * proc1 end of testing
- *
  * 01234
+ * ABCDE
+ * 56789
+ * FGHIJ01234
+ * abcde
  * 56789
  * proc2 end of testing
+ * lmnop
+ * fghij
+ * qrstu
+ * abcde
+ * lmnop
+ * fghij
+ * proc1 end of testing
+ * qrstu
+ * proc4 end of testing
+ * 
+ * ABCDE
+ * FGHIJ
+ * proc3 end of testing
  */
 
 #include "assert.h"
@@ -47,7 +52,7 @@ void set_test_procs() {
 	g_test_procs[0].m_priority   = MEDIUM;
 	
 	g_test_procs[1].mpf_start_pc = &proc2;
-	g_test_procs[1].m_priority   = MEDIUM;
+	g_test_procs[1].m_priority   = HIGH;
 	
 	g_test_procs[2].mpf_start_pc = &proc3;
 	g_test_procs[2].m_priority   = HIGH;
@@ -74,21 +79,12 @@ void proc1(void)
 	while ( 1 ) {
 		
 		if (i==5) {
-			for (j=0; j<MEMORY_BLOCKS; j++) {
-				mem2 = mem;
-				mem = request_memory_block();
-			}
+			//for (j=0; j<MEMORY_BLOCKS; j++) {
+			//	mem2 = mem;
+			//	mem = request_memory_block();
+			//}
 		}
 		
-		if (i==15) {
-			state = release_memory_block(mem);
-			assert(state == RTX_OK);
-		}
-		
-		if (i==20) {
-			state = release_memory_block(mem2);
-			assert(state == RTX_OK);
-		}
 		
 		if ( i != 0 && i%5 == 0 ) {
 			uart0_put_string("\n\r");
@@ -109,6 +105,7 @@ void proc1(void)
 	}
 	c = "proc1 end of testing\n\r";
 	uart0_put_string(c);
+	set_process_priority(1, LOWEST);
 	while ( 1 ) {
 		release_processor();
 	}
@@ -126,9 +123,9 @@ void proc2(void)
 	void *mem;
 	
 	while ( 1) {
-		if ( i!=0 && i==10 ) {
-			mem = request_memory_block();
-		}
+
+		
+		
 		if ( i != 0 && i%5 == 0 ) {
 			uart0_put_string("\n\r");
 			counter++;
@@ -147,6 +144,7 @@ void proc2(void)
 	}
 	c = "proc2 end of testing\n\r";
 	uart0_put_string(c);
+	set_process_priority(2, LOWEST);
 	while ( 1 ) {
 		release_processor();
 	}
@@ -161,9 +159,10 @@ void proc3(void)
 	void *mem;
 	
 	while ( 1) {
-		if ( i!=0 && i==10 ) {
-			mem = request_memory_block();
+		if (i == 10) {
+			set_process_priority(3, LOW);
 		}
+		
 		if ( i != 0 && i%5 == 0 ) {
  			uart0_put_string("\n\r");
 			counter++;
@@ -181,7 +180,7 @@ void proc3(void)
 	}
 	c = "proc3 end of testing\n\r";
 	uart0_put_string(c);
-	ret_val = set_process_priority(3, LOW);
+	set_process_priority(3, LOWEST);
 	while ( 1 ) {
 		release_processor();
 	}
@@ -189,6 +188,32 @@ void proc3(void)
 
 void proc4(void)
 {
+	int i = 0;
+	int ret_val = 20;
+	int counter = 0;
+	char* c;
+	void *mem;
+	
+	while ( 1) {
+		
+		if ( i != 0 && i%5 == 0 ) {
+ 			uart0_put_string("\n\r");
+			counter++;
+			if ( counter == 4 ) {
+				break;
+			} else {
+				ret_val = release_processor();
+			}
+#ifdef DEBUG_0
+			printf("proc4: ret_val=%d\n", ret_val);
+#endif /* DEBUG_0 */
+		}
+		uart0_put_char('l' + i%10);
+		i++;
+	}
+	c = "proc4 end of testing\n\r";
+	uart0_put_string(c);
+	set_process_priority(4, LOWEST);
 	while ( 1 ) {
 		release_processor();
 	}
