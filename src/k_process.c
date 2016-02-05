@@ -32,13 +32,17 @@ U32 g_switch_flag = 0;          /* whether to continue to run the process before
 				/* this value will be set by UART handler */
 
 /* process initialization table */
-PROC_INIT g_proc_table[NUM_TEST_PROCS];
-extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
+PROC_INIT g_proc_table[NUM_TEST_PROCS+1];
+extern PROC_INIT g_test_procs[NUM_TEST_PROCS+1];
 
-PCB **p_queue;
-int p_queue_len = 0;
+PQ *ready_queue;
 
-
+void nullProc() {
+	while(1){
+		uart0_put_string("NULL");
+		k_release_processor();
+	}
+}
 /**
  * @biref: initialize all processes in the system
  * NOTE: We assume there are only two user processes in the system in this example.
@@ -47,22 +51,27 @@ void process_init()
 {
 	int i;
 	U32 *sp;
-	
-	//printf("test");
         /* fill out the initialization table */
 	set_test_procs();
+	
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		g_proc_table[i].m_pid = g_test_procs[i].m_pid;
 		g_proc_table[i].m_stack_size = g_test_procs[i].m_stack_size;
 		g_proc_table[i].mpf_start_pc = g_test_procs[i].mpf_start_pc;
 		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
 	}
+	
+	g_proc_table[NUM_TEST_PROCS].m_pid = 0;
+	g_proc_table[NUM_TEST_PROCS].m_stack_size = 0x100;
+	g_proc_table[NUM_TEST_PROCS].mpf_start_pc = &nullProc;
+	g_proc_table[NUM_TEST_PROCS].m_priority = LOWEST+1;
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+	for ( i = 0; i < NUM_TEST_PROCS+1; i++ ) {
 		int j;
 		(gp_pcbs[i])->m_pid = (g_proc_table[i]).m_pid;
 		(gp_pcbs[i])->m_state = NEW;
+		(gp_pcbs[i])->m_priority = (g_proc_table[i]).m_priority;
 		
 		sp = alloc_stack((g_proc_table[i]).m_stack_size);
 		*(--sp)  = INITIAL_xPSR;      // user process initial xPSR  
@@ -70,6 +79,7 @@ void process_init()
 		for ( j = 0; j < 6; j++ ) { // R0-R3, R12 are cleared with 0
 			*(--sp) = 0x0;
 		}
+		pq_push(ready_queue, gp_pcbs[i]);
 		(gp_pcbs[i])->mp_sp = sp;
 	}
 
@@ -89,15 +99,9 @@ void process_init()
 
 PCB *scheduler(void)
 {
-	if (gp_current_process == NULL) {
-		gp_current_process = gp_pcbs[0]; 
-		return gp_pcbs[0];
-	}
-	PCB *ret = pq_pop();
-	if (ret == null){
-		//return null process
-	}
-	return  ret
+	PCB *ret;
+	ret = pq_pop(ready_queue);
+	return  ret;
 }
 
 /*@brief: switch out old pcb (p_pcb_old), run the new pcb (gp_current_process)
@@ -116,9 +120,11 @@ int process_switch(PCB *p_pcb_old)
 
 	if (state == NEW) {
 		if (gp_current_process != p_pcb_old && p_pcb_old->m_state != NEW) {
-			p_pcb_old->m_state = RDY;
 			p_pcb_old->mp_sp = (U32 *) __get_MSP();
-			pq_push(p_pcb_old);
+			if (p_pcb_old->m_state != BLK) {
+				p_pcb_old->m_state = RDY;
+				pq_push(ready_queue, p_pcb_old);
+			}
 		}
 		gp_current_process->m_state = RUN;
 		__set_MSP((U32) gp_current_process->mp_sp);
@@ -128,10 +134,12 @@ int process_switch(PCB *p_pcb_old)
 	/* The following will only execute if the if block above is FALSE */
 
 	if (gp_current_process != p_pcb_old) {
-		if (state == RDY){ 		
-			p_pcb_old->m_state = RDY; 
+		if (state == RDY){
 			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
-			pq_push(p_pcb_old);
+			if (p_pcb_old->m_state != BLK) {
+				p_pcb_old->m_state = RDY;
+				pq_push(ready_queue, p_pcb_old);
+			}
 			gp_current_process->m_state = RUN;
 			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    
 		} else {
@@ -157,7 +165,8 @@ int k_release_processor(void)
 		gp_current_process = p_pcb_old; // revert back to the old process
 		return RTX_ERR;
 	}
-        if ( p_pcb_old == NULL ) {
+	
+  if ( p_pcb_old == NULL) {
 		p_pcb_old = gp_current_process;
 	}
 	process_switch(p_pcb_old);
@@ -177,7 +186,7 @@ int k_get_process_priority(int pid){
 void k_set_process_priority(int pid, int prio){
 	int i;
 	
-	if (pid == gp_current_process && gp_current_process->m_priority > pq_peak->m_priority){
+	if (pid == gp_current_process->m_pid && gp_current_process->m_priority > pq_peak(ready_queue)->m_priority){
 		k_release_processor();
 	}
 	

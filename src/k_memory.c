@@ -21,6 +21,7 @@ U32 *free_block; //points to available space
 U32 *end_block;  //points to end of the linked list
 
 LinkedList *mem_blks;
+PQ *blocked_memory_q;
 //PriorityQueue blocked_resource_q;
 
 /**
@@ -63,18 +64,39 @@ void memory_init(void)
 
 	/* allocate memory for pcb pointers   */
 	gp_pcbs = (PCB **)p_end;
-	p_end += NUM_TEST_PROCS * sizeof(PCB *);
+	p_end += (NUM_TEST_PROCS+1) * sizeof(PCB *);
   
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
+	for ( i = 0; i < (NUM_TEST_PROCS+1); i++ ) {
 		gp_pcbs[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
 	}
 	
-	p_queue = (PCB **)p_end;
-	p_end += NUM_TEST_PROCS * sizeof(PCB *);
+	// Initialize pcb priority queue
+	ready_queue = (PQ *)p_end;
+	p_end += sizeof(PQ);
+	
+	ready_queue->p_queue = (PCB **)p_end;
+	p_end += (NUM_TEST_PROCS+1) * sizeof(PCB *);
   
-	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
-		p_queue[i] = (PCB *)p_end;
+	ready_queue->len = 0;
+	
+	
+	for ( i = 0; i < (NUM_TEST_PROCS+1); i++ ) {
+		ready_queue->p_queue[i] = (PCB *)p_end;
+		p_end += sizeof(PCB); 
+	}
+	
+	// Initialize blocked memory PQ
+	blocked_memory_q = (PQ *)p_end;
+	p_end += sizeof(PQ);
+	
+	blocked_memory_q->p_queue = (PCB **)p_end;
+	p_end += (NUM_TEST_PROCS+1) * sizeof(PCB *);
+  
+	blocked_memory_q->len = 0;
+	
+	for ( i = 0; i < (NUM_TEST_PROCS+1); i++ ) {
+		blocked_memory_q->p_queue[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
 	}
 	
@@ -89,7 +111,7 @@ void memory_init(void)
 	if ((U32)gp_stack & 0x04) { /* 8 bytes alignment */
 		--gp_stack; 
 	}
-  
+	
 	/* allocate memory for heap, not implemented yet*/
 	
 	c = p_end+8;
@@ -136,8 +158,8 @@ void *k_request_memory_block(void) {
 #endif /* ! DEBUG_0 */
 	
 	while(!linkedListHasNext(mem_blks)){
-		//blocked_resource_q.push(gp_current_process);
-		//gp_current_process.setState(PROC_STATE_E.BLK);
+		pq_push(blocked_memory_q, gp_current_process);
+		gp_current_process->m_state = BLK;
 		//__enable_irq();
 		k_release_processor();
 	}
@@ -158,13 +180,12 @@ int k_release_memory_block(void *p_mem_blk) {
 		return RTX_ERR;
 	}
 	
-	//if (!blocked_resource_q.isEmpty()) {
-		//PCB *process = blocked_resource_q.pop();
-		//process.setMemory(p_mem_blk);
-		//process.setState(PROC_STATE_E.RDY);
-	//} else {
-		pushLinkedList(mem_blks, (Node *)(p_mem_blk));
-	//}
+	if (blocked_memory_q->len != 0) {
+		PCB *process = pq_pop(blocked_memory_q);
+		process->m_state = RDY;
+		pq_push(ready_queue, process);
+	}
+	pushLinkedList(mem_blks, (Node *)(p_mem_blk));
 	//__enable_irq();
 	return RTX_OK;
 }

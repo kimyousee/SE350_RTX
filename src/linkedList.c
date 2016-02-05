@@ -28,6 +28,9 @@ Node* popLinkedList(LinkedList *l) {
 }
 
 void pushLinkedList(LinkedList *l, Node *n) {
+	if (l->head == NULL) {
+		l->head = n;
+	}
 	l->tail->next = n;
 	l->tail = l->tail->next;
 	l->tail->next = NULL;

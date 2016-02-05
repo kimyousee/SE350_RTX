@@ -1,9 +1,14 @@
 #include "k_process.h"
 
-void pq_push (PCB *pcb);
-PCB *pq_pop ();
+typedef struct PriQ {
+	PCB **p_queue;
+	int len;
+} PQ;
 
-extern PCB **gp_pcbs;
-extern PCB **p_queue;
-extern int p_queue_len;
-extern PCB *pq_peak ();
+void pq_push (PQ *pq, PCB *pcb);
+PCB *pq_pop (PQ *pq);
+PCB *pq_peak (PQ *pq);
+
+
+
+

@@ -7,10 +7,24 @@
  * Expected UART output:
  * abcde
  * 01234
+ * ABCDE
+ * lmnop
  * fghij
  * 56789
+ * FGHIJ
+ * qrstu
  * 01234
+ * ABCDE
+ * lmnop
  * 56789
+ * FGHIJ
+ * qrstu
+ * ABCDE
+ * lmnop
+ * FGHIJ
+ * qrstu
+ * lmnop
+ * qrstu
  * proc1 end of testing
  * proc2 end of testing
  *
@@ -48,6 +62,12 @@ void set_test_procs() {
 	
 	g_test_procs[1].mpf_start_pc = &proc2;
 	g_test_procs[1].m_priority   = MEDIUM;
+	
+	g_test_procs[2].mpf_start_pc = &proc3;
+	g_test_procs[2].m_priority   = MEDIUM;
+	
+	g_test_procs[3].mpf_start_pc = &proc4;
+	g_test_procs[3].m_priority   = MEDIUM;
 
 }
 
@@ -144,4 +164,87 @@ void proc2(void)
 	}
 }
 
+void proc3(void)
+{
+	int i = 0;
+	int ret_val = 20;
+	int counter = 0;
+	char* c;
+	
+	while ( 1) {
+		if ( i != 0 && i%5 == 0 ) {
+			uart0_put_string("\n\r");
+			//check_test_procs("\n\r", 2);
+			counter++;
+			if ( counter == 6 ) {
+				//ret_val = set_process_priority(PID_P1, HIGH);
+				break;
+			} else {
+				ret_val = release_processor();
+			}
+#ifdef DEBUG_0
+			printf("proc3: ret_val=%d\n", ret_val);
+#endif /* DEBUG_0 */
+		}
+		uart0_put_char('A' + i%10);
+		//check_test_procs((char*)('0'+i%10), 1);
+		i++;
+	}
+	c = "proc3 end of testing\n\r";
+	uart0_put_string(c);
+	//check_test_procs(c, strlen(c));
+	while ( 1 ) {
+// 		uart0_put_string(result);
+// 		uart0_put_string(expected);
+// 		if (testResult == 1 && counter == strlen(expected)) {
+// 			uart0_put_string("test1 OK\n\r");
+// 		} else {
+// 			uart0_put_string("test1 FAIL\n\r");
+// 		}
+		
+		release_processor();
+	}
+}
+
+void proc4(void)
+{
+	int i = 0;
+	int ret_val = 20;
+	int counter = 0;
+	char* c;
+	
+	while ( 1) {
+		if ( i != 0 && i%5 == 0 ) {
+			uart0_put_string("\n\r");
+			//check_test_procs("\n\r", 2);
+			counter++;
+			if ( counter == 8 ) {
+				//ret_val = set_process_priority(PID_P1, HIGH);
+				break;
+			} else {
+				ret_val = release_processor();
+			}
+#ifdef DEBUG_0
+			printf("proc4: ret_val=%d\n", ret_val);
+#endif /* DEBUG_0 */
+		}
+		uart0_put_char('l' + i%10);
+		//check_test_procs((char*)('0'+i%10), 1);
+		i++;
+	}
+	c = "proc4 end of testing\n\r";
+	uart0_put_string(c);
+	//check_test_procs(c, strlen(c));
+	while ( 1 ) {
+// 		uart0_put_string(result);
+// 		uart0_put_string(expected);
+// 		if (testResult == 1 && counter == strlen(expected)) {
+// 			uart0_put_string("test1 OK\n\r");
+// 		} else {
+// 			uart0_put_string("test1 FAIL\n\r");
+// 		}
+		
+		release_processor();
+	}
+}
 

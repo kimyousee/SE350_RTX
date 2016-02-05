@@ -40,6 +40,7 @@ __asm void SVC_Handler (void)
                        ; C kernel functions entry point
                        ; R0-R3 contains the kernel function input parameter (See AAPCS)
   POP {R4-R11, LR}     ; Restore other registers for preemption caused by i-procs
+
   MRS  R12, MSP        ; Read MSP
   STR  R0, [R12]       ; store C kernel function return value in R0
                        ; to R0 on the exception stack frame  

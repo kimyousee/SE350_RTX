@@ -40,6 +40,12 @@ void set_test_procs() {
 	
 	g_test_procs[1].mpf_start_pc = &proc2;
 	g_test_procs[1].m_priority   = MEDIUM;
+	
+	g_test_procs[2].mpf_start_pc = &proc3;
+	g_test_procs[2].m_priority   = MEDIUM;
+	
+	g_test_procs[3].mpf_start_pc = &proc4;
+	g_test_procs[3].m_priority   = MEDIUM;
 
 }
 
@@ -57,10 +63,14 @@ void proc1(void)
 	
 	while ( 1 ) {
 		
-		if ( i != 0 && i%5 == 0) {
-			for (j=0; j<MEMORY_BLOCKS+1; j++) {
+		if ( i != 0 && i==5) {
+			for (j=0; j<MEMORY_BLOCKS; j++) {
 				mem = request_memory_block();
 			}
+		}
+		
+		if (i!=0 && i==15) {
+			release_memory_block(mem);
 		}
 		
 		if ( i != 0 && i%5 == 0 ) {
@@ -96,8 +106,12 @@ void proc2(void)
 	int ret_val = 20;
 	int counter = 0;
 	char* c;
+	void *mem;
 	
 	while ( 1) {
+		if ( i!=0 && i==10 ) {
+			mem = request_memory_block();
+		}
 		if ( i != 0 && i%5 == 0 ) {
 			uart0_put_string("\n\r");
 			counter++;
@@ -121,4 +135,15 @@ void proc2(void)
 	}
 }
 
+void proc3(void) {
+	while(1) {
+		release_processor();
+	}
+}
+
+void proc4(void) {
+	while(1) {
+		release_processor();
+	}
+}
 
