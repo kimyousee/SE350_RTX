@@ -39,7 +39,9 @@ PQ *ready_queue;
 
 void nullProc() {
 	while(1){
-		uart0_put_string("NULL");
+		#ifdef DEBUG_0 
+		printf("NULL");
+		#endif /* ! DEBUG_0 */
 		k_release_processor();
 	}
 }

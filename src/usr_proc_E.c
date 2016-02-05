@@ -59,6 +59,12 @@ void set_test_procs() {
 	
 	g_test_procs[3].mpf_start_pc = &proc4;
 	g_test_procs[3].m_priority   = MEDIUM;
+	
+	g_test_procs[4].mpf_start_pc = &proc5;
+	g_test_procs[4].m_priority   = LOWEST;
+	
+	g_test_procs[5].mpf_start_pc = &proc6;
+	g_test_procs[5].m_priority   = LOWEST;
 
 }
 
@@ -214,6 +220,20 @@ void proc4(void)
 	c = "proc4 end of testing\n\r";
 	uart0_put_string(c);
 	set_process_priority(4, LOWEST);
+	while ( 1 ) {
+		release_processor();
+	}
+}
+
+void proc5(void)
+{
+	while ( 1 ) {
+		release_processor();
+	}
+}
+
+void proc6(void)
+{
 	while ( 1 ) {
 		release_processor();
 	}

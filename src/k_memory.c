@@ -187,7 +187,9 @@ int k_release_memory_block(void *p_mem_blk) {
 	}
 	
 	if (blocked_memory_q->len != 0) {
-		PCB *process = pq_pop(blocked_memory_q);
+		PCB *process;
+		pq_sort(blocked_memory_q);
+		process = pq_pop(blocked_memory_q);
 		process->m_state = RDY;
 		pq_push(ready_queue, process);
 		pushLinkedList(mem_blks, (Node *)(p_mem_blk));

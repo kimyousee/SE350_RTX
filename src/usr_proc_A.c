@@ -70,6 +70,12 @@ void set_test_procs() {
 	
 	g_test_procs[3].mpf_start_pc = &proc4;
 	g_test_procs[3].m_priority   = MEDIUM;
+	
+	g_test_procs[4].mpf_start_pc = &proc5;
+	g_test_procs[4].m_priority   = MEDIUM;
+	
+	g_test_procs[5].mpf_start_pc = &proc6;
+	g_test_procs[5].m_priority   = MEDIUM;
 
 }
 
@@ -250,3 +256,16 @@ void proc4(void)
 	}
 }
 
+void proc5(void)
+{
+	while ( 1 ) {
+		release_processor();
+	}
+}
+
+void proc6(void)
+{
+	while ( 1 ) {
+		release_processor();
+	}
+}
