@@ -165,7 +165,16 @@ void *k_request_memory_block(void) {
 			printf("k_request_memory_block: blocked process %d\n", gp_current_process->m_pid);
 		#endif /* ! DEBUG_0 */
 		k_release_processor();
+		
+		if (gp_current_process->mem_pointer != NULL) {
+			free_mem = (Node*)gp_current_process->mem_pointer;
+			gp_current_process->mem_pointer = NULL;
+			return free_mem;
+		}
 	}
+	
+	
+	
 	free_mem = popLinkedList(mem_blks);
 	//printf("%x\n", (void *) (free_mem));
 	//__enable_irq();
@@ -192,7 +201,8 @@ int k_release_memory_block(void *p_mem_blk) {
 		process = pq_pop(blocked_memory_q);
 		process->m_state = RDY;
 		pq_push(ready_queue, process);
-		pushLinkedList(mem_blks, (Node *)(p_mem_blk));
+		process->mem_pointer = p_mem_blk;
+		//pushLinkedList(mem_blks, (Node *)(p_mem_blk));
 		check_priority();
 		return RTX_OK;
 	}

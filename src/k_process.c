@@ -40,7 +40,7 @@ PQ *ready_queue;
 void nullProc() {
 	while(1){
 		#ifdef DEBUG_0 
-		printf("NULL");
+		printf("NULL proc running\n");
 		#endif /* ! DEBUG_0 */
 		k_release_processor();
 	}
@@ -162,6 +162,13 @@ int k_release_processor(void)
 {
 	PCB *p_pcb_old = NULL;
 	
+	if (gp_current_process != NULL && gp_current_process->m_priority < pq_peak(ready_queue)->m_priority && gp_current_process->m_state!=BLK) {
+	#ifdef DEBUG_0 
+		printf("remaining on process %d\n", gp_current_process->m_pid);
+	#endif /* ! DEBUG_0 */
+		return RTX_OK;
+	}
+	
 	p_pcb_old = gp_current_process;
 	gp_current_process = scheduler();
 	
@@ -173,6 +180,7 @@ int k_release_processor(void)
   if ( p_pcb_old == NULL) {
 		p_pcb_old = gp_current_process;
 	}
+	
 	process_switch(p_pcb_old);
 	return RTX_OK;
 }
@@ -211,8 +219,13 @@ void check_priority(void){
 
 void k_set_process_priority(int pid, int prio){
 	int i;
+	PCB *p;
 	
-	PCB *p = get_process(pid, gp_pcbs);
+	if (pid == PID_NULL || prio < HIGH || prio > LOWEST) {
+		return;
+	}
+		
+	p = get_process(pid, gp_pcbs);
 	if (p != NULL) {
 		#ifdef DEBUG_0 
 		printf("setting process %d priority from %d to %d\n", p->m_pid, p->m_priority, prio);

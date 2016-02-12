@@ -50,7 +50,7 @@
 #endif /* DEBUG_0 */
 
 /* Memory Constants */
-#define MEMORY_BLOCKS 30
+#define MEMORY_BLOCKS 2
 #define MEMORY_BLOCK_SIZE 128
 
 /*----- Types -----*/
@@ -71,7 +71,8 @@ typedef struct pcb
 	U32 *mp_sp;		/* stack pointer of the process */
 	U32 m_pid;		/* process id */
 	U32 m_priority;
-	PROC_STATE_E m_state;   /* state of the process */      
+	PROC_STATE_E m_state;   /* state of the process */     
+	void *mem_pointer; /* pointer to the memory after it's released */
 } PCB;
 
 /* initialization table item */
