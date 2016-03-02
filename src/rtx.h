@@ -10,11 +10,31 @@
 #define RTX_OK  0
 #define NULL 0
 #define NUM_TEST_PROCS 6
+#define NUM_SYSTEM_PROCS 2
+#define TOTAL_PROCS 10
 /* Process Priority. The bigger the number is, the lower the priority is*/
 #define HIGH    0
 #define MEDIUM  1
 #define LOW     2
 #define LOWEST  3
+
+/* Process IDs */
+#define PID_NULL 0
+#define PID_P1   1
+#define PID_P2   2
+#define PID_P3   3
+#define PID_P4   4
+#define PID_P5   5
+#define PID_P6   6
+#define PID_A    7
+#define PID_B    8
+#define PID_C    9
+#define PID_SET_PRIO     10
+#define PID_CLOCK        11
+#define PID_KCD          12
+#define PID_CRT          13
+#define PID_TIMER_IPROC  14
+#define PID_UART_IPROC   15
 
 /* ----- Types ----- */
 typedef unsigned int U32;
@@ -60,4 +80,17 @@ extern int k_set_process_priority(int pid, int prio);
 #define set_process_priority(pid, prio) _set_process_priority((U32)k_set_process_priority, pid, prio)
 extern int _set_process_priority(U32 p_func, int pid, int prio) __SVC_0;
 
+/* IPC Management */
+extern int k_send_message(int pid, void *p_msg);
+#define send_message(pid, p_msg) _send_message((U32)k_send_message, pid, p_msg)
+extern int _send_message(U32 p_func, int pid, void *p_msg) __SVC_0;
+
+extern void *k_receive_message(int *p_pid);
+#define receive_message(p_pid) _receive_message((U32)k_receive_message, p_pid)
+extern void *_receive_message(U32 p_func, void *p_pid) __SVC_0;
+
+/* Timing Service */
+extern int k_delayed_send(int pid, void *p_msg, int delay);
+#define delayed_send(pid, p_msg, delay) _delayed_send((U32)k_delayed_send, pid, p_msg, delay)
+extern int _delayed_send(U32 p_func, int pid, void *p_msg, int delay) __SVC_0;  
 #endif /* !RTX_H_ */

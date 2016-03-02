@@ -15,6 +15,8 @@
 
 #define NULL 0
 #define NUM_TEST_PROCS 6
+#define NUM_SYSTEM_PROCS 2
+#define TOTAL_PROCS 10
 
 #define HIGH		0
 #define MEDIUM  1
@@ -83,5 +85,19 @@ typedef struct proc_init
 	int m_stack_size;       /* size of stack in words */
 	void (*mpf_start_pc) ();/* entry point of the process */    
 } PROC_INIT;
+
+/* message buffer */
+typedef struct msgbuf
+{
+#ifdef K_MSG_ENV
+	void *mp_next;		/* ptr to next message received*/
+	int m_send_pid;		/* sender pid */
+	int m_recv_pid;		/* receiver pid */
+	int m_kdata[5];		/* extra 20B kernel data place holder */
+#endif
+	int mtype;              /* user defined message type */
+	char mtext[1];          /* body of the message */
+} MSG_BUF;
+
 
 #endif // ! K_RTX_H_

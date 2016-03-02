@@ -8,6 +8,7 @@
 #include <LPC17xx.h>
 #include "uart.h"
 #include "uart_polling.h"
+#include "priority_queue.h"
 #ifdef DEBUG_0
 #include "printf.h"
 #endif
@@ -20,6 +21,8 @@ uint8_t g_char_in;
 uint8_t g_char_out;
 
 extern uint32_t g_switch_flag;
+extern PQ *ready_queue;
+extern PQ *blocked_memory_q;
 
 extern int k_release_processor(void);
 /**
@@ -153,7 +156,6 @@ int uart_irq_init(int n_uart) {
 	return 0;
 }
 
-
 /**
  * @brief: use CMSIS ISR for UART0 IRQ Handler
  * NOTE: This example shows how to save/restore all registers rather than just
@@ -165,16 +167,8 @@ __asm void UART0_IRQHandler(void)
 {
 	PRESERVE8
 	IMPORT c_UART0_IRQHandler
-	IMPORT k_release_processor
 	PUSH{r4-r11, lr}
 	BL c_UART0_IRQHandler
-	LDR R4, =__cpp(&g_switch_flag)
-	LDR R4, [R4]
-	MOV R5, #0     
-	CMP R4, R5
-	BEQ  RESTORE    ; if g_switch_flag == 0, then restore the process that was interrupted
-	BL k_release_processor  ; otherwise (i.e g_switch_flag == 1, then switch to the other process)
-RESTORE
 	POP{r4-r11, pc}
 } 
 /**
@@ -184,7 +178,28 @@ void c_UART0_IRQHandler(void)
 {
 	uint8_t IIR_IntId;	    // Interrupt ID from IIR 		 
 	LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
+	g_char_in = pUart->RBR;
 	
+	switch(g_char_in) {
+		case '/':
+			printf("Printing ready queue: \n\r");
+			pq_print(ready_queue);
+			break;
+		case '*':
+			printf("Printing blocked memory queue: \n\r");
+			pq_print(blocked_memory_q);
+			break;
+		case '-':
+			printf("Printing blocked messaging queue: \n\r");
+			break;
+		default:
+			break;
+	}
+	
+	uart1_put_char(g_char_in);
+	UART_i_Proc();
+	k_release_processor();
+	return;
 #ifdef DEBUG_0
 	uart1_put_string("Entering c_UART0_IRQHandler\n\r");
 #endif // DEBUG_0

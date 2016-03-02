@@ -10,5 +10,6 @@ k_process.o: src\uart_def.h
 k_process.o: src\k_process.h
 k_process.o: src\k_rtx.h
 k_process.o: src\priority_queue.h
+k_process.o: src\linkedList.h
 k_process.o: src\printf.h
 k_process.o: C:\Software\Keil\ARM\ARMCC\bin\..\include\stdarg.h

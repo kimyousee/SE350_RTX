@@ -18,6 +18,7 @@
 #include "uart_polling.h"
 #include "k_process.h"
 #include "priority_queue.h"
+#include "linkedList.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -26,16 +27,30 @@
 /* ----- Global Variables ----- */
 PCB **gp_pcbs;                  /* array of pcbs */
 PCB *gp_current_process = NULL; /* always point to the current RUN process */
+PCB *uart_proc;
 
 U32 g_switch_flag = 0;          /* whether to continue to run the process before the UART receive interrupt */
                                 /* 1 means to switch to another process, 0 means to continue the current process */
 				/* this value will be set by UART handler */
 
 /* process initialization table */
-PROC_INIT g_proc_table[NUM_TEST_PROCS+1];
-extern PROC_INIT g_test_procs[NUM_TEST_PROCS+1];
+PROC_INIT g_proc_table[TOTAL_PROCS];
+
+extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
+extern PROC_INIT g_system_procs[NUM_SYSTEM_PROCS];
 
 PQ *ready_queue;
+LinkedList *timout_queue;
+
+PCB *findPCB(U32 id) {
+	int i;
+	for (i=0; i<TOTAL_PROCS; i++) {
+		if (gp_pcbs[i]->m_pid == id) {
+			return gp_pcbs[i];
+		}
+	}
+	return NULL;
+}
 
 void nullProc() {
 	while(1){
@@ -45,6 +60,29 @@ void nullProc() {
 		k_release_processor();
 	}
 }
+
+void UART_i_Proc() {
+	PCB *pcb;
+	#ifdef DEBUG_0 
+	printf("UART proc running\n");
+	#endif /* ! DEBUG_0 */
+	pcb = findPCB(PID_UART_IPROC);
+	
+}
+
+void Timer_i_Proc() {
+	printf("Timer proc running\n");
+}
+
+void switch_to_uart_i_process(void) {
+	printf("UART proc running\n");
+	//PCB *p_pcb_old = gp_current_process;
+	//gp_current_process = uart_proc;
+	//gp_current_process = gp_pcbs[6];
+	//process_switch(p_pcb_old);
+	//k_release_processor();
+}
+
 /**
  * @biref: initialize all processes in the system
  * NOTE: We assume there are only two user processes in the system in this example.
@@ -55,6 +93,7 @@ void process_init()
 	U32 *sp;
         /* fill out the initialization table */
 	set_test_procs();
+	set_system_procs();
 	
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		g_proc_table[i].m_pid = g_test_procs[i].m_pid;
@@ -63,13 +102,33 @@ void process_init()
 		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
 	}
 	
-	g_proc_table[NUM_TEST_PROCS].m_pid = 0;
-	g_proc_table[NUM_TEST_PROCS].m_stack_size = 0x100;
-	g_proc_table[NUM_TEST_PROCS].mpf_start_pc = &nullProc;
-	g_proc_table[NUM_TEST_PROCS].m_priority = LOWEST+1;
+	for ( i = 0; i < NUM_SYSTEM_PROCS; i++ ) {
+		g_proc_table[i+NUM_TEST_PROCS].m_pid = g_system_procs[i].m_pid;
+		g_proc_table[i+NUM_TEST_PROCS].m_stack_size = g_system_procs[i].m_stack_size;
+		g_proc_table[i+NUM_TEST_PROCS].mpf_start_pc = g_system_procs[i].mpf_start_pc;
+		g_proc_table[i+NUM_TEST_PROCS].m_priority = g_system_procs[i].m_priority;
+	}
+	
+	// NULL process
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS].m_pid = 0;
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS].m_stack_size = 0x100;
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS].mpf_start_pc = &nullProc;
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS].m_priority = LOWEST+1;
+	
+	// UART I Process
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1].m_pid = PID_UART_IPROC;
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1].m_stack_size = 0x100;
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1].mpf_start_pc = &UART_i_Proc;
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1].m_priority = LOWEST+1;
+	
+	// Timer I Process
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+2].m_pid = PID_UART_IPROC;
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+2].m_stack_size = 0x100;
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+2].mpf_start_pc = &UART_i_Proc;
+	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+2].m_priority = LOWEST+1;
   
 	/* initilize exception stack frame (i.e. initial context) for each process */
-	for ( i = 0; i < NUM_TEST_PROCS+1; i++ ) {
+	for ( i = 0; i < TOTAL_PROCS; i++ ) {
 		int j;
 		(gp_pcbs[i])->m_pid = (g_proc_table[i]).m_pid;
 		(gp_pcbs[i])->m_state = NEW;
@@ -81,15 +140,14 @@ void process_init()
 		for ( j = 0; j < 6; j++ ) { // R0-R3, R12 are cleared with 0
 			*(--sp) = 0x0;
 		}
-		pq_push(ready_queue, gp_pcbs[i]);
+		if (gp_pcbs[i]->m_pid != PID_UART_IPROC) {
+			pq_push(ready_queue, gp_pcbs[i]);
+		}
+		
 		(gp_pcbs[i])->mp_sp = sp;
 	}
-
-	/*for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
-		//int p = pq_pop()->m_pid;
-		printf("x%x : %x \n",  p, k_get_process_priority(p));
-	}*/
 	
+	uart_proc = gp_pcbs[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1];
 }
 
 /*@brief: scheduler, pick the pid of the next to run process
@@ -104,6 +162,13 @@ PCB *scheduler(void)
 	PCB *ret;
 	ret = pq_pop(ready_queue);
 	return  ret;
+}
+
+int isSystemProcess(U32 id) {
+	if (id == PID_TIMER_IPROC || id == PID_UART_IPROC) {
+		return 1;
+	}
+	return 0;
 }
 
 /*@brief: switch out old pcb (p_pcb_old), run the new pcb (gp_current_process)
@@ -127,7 +192,9 @@ int process_switch(PCB *p_pcb_old)
 			p_pcb_old->mp_sp = (U32 *) __get_MSP();
 			if (p_pcb_old->m_state != BLK) {
 				p_pcb_old->m_state = RDY;
-				pq_push(ready_queue, p_pcb_old);
+				if (!isSystemProcess(p_pcb_old->m_pid)) {
+					pq_push(ready_queue, p_pcb_old);
+				}	
 			}
 		}
 		gp_current_process->m_state = RUN;
@@ -142,7 +209,9 @@ int process_switch(PCB *p_pcb_old)
 			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
 			if (p_pcb_old->m_state != BLK) {
 				p_pcb_old->m_state = RDY;
-				pq_push(ready_queue, p_pcb_old);
+				if (!isSystemProcess(p_pcb_old->m_pid)) {
+					pq_push(ready_queue, p_pcb_old);
+				}	
 			}
 			gp_current_process->m_state = RUN;
 			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    

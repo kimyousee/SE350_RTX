@@ -10,6 +10,7 @@
 
 #include "k_rtx.h"
 #include "priority_queue.h"
+#include "linkedList.h"
 
 /* ----- Definitions ----- */
 #define RAM_END_ADDR 0x10008000
@@ -19,6 +20,7 @@
 extern unsigned int Image$$RW_IRAM1$$ZI$$Limit; 
 extern PCB **gp_pcbs;
 extern PQ *ready_queue;
+extern LinkedList *timout_queue;
 extern PROC_INIT g_proc_table[NUM_TEST_PROCS];
 
 /* ----- Functions ------ */

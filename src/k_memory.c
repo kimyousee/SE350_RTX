@@ -7,7 +7,6 @@
 
 #include "k_memory.h"
 #include "k_process.h"
-#include "linkedList.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -64,9 +63,9 @@ void memory_init(void)
 
 	/* allocate memory for pcb pointers   */
 	gp_pcbs = (PCB **)p_end;
-	p_end += (NUM_TEST_PROCS+1) * sizeof(PCB *);
+	p_end += (TOTAL_PROCS) * sizeof(PCB *);
   
-	for ( i = 0; i < (NUM_TEST_PROCS+1); i++ ) {
+	for ( i = 0; i < (TOTAL_PROCS); i++ ) {
 		gp_pcbs[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
 	}
@@ -76,12 +75,12 @@ void memory_init(void)
 	p_end += sizeof(PQ);
 	
 	ready_queue->p_queue = (PCB **)p_end;
-	p_end += (NUM_TEST_PROCS+1) * sizeof(PCB *);
+	p_end += (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1) * sizeof(PCB *);
   
 	ready_queue->len = 0;
 	
 	
-	for ( i = 0; i < (NUM_TEST_PROCS+1); i++ ) {
+	for ( i = 0; i < (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1); i++ ) {
 		ready_queue->p_queue[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
 	}
@@ -91,14 +90,20 @@ void memory_init(void)
 	p_end += sizeof(PQ);
 	
 	blocked_memory_q->p_queue = (PCB **)p_end;
-	p_end += (NUM_TEST_PROCS+1) * sizeof(PCB *);
+	p_end += (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1) * sizeof(PCB *);
   
 	blocked_memory_q->len = 0;
 	
-	for ( i = 0; i < (NUM_TEST_PROCS+1); i++ ) {
+	for ( i = 0; i < (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1); i++ ) {
 		blocked_memory_q->p_queue[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
 	}
+	
+	// Initialize timeout queue
+	p_end += 8; 
+	timout_queue = (LinkedList *)p_end;
+	p_end += sizeof(LinkedList);
+	
 	
 #ifdef DEBUG_0  
 	printf("gp_pcbs[0] = 0x%x \n", gp_pcbs[0]);
@@ -115,10 +120,12 @@ void memory_init(void)
 	/* allocate memory for heap, not implemented yet*/
 	
 	c = p_end+8;
-	mem_blks = initLinkedList(c);
-	c = c+MEMORY_BLOCK_SIZE;
+	mem_blks = (LinkedList *)c;
+	c += sizeof(LinkedList);
+	//mem_blks = initLinkedList(c);
+	//c = c+MEMORY_BLOCK_SIZE;
 	
-	for ( i = 0; i < MEMORY_BLOCKS-1; i++ ) {
+	for ( i = 0; i < MEMORY_BLOCKS; i++ ) {
 		c = c+MEMORY_BLOCK_SIZE;
 		pushLinkedList(mem_blks, (Node *)(c));
 	}
@@ -126,6 +133,23 @@ void memory_init(void)
 	//printf("pend = 0x%x \n", p_end);
 }
 
+//proc1() {
+//	(void *) mem = request_mem_block();
+//	mem = (MSG_BUF *)mem;
+//	mem->type = ...
+//	send_mesage(id, (void*) mem);
+//}
+// void delaysendmessage(int id, void *msg, int delay) {
+// 	msg = (MSG_BUF *)msg;
+// 	int mtype = msg->mtype;
+// 	char mtext[1] = msg->mtext;
+// 	msg = (Node *)msg;
+// 	MSG_BUF *b = (MSG_BUF *)msg->message;
+// 	b->mtype = mtype;
+// 	b->mtext = mtext;
+// 	b->m_send_pid = id;
+// 	msg->value = delay;
+// }
 /**
  * @brief: allocate stack for a process, align to 8 bytes boundary
  * @param: size, stack size in bytes

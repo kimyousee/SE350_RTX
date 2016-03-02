@@ -2,6 +2,8 @@
 
 typedef struct NodeStruct {
 	struct NodeStruct *next;
+	int value;
+	void *message;
 } Node;
 
 typedef struct LinkedListStruct {
@@ -9,7 +11,7 @@ typedef struct LinkedListStruct {
 	struct NodeStruct *tail;
 } LinkedList;
 
-LinkedList* initLinkedList(U8 *pointer);
 Node* popLinkedList(LinkedList *l);
 void pushLinkedList(LinkedList *l, Node *n);
+void sortPushLinkedList(LinkedList *l, Node *n);
 int linkedListHasNext(LinkedList *l);
