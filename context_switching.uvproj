@@ -496,6 +496,16 @@
               <FileType>1</FileType>
               <FilePath>.\src\usr_proc_C.c</FilePath>
             </File>
+            <File>
+              <FileName>real_user_proc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\real_user_proc.c</FilePath>
+            </File>
+            <File>
+              <FileName>real_user_proc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\src\real_user_proc.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

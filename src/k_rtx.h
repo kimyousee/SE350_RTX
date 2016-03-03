@@ -55,7 +55,7 @@
 #endif /* DEBUG_0 */
 
 /* Memory Constants */
-#define MEMORY_BLOCKS 2
+#define MEMORY_BLOCKS 30
 #define MEMORY_BLOCK_SIZE 128
 
 /*----- Types -----*/

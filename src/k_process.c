@@ -97,6 +97,15 @@ void Timer_i_Proc() {
 	*/
 }
 
+// int k_delayed_send(int pid, void *p_msg, int delay) {
+// 	p_msg = (MSG_BUF *)p_msg;
+// 	int mtype = p_msg->mtype;
+// 	char mtext[] = p_msg->mtext;
+// 	p_msg = (Node *)p_msg;
+// 	p_msg->value = delay;
+// 	
+// }
+
 void switch_to_uart_i_process(void) {
 	printf("UART proc running\n");
 	//PCB *p_pcb_old = gp_current_process;

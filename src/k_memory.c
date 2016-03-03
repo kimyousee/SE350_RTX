@@ -203,7 +203,7 @@ void *k_request_memory_block(void) {
 	//printf("%x\n", (void *) (free_mem));
 	//__enable_irq();
 	#ifdef DEBUG_0 
-	printf("k_request_memory_block: return memory %d\n", free_mem);
+	printf("k_request_memory_block: return memory 0x%x\n", free_mem);
 	#endif /* ! DEBUG_0 */
 	return (void *) (free_mem);
 }
