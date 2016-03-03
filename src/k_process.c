@@ -19,6 +19,9 @@
 #include "k_process.h"
 #include "priority_queue.h"
 #include "linkedList.h"
+#include "timer.h"
+#include "system_proc.h"
+#include "real_user_proc.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -37,7 +40,9 @@ U32 g_switch_flag = 0;          /* whether to continue to run the process before
 PROC_INIT g_proc_table[TOTAL_PROCS];
 
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
+extern PROC_INIT g_user_procs[NUM_USER_PROCS];
 extern PROC_INIT g_system_procs[NUM_SYSTEM_PROCS];
+extern uint32_t g_timer_count;
 
 PQ *ready_queue;
 LinkedList *timout_queue;
@@ -71,7 +76,25 @@ void UART_i_Proc() {
 }
 
 void Timer_i_Proc() {
-	printf("Timer proc running\n");
+	//printf("Timer proc running\n");
+	Node *n;
+	void *mem;
+	//MSG_BUF* new_envelope = (MSG_BUF*)k_receive_message(NULL);
+	//printf("Timer count: %d\n\r", g_timer_count);
+	/*
+	if (new_envelope != NULL){
+		mem = request_memory_block();
+		n = (Node*)mem;
+		n->message = new_envelope;
+		n->value = g_timer_count + delay;
+		sortPushLinkedList(timeout_queue, n);
+	}
+	if (linkedListHasNext(timeout_queue) && timeout_queue->head->value <= g_timer_count){
+		msgbuf *envelope = (msgbuf*)popLinkedList(timeout_queue)->message;
+		int target_pid = envelope->m_recv_pid;
+		// k_send_message(target_pid, envelope);
+	}
+	*/
 }
 
 void switch_to_uart_i_process(void) {
@@ -83,6 +106,13 @@ void switch_to_uart_i_process(void) {
 	//k_release_processor();
 }
 
+void addProcTable(int i, int id, int stack_size, int priority, void (*pc) ()) {
+	g_proc_table[i].m_pid =id;
+	g_proc_table[i].m_stack_size = stack_size;
+	g_proc_table[i].mpf_start_pc = pc;
+	g_proc_table[i].m_priority = priority;
+}
+
 /**
  * @biref: initialize all processes in the system
  * NOTE: We assume there are only two user processes in the system in this example.
@@ -90,43 +120,45 @@ void switch_to_uart_i_process(void) {
 void process_init() 
 {
 	int i;
+	int j;
 	U32 *sp;
         /* fill out the initialization table */
 	set_test_procs();
+	set_user_procs();
 	set_system_procs();
-	
+	j = 0;
+	// User processes
 	for ( i = 0; i < NUM_TEST_PROCS; i++ ) {
-		g_proc_table[i].m_pid = g_test_procs[i].m_pid;
-		g_proc_table[i].m_stack_size = g_test_procs[i].m_stack_size;
-		g_proc_table[i].mpf_start_pc = g_test_procs[i].mpf_start_pc;
-		g_proc_table[i].m_priority = g_test_procs[i].m_priority;
+		addProcTable(j, g_test_procs[i].m_pid, g_test_procs[i].m_stack_size, 
+			g_test_procs[i].m_priority, g_test_procs[i].mpf_start_pc);
+		j++;
 	}
 	
+	for ( i = 0; i < NUM_USER_PROCS; i++ ) {
+		addProcTable(j, g_user_procs[i].m_pid, g_user_procs[i].m_stack_size, 
+			g_user_procs[i].m_priority, g_user_procs[i].mpf_start_pc);
+		j++;
+	}
+	
+	// KCD and CRT processes
 	for ( i = 0; i < NUM_SYSTEM_PROCS; i++ ) {
-		g_proc_table[i+NUM_TEST_PROCS].m_pid = g_system_procs[i].m_pid;
-		g_proc_table[i+NUM_TEST_PROCS].m_stack_size = g_system_procs[i].m_stack_size;
-		g_proc_table[i+NUM_TEST_PROCS].mpf_start_pc = g_system_procs[i].mpf_start_pc;
-		g_proc_table[i+NUM_TEST_PROCS].m_priority = g_system_procs[i].m_priority;
+		addProcTable(j, g_system_procs[i].m_pid, g_system_procs[i].m_stack_size, 
+			g_system_procs[i].m_priority, g_system_procs[i].mpf_start_pc);
+		j++;
 	}
 	
 	// NULL process
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS].m_pid = 0;
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS].m_stack_size = 0x100;
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS].mpf_start_pc = &nullProc;
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS].m_priority = LOWEST+1;
+	addProcTable(j, 0, 0x100, LOWEST+1, &nullProc);
+	j++;
 	
 	// UART I Process
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1].m_pid = PID_UART_IPROC;
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1].m_stack_size = 0x100;
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1].mpf_start_pc = &UART_i_Proc;
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1].m_priority = LOWEST+1;
+	addProcTable(j, PID_UART_IPROC, 0x100, LOWEST+1, &UART_i_Proc);
+	j++;
 	
 	// Timer I Process
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+2].m_pid = PID_UART_IPROC;
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+2].m_stack_size = 0x100;
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+2].mpf_start_pc = &UART_i_Proc;
-	g_proc_table[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+2].m_priority = LOWEST+1;
-  
+	addProcTable(j, PID_TIMER_IPROC, 0x100, LOWEST+1, &Timer_i_Proc);
+  j++;
+	
 	/* initilize exception stack frame (i.e. initial context) for each process */
 	for ( i = 0; i < TOTAL_PROCS; i++ ) {
 		int j;

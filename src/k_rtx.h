@@ -16,7 +16,9 @@
 #define NULL 0
 #define NUM_TEST_PROCS 6
 #define NUM_SYSTEM_PROCS 2
-#define TOTAL_PROCS 10
+#define NUM_I_PROCS 2
+#define NUM_USER_PROCS 1
+#define TOTAL_PROCS (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+NUM_I_PROCS+NUM_USER_PROCS+1)
 
 #define HIGH		0
 #define MEDIUM  1
@@ -44,6 +46,7 @@
 /* Message Types */
 #define DEFAULT 0
 #define KCD_REG 1
+#define CRT_DISPLAY 2
 
 #ifdef DEBUG_0
 #define USR_SZ_STACK 0x200         /* user proc stack size 512B   */

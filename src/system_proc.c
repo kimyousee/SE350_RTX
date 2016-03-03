@@ -27,10 +27,33 @@ void set_system_procs() {
 
 void KCD_proc(void) {
 	void *msg;
+	//array -> {keyword, proc};
 	while(1) {
 		//receive_message();
 		//printf("KCD Proc\n");
-		//msg = receive_message(NULL);
+		//MSG_BUF* msg = (MSG_BUF*)k_receive_message(NULL);
+		//switch(msg->mtype){
+			//case KCD_REG:
+				//keyword = msg->body;
+				//proc = msg->sender;
+				//array.add({keyword, proc});
+// 				if (msg->mtext[0] == '%'){
+// 					if (msg->mtext[1] == 'W'){
+// 						k_send_message(PID_CLOCK, (void*)msg);
+// 					}
+// 				}
+				//break;
+			//case CRT_DISPLAY:
+				//if msg->body == keyword:
+					//forwardmessage to proc;
+				//if 
+				//k_send_message(PID_CRT, (void *)msg);
+				//break;
+			//default: break;
+		//}
+		
+		
+		
 		release_processor();
 	}
 }
