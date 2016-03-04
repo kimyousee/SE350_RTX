@@ -1,5 +1,8 @@
 #include "k_process.h"
 
+#ifndef _PRIORITY_QUEUE_
+#define _PRIORITY_QUEUE_
+
 typedef struct PriQ {
 	PCB **p_queue;
 	int len;
@@ -11,6 +14,6 @@ PCB *pq_peak (PQ *pq);
 void pq_sort (PQ *pq);
 void pq_print(PQ *pq);
 
-
+#endif
 
 

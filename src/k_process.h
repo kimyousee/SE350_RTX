@@ -24,6 +24,7 @@ int k_release_processor(void);           /* kernel release_process function */
 int k_get_process_priority(int pid);
 void k_set_process_priority(int pid, int prio);
 void check_priority(void);
+PCB* get_process(int pid, PCB **queue);
 
 extern U32 *alloc_stack(U32 size_b);   /* allocate stack for a process */
 extern void __rte(void);               /* pop exception stack frame */

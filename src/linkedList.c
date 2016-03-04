@@ -23,6 +23,7 @@ void pushLinkedList(LinkedList *l, Node *n) {
 		n->next = NULL;
 		l->head = n;
 		l->tail = n;
+		return;
 	}
 	l->tail->next = n;
 	l->tail = l->tail->next;

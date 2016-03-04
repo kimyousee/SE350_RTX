@@ -22,6 +22,7 @@
 #include "timer.h"
 #include "system_proc.h"
 #include "real_user_proc.h"
+#include "k_message.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -47,7 +48,7 @@ extern PROC_INIT g_system_procs[NUM_SYSTEM_PROCS];
 extern uint32_t g_timer_count;
 
 PQ *ready_queue;
-LinkedList *timout_queue;
+LinkedList *timeout_queue;
 
 PCB *findPCB(U32 id) {
 	int i;
@@ -78,9 +79,27 @@ void UART_i_Proc() {
 }
 
 void Timer_i_Proc() {
-	//printf("Timer proc running\n");
-	Node *n;
+	PCB *pcb;
 	void *mem;
+	Node *node;
+	MSG_BUF *msg;
+	pcb = findPCB(PID_TIMER_IPROC);
+	msg = receive_message_nonblocking(pcb);
+	while (msg != NULL) {
+		node = (Node*)k_nonblocking_request_memory_block();
+		if (node == NULL) {
+			break;
+		}
+		node->value = (int)(g_timer_count+(uint32_t)(msg->m_kdata[0]));
+		node->message = (void *)msg;
+		sortPushLinkedList(timeout_queue, node);
+		msg = receive_message_nonblocking(pcb);
+	}
+	while (linkedListHasNext(timeout_queue) && timeout_queue->head->value <= g_timer_count){
+		MSG_BUF *envelope = (MSG_BUF*)(popLinkedList(timeout_queue)->message);
+		int target_pid = envelope->m_recv_pid;
+		k_send_message(target_pid, envelope);
+	}
 	//MSG_BUF* new_envelope = (MSG_BUF*)k_receive_message(NULL);
 	//printf("Timer count: %d\n\r", g_timer_count);
 	/*
@@ -107,15 +126,6 @@ void Timer_i_Proc() {
 // 	p_msg->value = delay;
 // 	
 // }
-
-void switch_to_uart_i_process(void) {
-	printf("UART proc running\n");
-	//PCB *p_pcb_old = gp_current_process;
-	//gp_current_process = uart_proc;
-	//gp_current_process = gp_pcbs[6];
-	//process_switch(p_pcb_old);
-	//k_release_processor();
-}
 
 void addProcTable(int i, int id, int stack_size, int priority, void (*pc) ()) {
 	g_proc_table[i].m_pid =id;
@@ -294,7 +304,7 @@ int k_release_processor(void)
 PCB* get_process(int pid, PCB **queue) {
 	int i;
 	
-	for (i = 0; i < NUM_TEST_PROCS; i++ ) {
+	for (i = 0; i < TOTAL_PROCS; i++ ) {
 		if (queue[i]->m_pid == pid){
 			return queue[i];
 		}
@@ -342,103 +352,4 @@ void k_set_process_priority(int pid, int prio){
 	pq_sort(ready_queue);
 	check_priority();
 	
-}
-
-void enqueue_block_receive(PCB *pcb) {
-	if (blocked_receive_head == NULL) {
-		blocked_receive_head = pcb;
-		blocked_receive_tail = pcb;
-		return;
-	}
-	blocked_receive_tail->next = pcb;
-	blocked_receive_tail = blocked_receive_tail->next;
-	blocked_receive_tail->next = NULL;
-}
-
-void dequeue_block_receive(U32 pid) {
-	PCB *n = blocked_receive_head;
-	PCB *p = NULL;
-	if (blocked_receive_head == NULL) {
-		return;
-	}
-	while (n != NULL) {
-		if (n->m_pid == pid) {
-			p->next = n->next;
-			n->next = NULL;
-			return;
-		}
-		p = n;
-		n = n->next;
-	}
-	return;
-}
-
-void enqueue_msg(PCB *p, MSG_BUF *msg) {
-	if (p->head_msg == NULL) {
-		p->head_msg = msg;
-		p->tail_msg = msg;
-		return;
-	}
-	p->tail_msg->mp_next = msg;
-	p->tail_msg = p->tail_msg->mp_next;
-	p->tail_msg->mp_next = NULL;
-}
-
-MSG_BUF* dequeue_msg(PCB *p) {
-	MSG_BUF *n = p->head_msg;
-	if (p->head_msg == NULL) {
-		return NULL;
-	}
-	p->head_msg = p->head_msg->mp_next;
-	return n;
-}
-
-void k_send_message(int receiving_pid, MSG_BUF *msg) {
-	PCB *p;
-	int i;
-	//atomic = TRUE;
-	msg->m_send_pid = gp_current_process->m_pid;
-	msg->m_recv_pid = receiving_pid;
-	
-	p = get_process(receiving_pid, gp_pcbs);
-	if (p == NULL){
-		return;
-	}
-	#ifdef DEBUG_0 
-	printf("process %d sending message(%s) to process %d\n", gp_current_process->m_pid, msg->mtext, p->m_pid);
-	#endif /* ! DEBUG_0 */
-	enqueue_msg(p, msg);
-	if (p->m_state == BLK_RCV) {
-		#ifdef DEBUG_0 
-		printf("process %d unblocked on receive\n", p->m_pid);
-		#endif /* ! DEBUG_0 */
-		dequeue_block_receive(p->m_pid);
-		p->m_state = RDY;
-		pq_push(ready_queue, p);
-	}
-	
-	//atomic = FALSE;
-}
-
-MSG_BUF *receive_message_nonblocking(PCB *p) {
-	MSG_BUF *msg = dequeue_msg(p);
-	return msg;
-}
-
-MSG_BUF *k_receive_message(int *p_pid) {
-	MSG_BUF *msg;
-	#ifdef DEBUG_0 
-	printf("process %d attempting to receive messages\n", gp_current_process->m_pid);
-	#endif /* ! DEBUG_0 */
-	while(gp_current_process->head_msg == NULL) {
-		#ifdef DEBUG_0 
-		printf("process %d blocked on receive\n", gp_current_process->m_pid);
-		#endif /* ! DEBUG_0 */
-		gp_current_process->m_state = BLK_RCV;
-		enqueue_block_receive(gp_current_process);
-		k_release_processor();
-	}
-	msg = dequeue_msg(gp_current_process);
-	
-	return msg;
 }

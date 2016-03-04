@@ -13,7 +13,7 @@
 #endif
 
 #define BIT(X) (1<<X)
-
+extern void Timer_i_Proc(void);
 volatile uint32_t g_timer_count = 0; // increment every 1 ms
 
 /**

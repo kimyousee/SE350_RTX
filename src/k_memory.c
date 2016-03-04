@@ -101,7 +101,7 @@ void memory_init(void)
 	
 	// Initialize timeout queue
 	p_end += 8; 
-	timout_queue = (LinkedList *)p_end;
+	timeout_queue = (LinkedList *)p_end;
 	p_end += sizeof(LinkedList);
 	
 	
@@ -172,6 +172,19 @@ U32 *alloc_stack(U32 size_b)
 	return sp;
 }
 
+void *k_nonblocking_request_memory_block(void) {
+	Node *free_mem;
+	if (!linkedListHasNext(mem_blks)) {
+		return NULL;
+	}
+	free_mem = popLinkedList(mem_blks);
+	//printf("%x\n", (void *) (free_mem));
+	//__enable_irq();
+	#ifdef DEBUG_0 
+	printf("k_request_memory_block: return memory 0x%x\n", free_mem);
+	#endif /* ! DEBUG_0 */
+	return (void *) (free_mem);
+}
 
 void *k_request_memory_block(void) {
 	Node *free_mem;

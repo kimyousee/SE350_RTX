@@ -25,6 +25,7 @@ extern PQ *ready_queue;
 extern PQ *blocked_memory_q;
 
 extern int k_release_processor(void);
+extern void UART_i_Proc(void);
 /**
  * @brief: initialize the n_uart
  * NOTES: It only supports UART0. It can be easily extended to support UART1 IRQ.
