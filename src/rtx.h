@@ -17,10 +17,10 @@
 #define TOTAL_PROCS (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+NUM_I_PROCS+NUM_USER_PROCS+1)
 
 /* Process Priority. The bigger the number is, the lower the priority is*/
-#define HIGH    0
-#define MEDIUM  1
-#define LOW     2
-#define LOWEST  3
+#define HIGH		1
+#define MEDIUM  2
+#define LOW     3
+#define LOWEST  4
 
 /* Process IDs */
 #define PID_NULL 0
@@ -51,15 +51,10 @@ typedef unsigned int U32;
 #define DEFAULT 0
 #define KCD_REG 1
 #define CRT_DISPLAY 2
+#define KEYBOARD_INPUT 3
 
-/* initialization table item */
-typedef struct proc_init
-{	
-	int m_pid;	        /* process id */ 
-	int m_priority;         /* initial priority, not used in this example. */ 
-	int m_stack_size;       /* size of stack in words */
-	void (*mpf_start_pc) ();/* entry point of the process */    
-} PROC_INIT;
+/* process states, note we only assume three states in this example */
+typedef enum {NEW = 0, RDY, RUN, BLK, BLK_RCV} PROC_STATE_E;  
 
 /* message buffer */
 typedef struct msgbuf
@@ -73,6 +68,34 @@ typedef struct msgbuf
 	int mtype;              /* user defined message type */
 	char mtext[1];          /* body of the message */
 } MSG_BUF;
+
+/*
+  PCB data structure definition.
+  You may want to add your own member variables
+  in order to finish P1 and the entire project 
+*/
+typedef struct pcb 
+{ 
+	struct pcb *next;  /* next pcb */  
+	U32 *mp_sp;		/* stack pointer of the process */
+	U32 m_pid;		/* process id */
+	U32 m_priority;
+	PROC_STATE_E m_state;   /* state of the process */     
+	void *mem_pointer; /* pointer to the memory after it's released */
+	MSG_BUF *head_msg;
+	MSG_BUF *tail_msg;
+} PCB;
+
+/* initialization table item */
+typedef struct proc_init
+{	
+	int m_pid;	        /* process id */ 
+	int m_priority;         /* initial priority, not used in this example. */ 
+	int m_stack_size;       /* size of stack in words */
+	void (*mpf_start_pc) ();/* entry point of the process */    
+} PROC_INIT;
+
+
 
 /* ----- RTX User API ----- */
 #define __SVC_0  __svc_indirect(0)

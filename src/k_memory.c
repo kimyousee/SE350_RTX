@@ -75,12 +75,12 @@ void memory_init(void)
 	p_end += sizeof(PQ);
 	
 	ready_queue->p_queue = (PCB **)p_end;
-	p_end += (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1) * sizeof(PCB *);
+	p_end += (TOTAL_PROCS) * sizeof(PCB *);
   
 	ready_queue->len = 0;
 	
 	
-	for ( i = 0; i < (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1); i++ ) {
+	for ( i = 0; i < (TOTAL_PROCS); i++ ) {
 		ready_queue->p_queue[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
 	}
@@ -90,11 +90,11 @@ void memory_init(void)
 	p_end += sizeof(PQ);
 	
 	blocked_memory_q->p_queue = (PCB **)p_end;
-	p_end += (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1) * sizeof(PCB *);
+	p_end += (TOTAL_PROCS) * sizeof(PCB *);
   
 	blocked_memory_q->len = 0;
 	
-	for ( i = 0; i < (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1); i++ ) {
+	for ( i = 0; i < (TOTAL_PROCS); i++ ) {
 		blocked_memory_q->p_queue[i] = (PCB *)p_end;
 		p_end += sizeof(PCB); 
 	}

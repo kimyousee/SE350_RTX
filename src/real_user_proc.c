@@ -23,15 +23,30 @@ void set_user_procs() {
 		g_user_procs[i].m_stack_size=0x100;
 	}
   
-	g_user_procs[0].m_pid = (U32)(PID_CLOCK);
+	g_user_procs[0].m_pid = (U32)PID_CLOCK;
 	g_user_procs[0].mpf_start_pc = &wall_clock_proc;
-	g_user_procs[0].m_priority = LOWEST;
+	g_user_procs[0].m_priority = MEDIUM;
 }
 
 
 void wall_clock_proc() {
+	MSG_BUF *msg;
+	void *mem;
+	int i = 0;
+	MSG_BUF *p_msg_env;
+
 	while (1) {
-		printf("wall clock\n\r");
+		if (i==0) {
+			i++;
+			p_msg_env = (struct msgbuf *) request_memory_block();
+			p_msg_env->mtype = KCD_REG;
+			p_msg_env->mtext[0] = '%';
+			p_msg_env->mtext[1] = 'W';
+			p_msg_env->mtext[2] = '\0';
+			//send_message(PID_KCD, (void *)p_msg_env);
+		}
+		msg = receive_message((int*)PID_CLOCK);
+		printf("Wall clock message: %s\n\r", msg->mtext);
 		release_processor();
 	}
 }

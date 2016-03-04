@@ -1,8 +1,11 @@
 #include "k_message.h"
 #include "printf.h"
 
+extern void UART_i_Proc(void);
+
 void enqueue_block_receive(PCB *pcb) {
 	if (blocked_receive_head == NULL) {
+		pcb->next = NULL;
 		blocked_receive_head = pcb;
 		blocked_receive_tail = pcb;
 		return;
@@ -12,22 +15,32 @@ void enqueue_block_receive(PCB *pcb) {
 	blocked_receive_tail->next = NULL;
 }
 
-void dequeue_block_receive(U32 pid) {
+PCB* dequeue_block_receive(U32 pid) {
 	PCB *n = blocked_receive_head;
 	PCB *p = NULL;
 	if (blocked_receive_head == NULL) {
-		return;
+		return NULL;
 	}
-	while (n != NULL) {
-		if (n->m_pid == pid) {
-			p->next = n->next;
-			n->next = NULL;
-			return;
-		}
-		p = n;
-		n = n->next;
+	
+	if (n->m_pid == pid) {
+		blocked_receive_head = n->next;
+		return n;
 	}
-	return;
+	
+	if (n->next == NULL) {
+		blocked_receive_head = NULL;
+		blocked_receive_tail = NULL;
+		return NULL;
+	}
+	while (n->next != NULL && n->next->m_pid != pid) {
+			n = n->next;
+	}
+	if (n->next == NULL) {
+		return NULL;
+	}
+	p = n->next;
+	n->next = p->next;
+	return p;
 }
 
 void enqueue_msg(PCB *p, MSG_BUF *msg) {
@@ -52,10 +65,18 @@ MSG_BUF* dequeue_msg(PCB *p) {
 }
 
 void k_send_message(int receiving_pid, MSG_BUF *msg) {
+	__disable_irq();
+	send_message(receiving_pid, gp_current_process->m_pid, msg);
+	__enable_irq();
+}
+
+void send_message(int receiving_pid, int sending_pid, MSG_BUF *msg) {
 	PCB *p;
 	int i;
 	//atomic = TRUE;
-	msg->m_send_pid = gp_current_process->m_pid;
+	//if (msg->m_send_pid == 0) {
+	msg->m_send_pid = sending_pid;
+	//}
 	msg->m_recv_pid = receiving_pid;
 	
 	p = get_process(receiving_pid, gp_pcbs);
@@ -63,27 +84,32 @@ void k_send_message(int receiving_pid, MSG_BUF *msg) {
 		return;
 	}
 	#ifdef DEBUG_0 
-	printf("process %d sending message(%s) to process %d\n", gp_current_process->m_pid, msg->mtext, p->m_pid);
+	printf("process %d sending message(%s) to process %d\n", msg->m_send_pid, msg->mtext, p->m_pid);
 	#endif /* ! DEBUG_0 */
 	enqueue_msg(p, msg);
-	if (p->m_state == BLK_RCV) {
-		#ifdef DEBUG_0 
-		printf("process %d unblocked on receive\n", p->m_pid);
-		#endif /* ! DEBUG_0 */
-		dequeue_block_receive(p->m_pid);
-		p->m_state = RDY;
-		pq_push(ready_queue, p);
+	if (receiving_pid == PID_UART_IPROC) {
+		UART_i_Proc();
+	} else {
+		if (p->m_state == BLK_RCV) {
+			#ifdef DEBUG_0 
+			printf("process %d unblocked on receive\n", p->m_pid);
+			#endif /* ! DEBUG_0 */
+			dequeue_block_receive(p->m_pid);
+			p->m_state = RDY;
+			pq_push(ready_queue, p);
+			check_priority();
+		}
 	}
 	
 	//atomic = FALSE;
 }
 
-MSG_BUF *receive_message_nonblocking(PCB *p) {
+void *receive_message_nonblocking(PCB *p) {
 	MSG_BUF *msg = dequeue_msg(p);
-	return msg;
+	return (void *)msg;
 }
 
-MSG_BUF *k_receive_message(int *p_pid) {
+void *k_receive_message(int *p_pid) {
 	MSG_BUF *msg;
 	#ifdef DEBUG_0 
 	printf("process %d attempting to receive messages\n", gp_current_process->m_pid);
@@ -97,8 +123,7 @@ MSG_BUF *k_receive_message(int *p_pid) {
 		k_release_processor();
 	}
 	msg = dequeue_msg(gp_current_process);
-	
-	return msg;
+	return (void *)msg;
 }
 
 void k_delayed_send(int pid, void *p_msg, int delay) {

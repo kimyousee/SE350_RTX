@@ -20,10 +20,10 @@
 #define NUM_USER_PROCS 1
 #define TOTAL_PROCS (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+NUM_I_PROCS+NUM_USER_PROCS+1)
 
-#define HIGH		0
-#define MEDIUM  1
-#define LOW     2
-#define LOWEST  3
+#define HIGH		1
+#define MEDIUM  2
+#define LOW     3
+#define LOWEST  4
 
 /* Process IDs */
 #define PID_NULL 0
@@ -47,6 +47,7 @@
 #define DEFAULT 0
 #define KCD_REG 1
 #define CRT_DISPLAY 2
+#define KEYBOARD_INPUT 3
 
 #ifdef DEBUG_0
 #define USR_SZ_STACK 0x200         /* user proc stack size 512B   */

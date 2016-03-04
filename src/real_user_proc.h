@@ -5,10 +5,10 @@
  * @date:   2014/01/17
  */
  
-#ifndef USR_PROC_H_
-#define USR_PROC_H
+#ifndef REAL_USR_PROC_H_
+#define REAL_USR_PROC_H
 
 void set_user_procs(void);
 void wall_clock_proc(void);
 
-#endif /* USR_PROC_H_ */
+#endif /* REAL_USR_PROC_H_ */

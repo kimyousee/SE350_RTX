@@ -17,6 +17,7 @@
 #include <system_LPC17xx.h>
 #include "uart_polling.h"
 #include "k_process.h"
+#include "k_memory.h"
 #include "priority_queue.h"
 #include "linkedList.h"
 #include "timer.h"
@@ -34,7 +35,6 @@ PCB *gp_current_process = NULL; /* always point to the current RUN process */
 PCB *blocked_receive_head = NULL;
 PCB *blocked_receive_tail = NULL;
 
-
 U32 g_switch_flag = 0;          /* whether to continue to run the process before the UART receive interrupt */
                                 /* 1 means to switch to another process, 0 means to continue the current process */
 				/* this value will be set by UART handler */
@@ -46,9 +46,18 @@ extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
 extern PROC_INIT g_user_procs[NUM_USER_PROCS];
 extern PROC_INIT g_system_procs[NUM_SYSTEM_PROCS];
 extern uint32_t g_timer_count;
+extern uint8_t g_char_in;
 
 PQ *ready_queue;
 LinkedList *timeout_queue;
+
+void blocked_receive_print(PCB *head) {
+	PCB *temp = head;
+	while (temp != NULL) {
+		printf("Process %d at memory 0x%x\n\r", temp->m_pid, temp);
+		temp = temp->next;
+	}
+}
 
 PCB *findPCB(U32 id) {
 	int i;
@@ -71,11 +80,29 @@ void nullProc() {
 
 void UART_i_Proc() {
 	PCB *pcb;
+	MSG_BUF *msg;
+	Node *node;
 	#ifdef DEBUG_0 
 	printf("UART proc running\n");
 	#endif /* ! DEBUG_0 */
 	pcb = findPCB(PID_UART_IPROC);
-	
+	if (g_char_in != 0) {
+		node = (Node*)k_nonblocking_request_memory_block();
+		msg = (MSG_BUF *)node;
+		msg->m_send_pid = PID_UART_IPROC;
+		msg->mtype = KEYBOARD_INPUT;
+		msg->mtext[0] = g_char_in;
+		g_char_in = 0;
+		send_message(PID_KCD, PID_UART_IPROC, msg);
+	}
+	msg = receive_message_nonblocking(pcb);
+	while (msg != NULL) {
+		if (msg->m_send_pid == PID_CRT) {
+			uart0_put_string((unsigned char *)msg->mtext);
+			k_release_memory_block((void *)msg);
+		}
+		msg = receive_message_nonblocking(pcb); 
+	}
 }
 
 void Timer_i_Proc() {
@@ -184,6 +211,7 @@ void process_init()
 	for ( i = 0; i < TOTAL_PROCS; i++ ) {
 		int j;
 		(gp_pcbs[i])->m_pid = (g_proc_table[i]).m_pid;
+		//printf("pid = %d, start = %d\n", (g_proc_table[i]).m_pid, (g_proc_table[i]).mpf_start_pc);
 		(gp_pcbs[i])->m_state = NEW;
 		(gp_pcbs[i])->m_priority = (g_proc_table[i]).m_priority;
 		
@@ -193,7 +221,10 @@ void process_init()
 		for ( j = 0; j < 6; j++ ) { // R0-R3, R12 are cleared with 0
 			*(--sp) = 0x0;
 		}
-		if (gp_pcbs[i]->m_pid != PID_UART_IPROC) {
+		
+		printf("stack = 0x%x\n", sp);
+		
+		if (!isIProcess(gp_pcbs[i]->m_pid)) {
 			pq_push(ready_queue, gp_pcbs[i]);
 		}
 		
@@ -215,7 +246,7 @@ PCB *scheduler(void)
 	return  ret;
 }
 
-int isSystemProcess(U32 id) {
+int isIProcess(U32 id) {
 	if (id == PID_TIMER_IPROC || id == PID_UART_IPROC) {
 		return 1;
 	}
@@ -278,9 +309,9 @@ int k_release_processor(void)
 {
 	PCB *p_pcb_old = NULL;
 	
-	if (gp_current_process != NULL && gp_current_process->m_priority < pq_peak(ready_queue)->m_priority && gp_current_process->m_state!=BLK) {
+	if (gp_current_process != NULL && gp_current_process->m_priority < pq_peak(ready_queue)->m_priority && gp_current_process->m_state!=BLK && gp_current_process->m_state!=BLK_RCV) {
 	#ifdef DEBUG_0 
-		printf("remaining on process %d\n", gp_current_process->m_pid);
+		//printf("remaining on process %d\n", gp_current_process->m_pid);
 	#endif /* ! DEBUG_0 */
 		return RTX_OK;
 	}

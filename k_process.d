@@ -9,8 +9,10 @@ k_process.o: src\uart_polling.h
 k_process.o: src\uart_def.h
 k_process.o: src\k_process.h
 k_process.o: src\k_rtx.h
+k_process.o: src\k_memory.h
 k_process.o: src\priority_queue.h
 k_process.o: src\linkedList.h
+k_process.o: src\priority_queue.h
 k_process.o: src\timer.h
 k_process.o: src\system_proc.h
 k_process.o: src\real_user_proc.h
