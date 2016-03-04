@@ -6,6 +6,7 @@
 #define RTX_H_
 
 /* ----- Definitations ----- */
+#define K_MSG_ENV
 #define RTX_ERR -1
 #define RTX_OK  0
 #define NULL 0

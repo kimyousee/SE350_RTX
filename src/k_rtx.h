@@ -9,7 +9,7 @@
 #define K_RTX_H_
 
 /*----- Definitations -----*/
-
+#define K_MSG_ENV
 #define RTX_ERR -1
 #define RTX_OK  0
 
@@ -63,7 +63,20 @@ typedef unsigned char U8;
 typedef unsigned int U32;
 
 /* process states, note we only assume three states in this example */
-typedef enum {NEW = 0, RDY, RUN, BLK} PROC_STATE_E;  
+typedef enum {NEW = 0, RDY, RUN, BLK, BLK_RCV} PROC_STATE_E;  
+
+/* message buffer */
+typedef struct msgbuff
+{
+#ifdef K_MSG_ENV
+	void *mp_next;
+	int m_send_pid;
+	int m_recv_pid;
+	int m_kdata[5];
+#endif
+	int mtype;
+	char mtext[1];
+} MSG_BUF;
 
 /*
   PCB data structure definition.
@@ -72,12 +85,14 @@ typedef enum {NEW = 0, RDY, RUN, BLK} PROC_STATE_E;
 */
 typedef struct pcb 
 { 
-	//struct pcb *mp_next;  /* next pcb, not used in this example */  
+	struct pcb *next;  /* next pcb */  
 	U32 *mp_sp;		/* stack pointer of the process */
 	U32 m_pid;		/* process id */
 	U32 m_priority;
 	PROC_STATE_E m_state;   /* state of the process */     
 	void *mem_pointer; /* pointer to the memory after it's released */
+	MSG_BUF *head_msg;
+	MSG_BUF *tail_msg;
 } PCB;
 
 /* initialization table item */
@@ -89,18 +104,6 @@ typedef struct proc_init
 	void (*mpf_start_pc) ();/* entry point of the process */    
 } PROC_INIT;
 
-/* message buffer */
-typedef struct msgbuf
-{
-#ifdef K_MSG_ENV
-	void *mp_next;		/* ptr to next message received*/
-	int m_send_pid;		/* sender pid */
-	int m_recv_pid;		/* receiver pid */
-	int m_kdata[5];		/* extra 20B kernel data place holder */
-#endif
-	int mtype;              /* user defined message type */
-	char mtext[1];          /* body of the message */
-} MSG_BUF;
 
 
 #endif // ! K_RTX_H_

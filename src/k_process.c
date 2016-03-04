@@ -30,7 +30,9 @@
 /* ----- Global Variables ----- */
 PCB **gp_pcbs;                  /* array of pcbs */
 PCB *gp_current_process = NULL; /* always point to the current RUN process */
-PCB *uart_proc;
+PCB *blocked_receive_head = NULL;
+PCB *blocked_receive_tail = NULL;
+
 
 U32 g_switch_flag = 0;          /* whether to continue to run the process before the UART receive interrupt */
                                 /* 1 means to switch to another process, 0 means to continue the current process */
@@ -187,8 +189,6 @@ void process_init()
 		
 		(gp_pcbs[i])->mp_sp = sp;
 	}
-	
-	uart_proc = gp_pcbs[NUM_TEST_PROCS+NUM_SYSTEM_PROCS+1];
 }
 
 /*@brief: scheduler, pick the pid of the next to run process
@@ -231,11 +231,9 @@ int process_switch(PCB *p_pcb_old)
 	if (state == NEW) {
 		if (gp_current_process != p_pcb_old && p_pcb_old->m_state != NEW) {
 			p_pcb_old->mp_sp = (U32 *) __get_MSP();
-			if (p_pcb_old->m_state != BLK) {
+			if (p_pcb_old->m_state != BLK && p_pcb_old->m_state != BLK_RCV) {
 				p_pcb_old->m_state = RDY;
-				if (!isSystemProcess(p_pcb_old->m_pid)) {
-					pq_push(ready_queue, p_pcb_old);
-				}	
+				pq_push(ready_queue, p_pcb_old);
 			}
 		}
 		gp_current_process->m_state = RUN;
@@ -248,11 +246,9 @@ int process_switch(PCB *p_pcb_old)
 	if (gp_current_process != p_pcb_old) {
 		if (state == RDY){
 			p_pcb_old->mp_sp = (U32 *) __get_MSP(); // save the old process's sp
-			if (p_pcb_old->m_state != BLK) {
+			if (p_pcb_old->m_state != BLK && p_pcb_old->m_state != BLK_RCV) {
 				p_pcb_old->m_state = RDY;
-				if (!isSystemProcess(p_pcb_old->m_pid)) {
-					pq_push(ready_queue, p_pcb_old);
-				}	
+				pq_push(ready_queue, p_pcb_old);
 			}
 			gp_current_process->m_state = RUN;
 			__set_MSP((U32) gp_current_process->mp_sp); //switch to the new proc's stack    
@@ -346,4 +342,103 @@ void k_set_process_priority(int pid, int prio){
 	pq_sort(ready_queue);
 	check_priority();
 	
+}
+
+void enqueue_block_receive(PCB *pcb) {
+	if (blocked_receive_head == NULL) {
+		blocked_receive_head = pcb;
+		blocked_receive_tail = pcb;
+		return;
+	}
+	blocked_receive_tail->next = pcb;
+	blocked_receive_tail = blocked_receive_tail->next;
+	blocked_receive_tail->next = NULL;
+}
+
+void dequeue_block_receive(U32 pid) {
+	PCB *n = blocked_receive_head;
+	PCB *p = NULL;
+	if (blocked_receive_head == NULL) {
+		return;
+	}
+	while (n != NULL) {
+		if (n->m_pid == pid) {
+			p->next = n->next;
+			n->next = NULL;
+			return;
+		}
+		p = n;
+		n = n->next;
+	}
+	return;
+}
+
+void enqueue_msg(PCB *p, MSG_BUF *msg) {
+	if (p->head_msg == NULL) {
+		p->head_msg = msg;
+		p->tail_msg = msg;
+		return;
+	}
+	p->tail_msg->mp_next = msg;
+	p->tail_msg = p->tail_msg->mp_next;
+	p->tail_msg->mp_next = NULL;
+}
+
+MSG_BUF* dequeue_msg(PCB *p) {
+	MSG_BUF *n = p->head_msg;
+	if (p->head_msg == NULL) {
+		return NULL;
+	}
+	p->head_msg = p->head_msg->mp_next;
+	return n;
+}
+
+void k_send_message(int receiving_pid, MSG_BUF *msg) {
+	PCB *p;
+	int i;
+	//atomic = TRUE;
+	msg->m_send_pid = gp_current_process->m_pid;
+	msg->m_recv_pid = receiving_pid;
+	
+	p = get_process(receiving_pid, gp_pcbs);
+	if (p == NULL){
+		return;
+	}
+	#ifdef DEBUG_0 
+	printf("process %d sending message(%s) to process %d\n", gp_current_process->m_pid, msg->mtext, p->m_pid);
+	#endif /* ! DEBUG_0 */
+	enqueue_msg(p, msg);
+	if (p->m_state == BLK_RCV) {
+		#ifdef DEBUG_0 
+		printf("process %d unblocked on receive\n", p->m_pid);
+		#endif /* ! DEBUG_0 */
+		dequeue_block_receive(p->m_pid);
+		p->m_state = RDY;
+		pq_push(ready_queue, p);
+	}
+	
+	//atomic = FALSE;
+}
+
+MSG_BUF *receive_message_nonblocking(PCB *p) {
+	MSG_BUF *msg = dequeue_msg(p);
+	return msg;
+}
+
+MSG_BUF *k_receive_message(int *p_pid) {
+	MSG_BUF *msg;
+	#ifdef DEBUG_0 
+	printf("process %d attempting to receive messages\n", gp_current_process->m_pid);
+	#endif /* ! DEBUG_0 */
+	while(gp_current_process->head_msg == NULL) {
+		#ifdef DEBUG_0 
+		printf("process %d blocked on receive\n", gp_current_process->m_pid);
+		#endif /* ! DEBUG_0 */
+		gp_current_process->m_state = BLK_RCV;
+		enqueue_block_receive(gp_current_process);
+		k_release_processor();
+	}
+	msg = dequeue_msg(gp_current_process);
+	
+	return msg;
 }

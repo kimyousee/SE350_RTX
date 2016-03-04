@@ -25,7 +25,7 @@ void set_user_procs() {
   
 	g_user_procs[0].m_pid = (U32)(PID_CLOCK);
 	g_user_procs[0].mpf_start_pc = &wall_clock_proc;
-	g_user_procs[0].m_priority = MEDIUM;
+	g_user_procs[0].m_priority = LOWEST;
 }
 
 

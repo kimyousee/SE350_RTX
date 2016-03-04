@@ -56,11 +56,11 @@ void set_system_procs() {
   
 	g_system_procs[0].m_pid = PID_KCD;
 	g_system_procs[0].mpf_start_pc = &KCD_proc;
-	g_system_procs[0].m_priority   = HIGH;
+	g_system_procs[0].m_priority   = LOWEST;
 	
 	g_system_procs[1].m_pid = PID_CRT;
 	g_system_procs[1].mpf_start_pc = &CRT_proc;
-	g_system_procs[1].m_priority   = LOW;
+	g_system_procs[1].m_priority   = LOWEST;
 }
 
 void KCD_proc(void) {
