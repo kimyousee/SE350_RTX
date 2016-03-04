@@ -52,6 +52,7 @@ typedef unsigned int U32;
 #define KCD_REG 1
 #define CRT_DISPLAY 2
 #define KEYBOARD_INPUT 3
+#define UPDATE_TIME 4
 
 /* process states, note we only assume three states in this example */
 typedef enum {NEW = 0, RDY, RUN, BLK, BLK_RCV} PROC_STATE_E;  

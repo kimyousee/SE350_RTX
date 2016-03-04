@@ -113,13 +113,21 @@ void Timer_i_Proc() {
 	pcb = findPCB(PID_TIMER_IPROC);
 	msg = receive_message_nonblocking(pcb);
 	while (msg != NULL) {
-		node = (Node*)k_nonblocking_request_memory_block();
-		if (node == NULL) {
-			break;
+		switch (msg->mtype) {
+			case UPDATE_TIME:
+				msg->mtext[0] = g_timer_count;
+				k_send_message(msg->m_send_pid, msg);
+				break;
+			default:
+				node = (Node*)k_nonblocking_request_memory_block();
+				if (node == NULL) {
+					break;
+				}
+				node->value = (int)(g_timer_count+(uint32_t)(msg->m_kdata[0]));
+				node->message = (void *)msg;
+				sortPushLinkedList(timeout_queue, node);
+				break;
 		}
-		node->value = (int)(g_timer_count+(uint32_t)(msg->m_kdata[0]));
-		node->message = (void *)msg;
-		sortPushLinkedList(timeout_queue, node);
 		msg = receive_message_nonblocking(pcb);
 	}
 	while (linkedListHasNext(timeout_queue) && timeout_queue->head->value <= g_timer_count){
@@ -127,32 +135,7 @@ void Timer_i_Proc() {
 		int target_pid = envelope->m_recv_pid;
 		k_send_message(target_pid, envelope);
 	}
-	//MSG_BUF* new_envelope = (MSG_BUF*)k_receive_message(NULL);
-	//printf("Timer count: %d\n\r", g_timer_count);
-	/*
-	if (new_envelope != NULL){
-		mem = request_memory_block();
-		n = (Node*)mem;
-		n->message = new_envelope;
-		n->value = g_timer_count + delay;
-		sortPushLinkedList(timeout_queue, n);
-	}
-	if (linkedListHasNext(timeout_queue) && timeout_queue->head->value <= g_timer_count){
-		msgbuf *envelope = (msgbuf*)popLinkedList(timeout_queue)->message;
-		int target_pid = envelope->m_recv_pid;
-		// k_send_message(target_pid, envelope);
-	}
-	*/
 }
-
-// int k_delayed_send(int pid, void *p_msg, int delay) {
-// 	p_msg = (MSG_BUF *)p_msg;
-// 	int mtype = p_msg->mtype;
-// 	char mtext[] = p_msg->mtext;
-// 	p_msg = (Node *)p_msg;
-// 	p_msg->value = delay;
-// 	
-// }
 
 void addProcTable(int i, int id, int stack_size, int priority, void (*pc) ()) {
 	g_proc_table[i].m_pid =id;

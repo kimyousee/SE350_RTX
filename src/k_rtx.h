@@ -48,6 +48,7 @@
 #define KCD_REG 1
 #define CRT_DISPLAY 2
 #define KEYBOARD_INPUT 3
+#define UPDATE_TIME 4
 
 #ifdef DEBUG_0
 #define USR_SZ_STACK 0x200         /* user proc stack size 512B   */

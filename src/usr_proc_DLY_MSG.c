@@ -73,39 +73,39 @@ void proc1(void)
 	char *c;
 	void *mem;
 	
-	while ( 1 ) {
+//	while ( 1 ) {
 		
-		if ( i != 0 && i==15) {
-			struct msgbuf *p_msg_env = (struct msgbuf *) request_memory_block();
-			p_msg_env->mtype = KCD_REG;
-			p_msg_env->mtext[0] = '%';
-			p_msg_env->mtext[1] = 'W';
-			p_msg_env->mtext[2] = '\0';
-			delayed_send(PID_P2, (void *)p_msg_env, 50);
-		}
-		
-		//if (i!=0 && i==15) {
-		//}
-		
-		if ( i != 0 && i%5 == 0 ) {
-			uart0_put_string("\n\r");
-			counter++;
-			if ( counter == 8 ) {
-				//ret_val = set_process_priority(PID_P2, HIGH);
-				break;
-			} else {
-				ret_val = release_processor();
-			}
-#ifdef DEBUG_0
-			printf("proc1: ret_val = %d \n", ret_val);
-#endif /* DEBUG_0 */
-		}
-		
-		uart0_put_char('a' + i%10);
-		i++;
-	}
-	c = "proc1 end of testing\n\r";
-	uart0_put_string(c);
+// 		if ( i != 0 && i==15) {
+// 			struct msgbuf *p_msg_env = (struct msgbuf *) request_memory_block();
+// 			p_msg_env->mtype = KCD_REG;
+// 			p_msg_env->mtext[0] = '%';
+// 			p_msg_env->mtext[1] = 'W';
+// 			p_msg_env->mtext[2] = '\0';
+// 			//delayed_send(PID_P2, (void *)p_msg_env, 50);
+// 		}
+// 		
+// 		//if (i!=0 && i==15) {
+// 		//}
+// 		
+// 		if ( i != 0 && i%5 == 0 ) {
+// 			uart0_put_string("\n\r");
+// 			counter++;
+// 			if ( counter == 8 ) {
+// 				//ret_val = set_process_priority(PID_P2, HIGH);
+// 				break;
+// 			} else {
+// 				ret_val = release_processor();
+// 			}
+// #ifdef DEBUG_0
+// 			printf("proc1: ret_val = %d \n", ret_val);
+// #endif /* DEBUG_0 */
+// 		}
+// 		
+// 		uart0_put_char('a' + i%10);
+// 		i++;
+// 	}
+// 	c = "proc1 end of testing\n\r";
+// 	uart0_put_string(c);
 	while ( 1 ) {
 		release_processor();
 	}
@@ -123,39 +123,39 @@ void proc2(void)
 	void *mem;
 	struct msgbuf * msg;
 	
-	while ( 1) {
-		if ( i!=0 && i==5 ) {
-			msg = receive_message(NULL);
-			#ifdef DEBUG_0
-			printf("proc2 got msg: %s\n", msg->mtext);
-			#endif /* DEBUG_0 */
-		}
-		
-		if ( i!=0 && i==30 ) {
-			msg = receive_message(NULL);
-			#ifdef DEBUG_0
-			printf("proc2 got msg: %s\n", msg->mtext);
-			#endif /* DEBUG_0 */
-		}
-		
-		if ( i != 0 && i%5 == 0 ) {
-			uart0_put_string("\n\r");
-			counter++;
-			if ( counter == 8 ) {
-				//ret_val = set_process_priority(PID_P1, HIGH);
-				break;
-			} else {
-				ret_val = release_processor();
-			}
-#ifdef DEBUG_0
-			printf("proc2: ret_val=%d\n", ret_val);
-#endif /* DEBUG_0 */
-		}
-		uart0_put_char('0' + i%10);
-		i++;
-	}
-	c = "proc2 end of testing\n\r";
-	uart0_put_string(c);
+// 	while ( 1) {
+// 		if ( i!=0 && i==5 ) {
+// 			msg = receive_message(NULL);
+// 			#ifdef DEBUG_0
+// 			printf("proc2 got msg: %s\n", msg->mtext);
+// 			#endif /* DEBUG_0 */
+// 		}
+// 		
+// 		if ( i!=0 && i==30 ) {
+// 			msg = receive_message(NULL);
+// 			#ifdef DEBUG_0
+// 			printf("proc2 got msg: %s\n", msg->mtext);
+// 			#endif /* DEBUG_0 */
+// 		}
+// 		
+// 		if ( i != 0 && i%5 == 0 ) {
+// 			uart0_put_string("\n\r");
+// 			counter++;
+// 			if ( counter == 8 ) {
+// 				//ret_val = set_process_priority(PID_P1, HIGH);
+// 				break;
+// 			} else {
+// 				ret_val = release_processor();
+// 			}
+// #ifdef DEBUG_0
+// 			printf("proc2: ret_val=%d\n", ret_val);
+// #endif /* DEBUG_0 */
+// 		}
+// 		uart0_put_char('0' + i%10);
+// 		i++;
+// 	}
+// 	c = "proc2 end of testing\n\r";
+// 	uart0_put_string(c);
 	while ( 1 ) {
 		release_processor();
 	}
