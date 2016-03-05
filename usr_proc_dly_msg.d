@@ -7,5 +7,3 @@ usr_proc_dly_msg.o: src\uart_polling.h
 usr_proc_dly_msg.o: C:\Software\Keil\ARM\ARMCC\bin\..\include\stdint.h
 usr_proc_dly_msg.o: src\uart_def.h
 usr_proc_dly_msg.o: src\usr_proc.h
-usr_proc_dly_msg.o: src\printf.h
-usr_proc_dly_msg.o: C:\Software\Keil\ARM\ARMCC\bin\..\include\stdarg.h

@@ -51,7 +51,7 @@ PROC_INIT g_system_procs[NUM_SYSTEM_PROCS];
 void set_system_procs() {
 	int i;
 	for( i = 0; i < NUM_SYSTEM_PROCS; i++ ) {
-		g_system_procs[i].m_stack_size=0x100;
+		g_system_procs[i].m_stack_size=0x300;
 	}
   
 	g_system_procs[0].m_pid = PID_KCD;
@@ -73,7 +73,7 @@ void KCD_proc(void) {
 	int current_msg_length = 0;
 	map = (MAP *)mem;
 	map->len = 0;
-	registerKeyword(map, "%W", PID_CLOCK);
+	//registerKeyword(map, "%W", PID_CLOCK);
 	//registerKeyword(map, "abc", 1);
 	//registerKeyword(map, "ab", 2);
 	//registerKeyword(map, "abc", 4);
@@ -100,7 +100,9 @@ void KCD_proc(void) {
 					for (i=0; i<map->len; i++) {
 						if (checkPrefix(map->pairs[i]->key, sending_msg->mtext)) {
 							send_message(map->pairs[i]->id, sending_msg);
-							printf("forwarding to registered process %d\n\r", map->pairs[i]->id);
+							#ifdef DEBUG_0
+							printf("forwarding to registered process %d\n\r", map->pairs[i]->id);3
+							#endif
 						}
 					}
 					

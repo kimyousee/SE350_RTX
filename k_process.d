@@ -18,5 +18,3 @@ k_process.o: src\system_proc.h
 k_process.o: src\real_user_proc.h
 k_process.o: src\k_message.h
 k_process.o: src\priority_queue.h
-k_process.o: src\printf.h
-k_process.o: C:\Software\Keil\ARM\ARMCC\bin\..\include\stdarg.h

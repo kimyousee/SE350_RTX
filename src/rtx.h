@@ -44,7 +44,7 @@
 typedef unsigned int U32;
 
 /* Memory Constants */
-#define MEMORY_BLOCKS 2
+#define MEMORY_BLOCKS 30
 #define MEMORY_BLOCK_SIZE 128
 
 /* Message Types */
@@ -56,6 +56,12 @@ typedef unsigned int U32;
 
 /* process states, note we only assume three states in this example */
 typedef enum {NEW = 0, RDY, RUN, BLK, BLK_RCV} PROC_STATE_E;  
+
+#ifdef DEBUG_0
+#define ONE_SECOND 10
+#else
+#define ONE_SECOND 100
+#endif
 
 /* message buffer */
 typedef struct msgbuf

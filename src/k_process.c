@@ -54,7 +54,9 @@ LinkedList *timeout_queue;
 void blocked_receive_print(PCB *head) {
 	PCB *temp = head;
 	while (temp != NULL) {
+		#ifdef DEBUG_0
 		printf("Process %d at memory 0x%x\n\r", temp->m_pid, temp);
+		#endif
 		temp = temp->next;
 	}
 }
@@ -93,7 +95,7 @@ void UART_i_Proc() {
 		msg->mtype = KEYBOARD_INPUT;
 		msg->mtext[0] = g_char_in;
 		g_char_in = 0;
-		send_message(PID_KCD, PID_UART_IPROC, msg);
+		m_send_message(PID_KCD, PID_UART_IPROC, msg);
 	}
 	msg = receive_message_nonblocking(pcb);
 	while (msg != NULL) {
@@ -113,12 +115,12 @@ void Timer_i_Proc() {
 	pcb = findPCB(PID_TIMER_IPROC);
 	msg = receive_message_nonblocking(pcb);
 	while (msg != NULL) {
-		switch (msg->mtype) {
-			case UPDATE_TIME:
-				msg->mtext[0] = g_timer_count;
-				k_send_message(msg->m_send_pid, msg);
-				break;
-			default:
+		//switch (msg->mtype) {
+			//case UPDATE_TIME:
+				//msg->mtext[0] = g_timer_count;
+			//	k_send_message(msg->m_send_pid, msg);
+				//break;
+			//default:
 				node = (Node*)k_nonblocking_request_memory_block();
 				if (node == NULL) {
 					break;
@@ -127,7 +129,7 @@ void Timer_i_Proc() {
 				node->message = (void *)msg;
 				sortPushLinkedList(timeout_queue, node);
 				break;
-		}
+		//}
 		msg = receive_message_nonblocking(pcb);
 	}
 	while (linkedListHasNext(timeout_queue) && timeout_queue->head->value <= g_timer_count){
@@ -179,15 +181,15 @@ void process_init()
 	}
 	
 	// NULL process
-	addProcTable(j, 0, 0x100, LOWEST+1, &nullProc);
+	addProcTable(j, 0, 0x300, LOWEST+1, &nullProc);
 	j++;
 	
 	// UART I Process
-	addProcTable(j, PID_UART_IPROC, 0x100, LOWEST+1, &UART_i_Proc);
+	addProcTable(j, PID_UART_IPROC, 0x300, LOWEST+1, &UART_i_Proc);
 	j++;
 	
 	// Timer I Process
-	addProcTable(j, PID_TIMER_IPROC, 0x100, LOWEST+1, &Timer_i_Proc);
+	addProcTable(j, PID_TIMER_IPROC, 0x300, LOWEST+1, &Timer_i_Proc);
   j++;
 	
 	/* initilize exception stack frame (i.e. initial context) for each process */
@@ -204,8 +206,9 @@ void process_init()
 		for ( j = 0; j < 6; j++ ) { // R0-R3, R12 are cleared with 0
 			*(--sp) = 0x0;
 		}
-		
+		#ifdef DEBUG_0
 		printf("stack = 0x%x\n", sp);
+		#endif
 		
 		if (!isIProcess(gp_pcbs[i]->m_pid)) {
 			pq_push(ready_queue, gp_pcbs[i]);

@@ -183,6 +183,7 @@ void c_UART0_IRQHandler(void)
 	LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
 	g_char_in = pUart->RBR;
 	
+	#ifdef DEBUG_0
 	switch(g_char_in) {
 		case '/':
 			printf("Printing ready queue: \n\r");
@@ -199,6 +200,7 @@ void c_UART0_IRQHandler(void)
 		default:
 			break;
 	}
+	#endif
 	
 	uart1_put_char(g_char_in);
 	UART_i_Proc();

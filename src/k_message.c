@@ -65,12 +65,12 @@ MSG_BUF* dequeue_msg(PCB *p) {
 }
 
 void k_send_message(int receiving_pid, MSG_BUF *msg) {
-	__disable_irq();
-	send_message(receiving_pid, gp_current_process->m_pid, msg);
-	__enable_irq();
+	//__disable_irq();
+	m_send_message(receiving_pid, gp_current_process->m_pid, msg);
+	//__enable_irq();
 }
 
-void send_message(int receiving_pid, int sending_pid, MSG_BUF *msg) {
+void m_send_message(int receiving_pid, int sending_pid, MSG_BUF *msg) {
 	PCB *p;
 	int i;
 	//atomic = TRUE;

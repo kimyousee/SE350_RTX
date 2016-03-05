@@ -21,7 +21,7 @@ PROC_INIT g_user_procs[NUM_USER_PROCS];
 void set_user_procs() {
 	int i;
 	for( i = 0; i < NUM_USER_PROCS; i++ ) {
-		g_user_procs[i].m_stack_size=0x100;
+		g_user_procs[i].m_stack_size=0x300;
 	}
   
 	g_user_procs[0].m_pid = (U32)PID_CLOCK;
@@ -62,7 +62,7 @@ void wall_clock_display(int time) {
 	MSG_BUF *msg;
 	msg = (MSG_BUF *) request_memory_block();
 	msg->mtype = UPDATE_TIME;
-	delayed_send(PID_TIMER_IPROC, msg, 10);
+	delayed_send(PID_CLOCK, msg, ONE_SECOND);
 	
 	msg = (MSG_BUF *) request_memory_block();
 	msg->mtype = CRT_DISPLAY;
@@ -90,7 +90,7 @@ void wall_clock_proc() {
 			p_msg_env->mtext[0] = '%';
 			p_msg_env->mtext[1] = 'W';
 			p_msg_env->mtext[2] = '\0';
-			//send_message(PID_KCD, (void *)p_msg_env);
+			send_message(PID_KCD, (void *)p_msg_env);
 		}
 		msg = receive_message((int*)PID_CLOCK);
 		switch (msg->mtype) {
