@@ -6,3 +6,5 @@ timer.o: C:\Software\Keil\ARM\CMSIS\Include\core_cmInstr.h
 timer.o: C:\Software\Keil\ARM\CMSIS\Include\core_cmFunc.h
 timer.o: C:\Software\Keil\ARM\Inc\NXP\LPC17xx\system_LPC17xx.h
 timer.o: src\timer.h
+timer.o: src\printf.h
+timer.o: C:\Software\Keil\ARM\ARMCC\bin\..\include\stdarg.h

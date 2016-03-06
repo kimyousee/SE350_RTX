@@ -73,12 +73,6 @@ void KCD_proc(void) {
 	int current_msg_length = 0;
 	map = (MAP *)mem;
 	map->len = 0;
-	//registerKeyword(map, "%W", PID_CLOCK);
-	//registerKeyword(map, "abc", 1);
-	//registerKeyword(map, "ab", 2);
-	//registerKeyword(map, "abc", 4);
-	//registerKeyword(map, "c", 3);
-	//array -> {keyword, proc};
 	mem = request_memory_block();
 	sending_msg = (MSG_BUF *)mem;
 	while(1) {
@@ -101,7 +95,7 @@ void KCD_proc(void) {
 						if (checkPrefix(map->pairs[i]->key, sending_msg->mtext)) {
 							send_message(map->pairs[i]->id, sending_msg);
 							#ifdef DEBUG_0
-							printf("forwarding to registered process %d\n\r", map->pairs[i]->id);3
+							printf("forwarding to registered process %d\n\r", map->pairs[i]->id);
 							#endif
 						}
 					}
@@ -115,41 +109,6 @@ void KCD_proc(void) {
 				break;
 			default: break;
 		}
-		
-		// Check for keywords
-		
-		//(void *)
-		
-		//printf("KCD Proc\n");
-		//MSG_BUF* msg = (MSG_BUF*)k_receive_message(NULL);
-		//switch(msg->mtype){
-			//case KCD_REG:
-				//keyword = msg->body;
-				//proc = msg->sender;
-				//array.add({keyword, proc});
-// 				if (msg->mtext[0] == '%'){
-// 					if (msg->mtext[1] == 'W'){
-// 						k_send_message(PID_CLOCK, (void*)msg);
-// 					}
-// 				}
-				//break;
-			//case CRT_DISPLAY:
-		//keyword = "abcd";
-		//for (i=0; i<map->len; i++) {
-			//if (checkPrefix(map->pairs[i]->key, keyword)) {
-				//forward message
-				//printf("%d\n\r", map->pairs[i]->id);
-			//}
-		//}
-		//forward to CRT
-				//k_send_message(PID_CRT, (void *)msg);
-				//break;
-			//default: break;
-		//}
-		
-		
-		
-		//release_processor();
 	}
 }
 
@@ -163,8 +122,6 @@ void CRT_proc(void) {
 				send_message(PID_UART_IPROC, msg);
 				break;
 			default: break;
-		}
-		
-		//pcb = findPCB(PID_CRT);
+		}		
 	}
 }

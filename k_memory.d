@@ -4,3 +4,5 @@ k_memory.o: src\k_rtx.h
 k_memory.o: src\priority_queue.h
 k_memory.o: src\k_process.h
 k_memory.o: src\linkedList.h
+k_memory.o: src\printf.h
+k_memory.o: C:\Software\Keil\ARM\ARMCC\bin\..\include\stdarg.h

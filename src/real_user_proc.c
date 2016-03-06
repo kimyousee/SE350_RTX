@@ -48,6 +48,9 @@ void timeToChar(int time, char* t) {
 	t[5] = ':';
 	t[6] = s1+'0';
 	t[7] = s2+'0';
+	t[8] = '\n';
+	t[9] = '\r';
+	t[10] = '\0';
 }
 
 int charToTime(char *c, int s) {
@@ -68,9 +71,7 @@ void wall_clock_display(int time) {
 	msg->mtype = CRT_DISPLAY;
 	timeToChar(time, msg->mtext);
 	
-	uart0_put_string(msg->mtext);
-	uart0_put_string("\n\r");
-	//send_message(PID_CRT, msg);
+	send_message(PID_CRT, msg);
 }
 
 void wall_clock_proc() {
@@ -107,9 +108,10 @@ void wall_clock_proc() {
 						break;
 					case 'S':
 						time = charToTime(msg->mtext, 4);
-						start = 1;
-					
-						wall_clock_display(time);
+						if (start == 0) {
+							start = 1;
+							wall_clock_display(time);
+						}
 						break;
 					case 'T':
 						start = 0;

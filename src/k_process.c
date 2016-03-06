@@ -90,12 +90,14 @@ void UART_i_Proc() {
 	pcb = findPCB(PID_UART_IPROC);
 	if (g_char_in != 0) {
 		node = (Node*)k_nonblocking_request_memory_block();
-		msg = (MSG_BUF *)node;
-		msg->m_send_pid = PID_UART_IPROC;
-		msg->mtype = KEYBOARD_INPUT;
-		msg->mtext[0] = g_char_in;
-		g_char_in = 0;
-		m_send_message(PID_KCD, PID_UART_IPROC, msg);
+		if (node != NULL) {
+			msg = (MSG_BUF *)node;
+			msg->m_send_pid = PID_UART_IPROC;
+			msg->mtype = KEYBOARD_INPUT;
+			msg->mtext[0] = g_char_in;
+			g_char_in = 0;
+			m_send_message(PID_KCD, PID_UART_IPROC, msg);
+		}
 	}
 	msg = receive_message_nonblocking(pcb);
 	while (msg != NULL) {
@@ -115,26 +117,20 @@ void Timer_i_Proc() {
 	pcb = findPCB(PID_TIMER_IPROC);
 	msg = receive_message_nonblocking(pcb);
 	while (msg != NULL) {
-		//switch (msg->mtype) {
-			//case UPDATE_TIME:
-				//msg->mtext[0] = g_timer_count;
-			//	k_send_message(msg->m_send_pid, msg);
-				//break;
-			//default:
-				node = (Node*)k_nonblocking_request_memory_block();
-				if (node == NULL) {
-					break;
-				}
-				node->value = (int)(g_timer_count+(uint32_t)(msg->m_kdata[0]));
-				node->message = (void *)msg;
-				sortPushLinkedList(timeout_queue, node);
-				break;
-		//}
+		node = (Node*)k_nonblocking_request_memory_block();
+		if (node == NULL) {
+			break;
+		}
+		node->value = (int)(g_timer_count+(uint32_t)(msg->m_kdata[0]));
+		node->message = (void *)msg;
+		sortPushLinkedList(timeout_queue, node);
 		msg = receive_message_nonblocking(pcb);
 	}
 	while (linkedListHasNext(timeout_queue) && timeout_queue->head->value <= g_timer_count){
-		MSG_BUF *envelope = (MSG_BUF*)(popLinkedList(timeout_queue)->message);
+		Node *node = (Node *)popLinkedList(timeout_queue);
+		MSG_BUF *envelope = (MSG_BUF*)(node->message);
 		int target_pid = envelope->m_recv_pid;
+		k_release_memory_block(node);
 		k_send_message(target_pid, envelope);
 	}
 }

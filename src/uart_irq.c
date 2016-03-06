@@ -179,8 +179,9 @@ __asm void UART0_IRQHandler(void)
  */
 void c_UART0_IRQHandler(void)
 {
-	uint8_t IIR_IntId;	    // Interrupt ID from IIR 		 
-	LPC_UART_TypeDef *pUart = (LPC_UART_TypeDef *)LPC_UART0;
+	LPC_UART_TypeDef *pUart;
+	__disable_irq();
+	pUart = (LPC_UART_TypeDef *)LPC_UART0;
 	g_char_in = pUart->RBR;
 	
 	#ifdef DEBUG_0
@@ -204,6 +205,7 @@ void c_UART0_IRQHandler(void)
 	
 	uart1_put_char(g_char_in);
 	UART_i_Proc();
+	__enable_irq();
 	k_release_processor();
 	return;
 }
