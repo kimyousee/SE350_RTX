@@ -160,11 +160,12 @@ void *k_nonblocking_request_memory_block(void) {
 	Node *free_mem;
 	__disable_irq();
 	if (!linkedListHasNext(mem_blks)) {
+		__enable_irq();
 		return NULL;
 	}
 	free_mem = popLinkedList(mem_blks);
 	//printf("%x\n", (void *) (free_mem));
-	//__enable_irq();
+
 	#ifdef DEBUG_0 
 	printf("k_request_memory_block: return memory 0x%x\n", free_mem);
 	#endif /* ! DEBUG_0 */
@@ -187,7 +188,7 @@ void *k_request_memory_block(void) {
 	while(!linkedListHasNext(mem_blks)){
 		pq_push(blocked_memory_q, gp_current_process);
 		gp_current_process->m_state = BLK;
-		//__enable_irq();
+		__enable_irq();
 		#ifdef DEBUG_0 
 			printf("k_request_memory_block: blocked process %d\n", gp_current_process->m_pid);
 		#endif /* ! DEBUG_0 */

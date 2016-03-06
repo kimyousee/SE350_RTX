@@ -49,7 +49,7 @@
 #define PID_UART_IPROC   15
 
 /* Memory Constants */
-#define MEMORY_BLOCKS 5
+#define MEMORY_BLOCKS 30
 #define MEMORY_BLOCK_SIZE 128
 
 /* Message Types */
@@ -69,11 +69,11 @@ typedef enum {NEW = 0, RDY, RUN, BLK, BLK_RCV} PROC_STATE_E;
 #endif
 
 #ifdef DEBUG_0
-#define USR_SZ_STACK 0x300
-#define SYS_SZ_STACK 0x200
+#define USR_SZ_STACK 0x500
+#define SYS_SZ_STACK 0x500
 #else
-#define USR_SZ_STACK 0x300
-#define SYS_SZ_STACK 0x200
+#define USR_SZ_STACK 0x500
+#define SYS_SZ_STACK 0x500
 #endif /* DEBUG_0 */
 
 

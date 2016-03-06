@@ -293,7 +293,7 @@ int k_release_processor(void)
 	
 	if (gp_current_process != NULL && gp_current_process->m_priority < pq_peak(ready_queue)->m_priority && gp_current_process->m_state!=BLK && gp_current_process->m_state!=BLK_RCV) {
 	#ifdef DEBUG_0 
-		//printf("remaining on process %d\n", gp_current_process->m_pid);
+		printf("remaining on process %d\n", gp_current_process->m_pid);
 	#endif /* ! DEBUG_0 */
 		return RTX_OK;
 	}
