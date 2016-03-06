@@ -2,3 +2,4 @@
 context_switch*[^uvproj]
 *.crf
 *.__i
+*.d

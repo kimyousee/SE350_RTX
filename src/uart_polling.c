@@ -124,7 +124,7 @@ int uart_put_string(int n_uart, unsigned char *s)
   }
   return 0;
 }
-
+	
 /**
  * @brief call back function for printf
  * NOTE: first paramter p is not used for now. UART1 used.
