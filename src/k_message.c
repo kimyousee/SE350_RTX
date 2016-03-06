@@ -65,22 +65,22 @@ MSG_BUF* dequeue_msg(PCB *p) {
 }
 
 void k_send_message(int receiving_pid, MSG_BUF *msg) {
-	//__disable_irq();
+	__disable_irq();
 	m_send_message(receiving_pid, gp_current_process->m_pid, msg);
-	//__enable_irq();
+	__enable_irq();
 }
 
 void m_send_message(int receiving_pid, int sending_pid, MSG_BUF *msg) {
 	PCB *p;
 	int i;
-	//atomic = TRUE;
-	//if (msg->m_send_pid == 0) {
+	__disable_irq();
+	
 	msg->m_send_pid = sending_pid;
-	//}
 	msg->m_recv_pid = receiving_pid;
 	
 	p = get_process(receiving_pid, gp_pcbs);
 	if (p == NULL){
+		__enable_irq();
 		return;
 	}
 	#ifdef DEBUG_0 
@@ -97,15 +97,18 @@ void m_send_message(int receiving_pid, int sending_pid, MSG_BUF *msg) {
 			dequeue_block_receive(p->m_pid);
 			p->m_state = RDY;
 			pq_push(ready_queue, p);
+			__enable_irq();
 			check_priority();
 		}
 	}
-	
-	//atomic = FALSE;
+	__enable_irq();
 }
 
 void *receive_message_nonblocking(PCB *p) {
-	MSG_BUF *msg = dequeue_msg(p);
+	MSG_BUF *msg;
+	__disable_irq();
+	msg = dequeue_msg(p);
+	__enable_irq();
 	return (void *)msg;
 }
 
@@ -114,22 +117,26 @@ void *k_receive_message(int *p_pid) {
 	#ifdef DEBUG_0 
 	printf("process %d attempting to receive messages\n", gp_current_process->m_pid);
 	#endif /* ! DEBUG_0 */
+	__disable_irq();
 	while(gp_current_process->head_msg == NULL) {
 		#ifdef DEBUG_0 
 		printf("process %d blocked on receive\n", gp_current_process->m_pid);
 		#endif /* ! DEBUG_0 */
 		gp_current_process->m_state = BLK_RCV;
 		enqueue_block_receive(gp_current_process);
+		__enable_irq();
 		k_release_processor();
+		__disable_irq();
 	}
 	msg = dequeue_msg(gp_current_process);
+	__enable_irq();
 	return (void *)msg;
 }
 
 void k_delayed_send(int pid, void *p_msg, int delay) {
 	PCB *p;
 	MSG_BUF *msg = (MSG_BUF*) p_msg;
-	
+	__disable_irq();
 	msg->m_send_pid = gp_current_process->m_pid;
 	msg->m_recv_pid = pid;
 	msg->m_kdata[0] = (int)delay;
@@ -143,4 +150,5 @@ void k_delayed_send(int pid, void *p_msg, int delay) {
 	printf("process %d sending message(%s) to process %d\n", gp_current_process->m_pid, msg->mtext, p->m_pid);
 	#endif /* ! DEBUG_0 */
 	enqueue_msg(p, msg);
+	__enable_irq();
 }

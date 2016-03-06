@@ -47,11 +47,6 @@
 /* initialization table item */
 PROC_INIT g_test_procs[NUM_TEST_PROCS];
 
-//char *result;
-//char *expected = "abcde\n\r01234\nfghij\n\r56789\n\r01234\n\r56789\n\rproc1 end of testing\n\rproc2 end of testing\n\r";
-//int counter = 0;
-//int testResult = 1;
-
 void set_test_procs() {
 	int i;
 	for( i = 0; i < NUM_TEST_PROCS; i++ ) {
@@ -79,16 +74,6 @@ void set_test_procs() {
 
 }
 
-// void check_test_procs(char *c, int length) {
-// 	int i;
-// 	for (i=0; i<length; i++) {
-// 		if (expected[counter] != c[i]) {
-// 			testResult = 0;
-// 		}
-// 		counter++;
-// 	}
-// }
-
 /**
  * @brief: a process that prints 2x5 lowercase letters
  */
@@ -115,13 +100,10 @@ void proc1(void)
 #endif /* DEBUG_0 */
 		}
 		uart0_put_char('a' + i%10);
-		//check_test_procs((char*)('a'+i%10), 1);
-		//result = strcat(result, (char *)('a'+i%10));
 		i++;
 	}
 	c = "proc1 end of testing\n\r";
 	uart0_put_string(c);
-	//check_test_procs(c, strlen(c));
 	while ( 1 ) {
 		release_processor();
 	}

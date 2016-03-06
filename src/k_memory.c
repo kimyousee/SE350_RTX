@@ -21,6 +21,7 @@ U32 *end_block;  //points to end of the linked list
 
 LinkedList *mem_blks;
 PQ *blocked_memory_q;
+int c = 0;
 //PriorityQueue blocked_resource_q;
 
 /**
@@ -133,23 +134,6 @@ void memory_init(void)
 	//printf("pend = 0x%x \n", p_end);
 }
 
-//proc1() {
-//	(void *) mem = request_mem_block();
-//	mem = (MSG_BUF *)mem;
-//	mem->type = ...
-//	send_mesage(id, (void*) mem);
-//}
-// void delaysendmessage(int id, void *msg, int delay) {
-// 	msg = (MSG_BUF *)msg;
-// 	int mtype = msg->mtype;
-// 	char mtext[1] = msg->mtext;
-// 	msg = (Node *)msg;
-// 	MSG_BUF *b = (MSG_BUF *)msg->message;
-// 	b->mtype = mtype;
-// 	b->mtext = mtext;
-// 	b->m_send_pid = id;
-// 	msg->value = delay;
-// }
 /**
  * @brief: allocate stack for a process, align to 8 bytes boundary
  * @param: size, stack size in bytes
@@ -174,6 +158,7 @@ U32 *alloc_stack(U32 size_b)
 
 void *k_nonblocking_request_memory_block(void) {
 	Node *free_mem;
+	__disable_irq();
 	if (!linkedListHasNext(mem_blks)) {
 		return NULL;
 	}
@@ -183,12 +168,17 @@ void *k_nonblocking_request_memory_block(void) {
 	#ifdef DEBUG_0 
 	printf("k_request_memory_block: return memory 0x%x\n", free_mem);
 	#endif /* ! DEBUG_0 */
+	c ++;
+	#ifdef DEBUG_0  
+	printf("********Process %d is requesting memory. Count: %d\n\r", gp_current_process->m_pid, c);
+	#endif
+	__enable_irq();
 	return (void *) (free_mem);
 }
 
 void *k_request_memory_block(void) {
 	Node *free_mem;
-	//__disable_irq();
+	__disable_irq();
 	
 #ifdef DEBUG_0 
 	printf("k_request_memory_block: entering...\n");
@@ -201,7 +191,9 @@ void *k_request_memory_block(void) {
 		#ifdef DEBUG_0 
 			printf("k_request_memory_block: blocked process %d\n", gp_current_process->m_pid);
 		#endif /* ! DEBUG_0 */
+		__enable_irq();
 		k_release_processor();
+		__disable_irq();
 		
 		if (gp_current_process->mem_pointer != NULL) {
 			free_mem = (Node*)gp_current_process->mem_pointer;
@@ -210,19 +202,20 @@ void *k_request_memory_block(void) {
 		}
 	}
 	
-	
-	
 	free_mem = popLinkedList(mem_blks);
-	//printf("%x\n", (void *) (free_mem));
-	//__enable_irq();
 	#ifdef DEBUG_0 
 	printf("k_request_memory_block: return memory 0x%x\n", free_mem);
+	#endif
+	c ++;
+	#ifdef DEBUG_0  
+	printf("********Process %d is requesting memory. Count: %d\n\r", gp_current_process->m_pid, c);
 	#endif /* ! DEBUG_0 */
+	__enable_irq();
 	return (void *) (free_mem);
 }
 
 int k_release_memory_block(void *p_mem_blk) {
-	//__disable_irq();
+	__disable_irq();
 #ifdef DEBUG_0 
 	printf("k_release_memory_block: releasing block @ 0x%x\n", p_mem_blk);
 #endif /* ! DEBUG_0 */
@@ -239,11 +232,15 @@ int k_release_memory_block(void *p_mem_blk) {
 		process->m_state = RDY;
 		pq_push(ready_queue, process);
 		process->mem_pointer = p_mem_blk;
-		//pushLinkedList(mem_blks, (Node *)(p_mem_blk));
+		__enable_irq();
 		check_priority();
 		return RTX_OK;
 	}
 	pushLinkedList(mem_blks, (Node *)(p_mem_blk));
-	//__enable_irq();
+	c --;
+	#ifdef DEBUG_0  
+	printf("********Process %d is releasing memory. Count: %d\n\r", gp_current_process->m_pid, c);
+	#endif
+	__enable_irq();
 	return RTX_OK;
 }
