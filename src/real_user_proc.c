@@ -7,7 +7,6 @@
  */
 
 #include "rtx.h"
-#include "uart_polling.h"
 #include "real_user_proc.h"
 #include <stdlib.h>
 
@@ -21,7 +20,7 @@ PROC_INIT g_user_procs[NUM_USER_PROCS];
 void set_user_procs() {
 	int i;
 	for( i = 0; i < NUM_USER_PROCS; i++ ) {
-		g_user_procs[i].m_stack_size=0x300;
+		g_user_procs[i].m_stack_size=USR_SZ_STACK;
 	}
   
 	g_user_procs[0].m_pid = (U32)PID_CLOCK;

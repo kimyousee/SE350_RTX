@@ -25,7 +25,7 @@ extern PQ *ready_queue;
 extern PQ *blocked_memory_q;
 extern PCB *blocked_receive_head;
 
-extern int k_release_processor(void);
+//extern int check_priority(void);
 extern void UART_i_Proc(void);
 extern void blocked_receive_print(PCB*);
 /**
@@ -206,6 +206,6 @@ void c_UART0_IRQHandler(void)
 	uart1_put_char(g_char_in);
 	UART_i_Proc();
 	__enable_irq();
-	k_release_processor();
+	check_priority();
 	return;
 }

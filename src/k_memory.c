@@ -196,8 +196,9 @@ void *k_request_memory_block(void) {
 		__disable_irq();
 		
 		if (gp_current_process->mem_pointer != NULL) {
-			free_mem = (Node*)gp_current_process->mem_pointer;
+			free_mem = (void*)gp_current_process->mem_pointer;
 			gp_current_process->mem_pointer = NULL;
+			__enable_irq();
 			return free_mem;
 		}
 	}
@@ -232,6 +233,7 @@ int k_release_memory_block(void *p_mem_blk) {
 		process->m_state = RDY;
 		pq_push(ready_queue, process);
 		process->mem_pointer = p_mem_blk;
+		//pushLinkedList(mem_blks, (Node *)(p_mem_blk));
 		__enable_irq();
 		check_priority();
 		return RTX_OK;

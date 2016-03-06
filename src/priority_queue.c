@@ -50,7 +50,7 @@ PCB *pq_pop (PQ *pq) {
 	ret = pq->p_queue[0];
 	pq->len--;
 	
-	for (i = 0; i < pq->len+1; i++){
+	for (i = 0; i < pq->len; i++){
 		pq->p_queue[i] = pq->p_queue[i+1];
 	}
 	 pq->p_queue[pq->len] = NULL;

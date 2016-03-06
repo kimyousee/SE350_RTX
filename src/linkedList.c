@@ -13,8 +13,13 @@ Node* popLinkedList(LinkedList *l) {
 	if (l->head == NULL) {
 		return NULL;
 	}
-	
-	l->head = l->head->next;
+	if (l->head == l->tail) {
+		l->head = NULL;
+		l->tail = NULL;
+	} else {
+		l->head = l->head->next;
+	}
+	n->next = NULL;
 	return n;
 }
 

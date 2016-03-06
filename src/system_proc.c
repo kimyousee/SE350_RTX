@@ -1,6 +1,5 @@
 #include "stdlib.h"
 #include "rtx.h"
-#include "uart_polling.h"
 #include "system_proc.h"
 #include "string.h"
 
@@ -51,7 +50,7 @@ PROC_INIT g_system_procs[NUM_SYSTEM_PROCS];
 void set_system_procs() {
 	int i;
 	for( i = 0; i < NUM_SYSTEM_PROCS; i++ ) {
-		g_system_procs[i].m_stack_size=0x300;
+		g_system_procs[i].m_stack_size=SYS_SZ_STACK;
 	}
   
 	g_system_procs[0].m_pid = PID_KCD;

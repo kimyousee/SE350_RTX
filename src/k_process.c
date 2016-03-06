@@ -177,15 +177,15 @@ void process_init()
 	}
 	
 	// NULL process
-	addProcTable(j, 0, 0x300, LOWEST+1, &nullProc);
+	addProcTable(j, 0, SYS_SZ_STACK, LOWEST+1, &nullProc);
 	j++;
 	
 	// UART I Process
-	addProcTable(j, PID_UART_IPROC, 0x300, LOWEST+1, &UART_i_Proc);
+	addProcTable(j, PID_UART_IPROC, SYS_SZ_STACK, LOWEST+1, &UART_i_Proc);
 	j++;
 	
 	// Timer I Process
-	addProcTable(j, PID_TIMER_IPROC, 0x300, LOWEST+1, &Timer_i_Proc);
+	addProcTable(j, PID_TIMER_IPROC, SYS_SZ_STACK, LOWEST+1, &Timer_i_Proc);
   j++;
 	
 	/* initilize exception stack frame (i.e. initial context) for each process */

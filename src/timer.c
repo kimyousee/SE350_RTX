@@ -14,7 +14,7 @@
 
 #define BIT(X) (1<<X)
 extern void Timer_i_Proc(void);
-extern void k_release_processor(void);
+extern void check_priority(void);
 volatile uint32_t g_timer_count = 0; // increment every 1 ms
 
 /**
@@ -123,6 +123,6 @@ void c_TIMER0_IRQHandler(void)
 	//printf("Time: %d\n\r", g_timer_count);
 	Timer_i_Proc();
 	__enable_irq();
-	k_release_processor();
+	check_priority();
 }
 
