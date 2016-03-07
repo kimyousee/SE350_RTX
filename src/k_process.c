@@ -15,7 +15,6 @@
 
 #include <LPC17xx.h>
 #include <system_LPC17xx.h>
-#include "uart_polling.h"
 #include "k_process.h"
 #include "k_memory.h"
 #include "priority_queue.h"
@@ -24,6 +23,7 @@
 #include "system_proc.h"
 #include "real_user_proc.h"
 #include "k_message.h"
+#include "uart.h"
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -102,7 +102,7 @@ void UART_i_Proc() {
 	msg = receive_message_nonblocking(pcb);
 	while (msg != NULL) {
 		if (msg->m_send_pid == PID_CRT) {
-			uart0_put_string((unsigned char *)msg->mtext);
+			uart_display_string((unsigned char *)msg->mtext);
 			k_release_memory_block((void *)msg);
 		}
 		msg = receive_message_nonblocking(pcb); 

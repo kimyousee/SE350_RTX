@@ -7,8 +7,8 @@
 
 #include <LPC17xx.h>
 #include "uart.h"
-#include "uart_polling.h"
 #include "priority_queue.h"
+#include "uart_polling.h"
 #ifdef DEBUG_0
 #include "printf.h"
 #endif
@@ -160,6 +160,32 @@ int uart_irq_init(int n_uart) {
 }
 
 /**
+ * @brief: write a char c to the n_uart
+ */
+  
+int uart_display_char(unsigned char c)
+{
+  LPC_UART_TypeDef *pUart;
+
+  pUart = (LPC_UART_TypeDef *)LPC_UART0;
+
+  /* polling LSR THRE bit to wait it is empty */
+  while (!(pUart->LSR & LSR_THRE)); 
+  return (pUart->THR = c);  /* write c to the THR */
+}
+
+/**
+ * @brief write a string to UART
+ */
+int uart_display_string(unsigned char *s)
+{
+  while (*s !=0) {              /* loop through each char in the string */
+    uart_display_char(*s++);/* print the char, then ptr increments  */
+  }
+  return 0;
+}
+
+/**
  * @brief: use CMSIS ISR for UART0 IRQ Handler
  * NOTE: This example shows how to save/restore all registers rather than just
  *       those backed up by the exception stack frame. We add extra
@@ -192,7 +218,7 @@ void c_UART0_IRQHandler(void)
 			break;
 		case '*':
 			printf("Printing blocked memory queue: \n\r");
-			pq_print(blocked_memory_q);
+			pq_print(blocked_memory_q);	
 			break;
 		case '-':
 			printf("Printing blocked messaging queue: \n\r");

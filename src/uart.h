@@ -60,5 +60,6 @@
      
 /* initialize the n_uart to use interrupt */
 int uart_irq_init(int n_uart);		
+int uart_display_string(unsigned char *s);
 
 #endif /* ! UART_IRQ_H_ */
