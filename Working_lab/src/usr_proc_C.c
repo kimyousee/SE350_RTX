@@ -76,7 +76,7 @@ void proc1(void)
 	while ( 1 ) {
 		
 		if ( i != 0 && i==5) {
-			for (j=0; j<MEMORY_BLOCKS; j++) {
+			for (j=0; j<MEMORY_BLOCKS+1; j++) {
 				mem = request_memory_block();
 			}
 		}
@@ -118,11 +118,11 @@ void proc2(void)
 	int ret_val = 20;
 	int counter = 0;
 	char* c;
-	void *mem;
+	MSG_BUF *mem;
 	
 	while ( 1) {
 		if ( i!=0 && i==10 ) {
-			mem = request_memory_block();
+			mem = (MSG_BUF *) receive_message((int *)PID_P2);
 		}
 		if ( i != 0 && i%5 == 0 ) {
 			uart0_put_string("\n\r");
