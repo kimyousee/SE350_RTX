@@ -246,7 +246,7 @@ int process_switch(PCB *p_pcb_old)
 {
 	PROC_STATE_E state;
 	#ifdef DEBUG_0 
-	printf("switching from process %d to process %d\n\r", p_pcb_old->m_pid, gp_current_process->m_pid);
+		//printf("switching from process %d to process %d\n\r", p_pcb_old->m_pid, gp_current_process->m_pid);
 	#endif /* ! DEBUG_0 */
 	state = gp_current_process->m_state;
 

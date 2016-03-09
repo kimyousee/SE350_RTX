@@ -38,7 +38,7 @@ void set_test_procs() {
 	int i;
 	for( i = 0; i < NUM_TEST_PROCS; i++ ) {
 		g_test_procs[i].m_pid=(U32)(i+1);
-		g_test_procs[i].m_stack_size=0x100;
+		g_test_procs[i].m_stack_size=USR_SZ_STACK;
 	}
   
 	g_test_procs[0].mpf_start_pc = &proc1;
@@ -76,7 +76,7 @@ void proc1(void)
 	while ( 1 ) {
 		
 		if ( i != 0 && i==5) {
-			for (j=0; j<MEMORY_BLOCKS+1; j++) {
+			for (j=0; j<2+1; j++) {
 				mem = request_memory_block();
 			}
 		}
