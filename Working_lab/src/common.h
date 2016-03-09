@@ -21,7 +21,7 @@
 #define NUM_TEST_PROCS 6
 #define NUM_SYSTEM_PROCS 2
 #define NUM_I_PROCS 2
-#define NUM_USER_PROCS 1
+#define NUM_USER_PROCS 2
 #define TOTAL_PROCS (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+NUM_I_PROCS+NUM_USER_PROCS+1)
 
 /* Process Priority. The bigger the number is, the lower the priority is*/
@@ -63,7 +63,7 @@
 typedef enum {NEW = 0, RDY, RUN, BLK, BLK_RCV} PROC_STATE_E;  
 
 #ifdef DEBUG_0
-#define ONE_SECOND 10
+#define ONE_SECOND 500
 #else
 #define ONE_SECOND 1000
 #endif

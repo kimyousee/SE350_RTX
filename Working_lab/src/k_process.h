@@ -22,7 +22,7 @@ void process_init(void);               /* initialize all procs in the system */
 PCB *scheduler(void);                  /* pick the pid of the next to run process */
 int k_release_processor(void);           /* kernel release_process function */
 int k_get_process_priority(int pid);
-void k_set_process_priority(int pid, int prio);
+int k_set_process_priority(int pid, int prio);
 void check_priority(void);
 PCB* get_process(int pid, PCB **queue);
 int isIProcess(U32 id);

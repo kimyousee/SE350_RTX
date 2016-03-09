@@ -55,7 +55,7 @@ void blocked_receive_print(PCB *head) {
 	PCB *temp = head;
 	while (temp != NULL) {
 		#ifdef DEBUG_0
-		printf("Process %d at memory 0x%x\n\r", temp->m_pid, temp);
+		printf("Process %d with priority %d is in memory 0x%x \n\r", temp->m_pid, temp->m_priority, temp);
 		#endif
 		temp = temp->next;
 	}
@@ -344,11 +344,12 @@ void check_priority(void){
 	}
 }
 
-void k_set_process_priority(int pid, int prio){
+int k_set_process_priority(int pid, int prio){
 	PCB *p;
 	
+	// TODO: add check
 	if (pid == PID_NULL || prio < HIGH || prio > LOWEST) {
-		return;
+		return RTX_ERR;
 	}
 		
 	p = get_process(pid, gp_pcbs);
@@ -361,5 +362,5 @@ void k_set_process_priority(int pid, int prio){
 	
 	pq_sort(ready_queue);
 	check_priority();
-	
+	return RTX_OK;
 }

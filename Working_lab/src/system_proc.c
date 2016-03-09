@@ -91,6 +91,7 @@ void KCD_proc(void) {
 					
 					for (i=0; i<map->len; i++) {
 						if (checkPrefix(map->pairs[i]->key, sending_msg->mtext)) {
+							sending_msg->mtype = DEFAULT;
 							send_message(map->pairs[i]->id, sending_msg);
 							#ifdef DEBUG_0
 							printf("forwarding to registered process %d\n\r", map->pairs[i]->id);

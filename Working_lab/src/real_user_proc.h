@@ -10,5 +10,6 @@
 
 void set_user_procs(void);
 void wall_clock_proc(void);
+void set_priority_proc(void);
 
 #endif /* REAL_USR_PROC_H_ */

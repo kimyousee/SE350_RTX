@@ -67,6 +67,6 @@ void pq_print(PQ *pq) {
 		return;
 	}
 	for (i=0; i<len; i++) {
-		printf("Process %d is in memory 0x%x \n\r", pq->p_queue[i]->m_pid, pq->p_queue[i]);
+		printf("Process %d with priority %d is in memory 0x%x \n\r", pq->p_queue[i]->m_pid, pq->p_queue[i]->m_priority, pq->p_queue[i]);
 	}
 }
