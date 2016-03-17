@@ -180,11 +180,13 @@ void set_priority_proc(void) {
 			token = strtok(msg->mtext, " ");
 			token = strtok(NULL, " ");
 			while(token) {
-        printf("%s", token);
+        //printf("%s", token);
 				if (index > 1) {
 					//ERR
 					errFlag = 1;
+					#ifdef DEBUG_0
 					printf("Check priority error \n\r");
+					#endif
 					break;
 				}
 				if (checkInt(token)) {
@@ -196,7 +198,9 @@ void set_priority_proc(void) {
 				} else {
 					//ERR
 					errFlag = 1;
+					#ifdef DEBUG_0
 					printf("Check priority error \n\r");
+					#endif
 					break;
 				}
         token = strtok(NULL, " ");
@@ -205,11 +209,11 @@ void set_priority_proc(void) {
 		}
 			index = 0;
 			if (errFlag) {
-				send_error_msg("Invalid input for set priority command");
+				send_error_msg("Invalid input for set priority command\n\r");
 			} else {
 				int retval = set_process_priority(id, newPri);
 				if (retval == RTX_ERR) {
-					send_error_msg("Invalid input for set priority command");
+					send_error_msg("Invalid input for set priority command\n\r");
 				}
 			}
 			errFlag = 0;

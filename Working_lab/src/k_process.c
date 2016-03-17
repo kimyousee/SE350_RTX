@@ -22,6 +22,7 @@
 #include "timer.h"
 #include "system_proc.h"
 #include "real_user_proc.h"
+#include "stress_test_proc.h"
 #include "k_message.h"
 #include "uart.h"
 
@@ -43,13 +44,14 @@ U32 g_switch_flag = 0;          /* whether to continue to run the process before
 PROC_INIT g_proc_table[TOTAL_PROCS];
 
 extern PROC_INIT g_test_procs[NUM_TEST_PROCS];
+extern PROC_INIT g_stress_test_procs[NUM_STRESS_TEST_PROCS];
 extern PROC_INIT g_user_procs[NUM_USER_PROCS];
 extern PROC_INIT g_system_procs[NUM_SYSTEM_PROCS];
 extern uint32_t g_timer_count;
 extern uint8_t g_char_in;
 
 PQ *ready_queue;
-LinkedList *timeout_queue;
+MSG_BUF *timeout_queue;
 
 void blocked_receive_print(PCB *head) {
 	PCB *temp = head;
@@ -109,27 +111,55 @@ void UART_i_Proc() {
 	}
 }
 
-void Timer_i_Proc() {
+void push_sorted_linkedlist(MSG_BUF **head, MSG_BUF *msg) {
+	MSG_BUF *cur = *head;
+	if (cur == NULL) {
+		(*head) = msg;
+		(*head)->mp_next = NULL;
+		return;
+	}
+	if (msg->m_kdata[0] < cur->m_kdata[0]) {
+		msg->mp_next = cur;
+		(*head) = msg;
+		return;
+	}
+	while(cur->mp_next != NULL && ((MSG_BUF*)(cur->mp_next))->m_kdata[0] < msg->m_kdata[0]) {
+		cur = cur->mp_next;
+	}
+	
+	msg->mp_next = cur->mp_next;
+	cur->mp_next = msg;
+}
+
+MSG_BUF *pop_linkedlist(MSG_BUF **head) {
+	MSG_BUF *n = *head;
+	if (*head == NULL) {
+		return NULL;
+	}
+	(*head) = (*head)->mp_next;
+	return n;
+}
+
+void Timer_i_Proc() {	
 	PCB *pcb;
 	Node *node;
 	MSG_BUF *msg;
 	pcb = findPCB(PID_TIMER_IPROC);
 	msg = receive_message_nonblocking(pcb);
 	while (msg != NULL) {
-		node = (Node*)k_nonblocking_request_memory_block();
-		if (node == NULL) {
-			break;
-		}
-		node->value = (int)(g_timer_count+(uint32_t)(msg->m_kdata[0]));
-		node->message = (void *)msg;
-		sortPushLinkedList(timeout_queue, node);
+		msg->m_kdata[0] += g_timer_count;
+		push_sorted_linkedlist(&timeout_queue, msg);
 		msg = receive_message_nonblocking(pcb);
+		#ifdef DEBUG_0
+			printf("Timer proc added message to timeout queue");
+		#endif
 	}
-	while (linkedListHasNext(timeout_queue) && timeout_queue->head->value <= g_timer_count){
-		Node *node = (Node *)popLinkedList(timeout_queue);
-		MSG_BUF *envelope = (MSG_BUF*)(node->message);
+	while (timeout_queue!=NULL && timeout_queue->m_kdata[0] <= g_timer_count){
+		MSG_BUF *envelope = (MSG_BUF *)pop_linkedlist(&timeout_queue);
 		int target_pid = envelope->m_recv_pid;
-		k_release_memory_block(node);
+		#ifdef DEBUG_0
+			printf("Time Proc sending delayed message to process %d\n\r", target_pid);
+		#endif
 		k_send_message(target_pid, envelope);
 	}
 }
@@ -150,8 +180,10 @@ void process_init()
 	int i;
 	int j;
 	U32 *sp;
+	timeout_queue = NULL;
         /* fill out the initialization table */
 	set_test_procs();
+	set_stress_test_procs();
 	set_user_procs();
 	set_system_procs();
 	j = 0;
@@ -165,6 +197,13 @@ void process_init()
 	for ( i = 0; i < NUM_USER_PROCS; i++ ) {
 		addProcTable(j, g_user_procs[i].m_pid, g_user_procs[i].m_stack_size, 
 			g_user_procs[i].m_priority, g_user_procs[i].mpf_start_pc);
+		j++;
+	}
+	
+	// Stress test processes
+	for ( i = 0; i < NUM_STRESS_TEST_PROCS; i++ ) {
+		addProcTable(j, g_stress_test_procs[i].m_pid, g_stress_test_procs[i].m_stack_size, 
+			g_stress_test_procs[i].m_priority, g_stress_test_procs[i].mpf_start_pc);
 		j++;
 	}
 	
@@ -348,7 +387,7 @@ int k_set_process_priority(int pid, int prio){
 	PCB *p;
 	
 	// TODO: add check
-	if (pid == PID_NULL || prio < HIGH || prio > LOWEST) {
+	if (pid == PID_NULL || pid == PID_KCD || pid == PID_CRT || prio < HIGH || prio > LOWEST) {
 		return RTX_ERR;
 	}
 		

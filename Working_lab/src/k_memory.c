@@ -101,12 +101,12 @@ void memory_init(void)
 		p_end += sizeof(PCB); 
 	}
 	
-	// Initialize timeout queue
-	p_end += 8; 
-	timeout_queue = (LinkedList *)p_end;
-	timeout_queue->head = NULL;
-	timeout_queue->tail = NULL;
-	p_end += sizeof(LinkedList);
+// 	// Initialize timeout queue
+// 	p_end += 8; 
+// 	timeout_queue = (LinkedList *)p_end;
+// 	timeout_queue->head = NULL;
+// 	timeout_queue->tail = NULL;
+// 	p_end += sizeof(LinkedList);
 	
 	
 #ifdef DEBUG_0  

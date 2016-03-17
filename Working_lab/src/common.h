@@ -22,7 +22,8 @@
 #define NUM_SYSTEM_PROCS 2
 #define NUM_I_PROCS 2
 #define NUM_USER_PROCS 2
-#define TOTAL_PROCS (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+NUM_I_PROCS+NUM_USER_PROCS+1)
+#define NUM_STRESS_TEST_PROCS 3
+#define TOTAL_PROCS (NUM_TEST_PROCS+NUM_SYSTEM_PROCS+NUM_I_PROCS+NUM_USER_PROCS+NUM_STRESS_TEST_PROCS+1)
 
 /* Process Priority. The bigger the number is, the lower the priority is*/
 #define HIGH    1
@@ -58,6 +59,8 @@
 #define CRT_DISPLAY 2
 #define KEYBOARD_INPUT 3
 #define UPDATE_TIME 4
+#define COUNT_REPORT 5
+#define WAKEUP10 6
 
 /* process states, note we only assume three states in this example */
 typedef enum {NEW = 0, RDY, RUN, BLK, BLK_RCV} PROC_STATE_E;  
