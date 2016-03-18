@@ -209,31 +209,13 @@ void set_priority_proc(void) {
 		}
 			index = 0;
 			if (errFlag) {
-				send_error_msg("Invalid input for set priority command\n\r");
+				send_error_msg("Error\n\r");
 			} else {
 				int retval = set_process_priority(id, newPri);
 				if (retval == RTX_ERR) {
-					send_error_msg("Invalid input for set priority command\n\r");
+					send_error_msg("Error\n\r");
 				}
 			}
 			errFlag = 0;
-			//printf("id=%d, pri=%d\n\r", id, newPri);
-// 			int i = 3;
-// 			char c =  msg->mtext[i];
-// 			int len = strlen(msg->mtext);
-// 			/*for (i=3; i<len; i++) {
-// 				%C 12 56 
-// 			}*/
-// 			while (c != ' ' && c != '\0') {
-// 				if (c - '0' < 0 || c - '0' > 9) {
-// 				}
-// 				
-// 				i++;
-// 				c =  msg->mtext[i];
-// 				if (c == '\0') {
-// 					break;
-// 				}
-// 			}
-// 			
  		}
 	}

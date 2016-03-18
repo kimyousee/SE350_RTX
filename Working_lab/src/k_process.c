@@ -331,7 +331,7 @@ int k_release_processor(void)
 	
 	if (gp_current_process != NULL && gp_current_process->m_priority < pq_peak(ready_queue)->m_priority && gp_current_process->m_state!=BLK && gp_current_process->m_state!=BLK_RCV) {
 	#ifdef DEBUG_0 
-		printf("remaining on process %d\n", gp_current_process->m_pid);
+		//printf("remaining on process %d\n", gp_current_process->m_pid);
 	#endif /* ! DEBUG_0 */
 		return RTX_OK;
 	}
@@ -387,17 +387,19 @@ int k_set_process_priority(int pid, int prio){
 	PCB *p;
 	
 	// TODO: add check
-	if (pid == PID_NULL || pid == PID_KCD || pid == PID_CRT || prio < HIGH || prio > LOWEST) {
+	if (pid == PID_NULL || pid == PID_TIMER_IPROC || pid == PID_UART_IPROC || prio < HIGH || prio > LOWEST) {
 		return RTX_ERR;
 	}
 		
 	p = get_process(pid, gp_pcbs);
-	if (p != NULL) {
-		#ifdef DEBUG_0 
-		printf("setting process %d priority from %d to %d\n", p->m_pid, p->m_priority, prio);
-		#endif /* ! DEBUG_0 */
-		p->m_priority = prio;
+	if (p == NULL) {
+		return RTX_ERR;
 	}
+	
+	#ifdef DEBUG_0 
+	printf("setting process %d priority from %d to %d\n", p->m_pid, p->m_priority, prio);
+	#endif /* ! DEBUG_0 */
+	p->m_priority = prio;
 	
 	pq_sort(ready_queue);
 	check_priority();

@@ -51,7 +51,7 @@
 
 /* Memory Constants */
 #define MEMORY_BLOCKS 30
-#define MEMORY_BLOCK_SIZE 64
+#define MEMORY_BLOCK_SIZE 128
 
 /* Message Types */
 #define DEFAULT 0
@@ -66,7 +66,7 @@
 typedef enum {NEW = 0, RDY, RUN, BLK, BLK_RCV} PROC_STATE_E;  
 
 #ifdef DEBUG_0
-#define ONE_SECOND 500
+#define ONE_SECOND 50
 #else
 #define ONE_SECOND 1000
 #endif

@@ -91,6 +91,7 @@ void KCD_proc(void) {
 					
 					for (i=0; i<map->len; i++) {
 						if (checkPrefix(map->pairs[i]->key, sending_msg->mtext)) {
+							sending_msg->mtext[current_msg_length] = '\0';
 							sending_msg->mtype = DEFAULT;
 							send_message(map->pairs[i]->id, sending_msg);
 							#ifdef DEBUG_0

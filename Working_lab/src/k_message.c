@@ -24,14 +24,16 @@ PCB* dequeue_block_receive(U32 pid) {
 	
 	if (n->m_pid == pid) {
 		blocked_receive_head = n->next;
+		if (blocked_receive_tail == n) {
+			blocked_receive_tail = n->next;
+		}
 		return n;
 	}
 	
 	if (n->next == NULL) {
-		blocked_receive_head = NULL;
-		blocked_receive_tail = NULL;
 		return NULL;
 	}
+	
 	while (n->next != NULL && n->next->m_pid != pid) {
 			n = n->next;
 	}
@@ -40,6 +42,10 @@ PCB* dequeue_block_receive(U32 pid) {
 	}
 	p = n->next;
 	n->next = p->next;
+	
+	if (n->next == NULL) {
+		blocked_receive_tail = n;
+	}
 	return p;
 }
 

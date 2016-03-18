@@ -142,12 +142,12 @@ void procC(void)
 				msg->mtype = CRT_DISPLAY;
 				strcpy(msg->mtext, "Process C\n\r");
 				send_message(PID_CRT, msg);
-				printFlag = 1;
+				//printFlag = 1;
 				
 				// Hibernate
 				msg = (MSG_BUF *)request_memory_block();
 				msg->mtype = WAKEUP10;
-				delayed_send(PID_C, msg, 100);
+				delayed_send(PID_C, msg, ONE_SECOND*10);
 				while (1) {
 					msg = receive_message(NULL);
 					//printf("Proc C woke up %d\n\r", msg->mtype);
@@ -159,9 +159,7 @@ void procC(void)
 				}	
 			}
 		}
-		if (printFlag == 0) {
-			release_memory_block(msg);
-		}
+		release_memory_block(msg);
 		printFlag = 0;
 		release_processor();
 	}
