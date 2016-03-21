@@ -1,23 +1,77 @@
-To demonstrate how interrupt can preempt a current running process
-There are two processes in the system: proc1 and proc2.
+------------------------------ P1 ------------------------------ 
+To demonstrate how memory and process management
+There are six processes in the system: proc1 to proc6
 
-You will need to open two UART terminals.
-The COM0 terminal is interrupt driven and accepts user input. 
-When user types 'S' single char in the terminal, the system switches from the current running process to the other ready process
+Memory management is implemented by a linklist of memory blocks, as well as a priority queue to keep track of the blocked processes.
+Process management is implemented by a priority queue to make sure that we always switch to a process with the highest priority.
 
-The COM1 terminal uses polling mechanism and output the debugging messages.
-The user proc1 and proc2 outputs for now to the debugging terminal for now.
+We decided to put our linkedlist and priority queues in the heap to prevent other memories overwriting them.
 
-Expected behavior:
+We check for preemption when a priority of a process is set or a process is unblocked
+We preempt in the case that the priority of the peak of the ready queue is higher than the current runnig process
 
-If user does not type anything from the COM0 or types a character other than 'S', then 
-proc1 and proc2 will switch between each other after six lines are printed.
-proc1 prints six lines of upper case letters.
-proc2 prints six lines of single digits.
+If all the processes are blocked, we run the NULL process
 
-When the user types an 'S' in COM0, then the current running process immediately releases
-the processor and switches the cpu to the other process in the system.
+If a process request a memory block and there are no more memory in our linkedlist, we block the process until another process releases its memory.
+We a process releases its memory, we preempt to check if the unblocked process has a higher priority than the current running process.
 
-Note there is a dummy loop added to introduce some delay so that it is easier to type 'S' before a process finishes printing six lines.
+To test our code, we have 6 test cases with 6 processes each:
 
-The code has not been tested on the board. To run it on the board, you will need to increase the delay.
+proc1 prints lower case letters a-j
+proc2 prints number 0-9
+proc3 prints upper case letters A-J
+proc4 prints lower case letters l-u
+proc5 and proc6 are dummy processes
+
+------------------------------ P2 ------------------------------ 
+New structs:
+Blocked receive list: A linkedlist for processes that are waiting for message
+
+IProcs: (get called whenever it needs to be called)
+  I procs never go in the ready queue, and it never get blocked, therefore, we made a nonblocking version for receive message and request memory for it.
+  UART:
+    UART proc is called whenever a keyboard interrupt is called, it also runs when another process (CRT) sends a message to it.
+    It forwards keyboard to the KCD, and also display messages from the CRT
+  Timer:
+    Timer has a Timeout queue: sorted linked list used by the timer I proc. Sorted by delay
+    Timer runs every ms. 
+    When it receives a message, it will put the message in the timeout queue with the expiration date (delay + current time). Every ms, it checks the timeout queue and when the delay is reached, it forwards the message to the right process
+System Procs (highest priority)
+  KCD:
+    Receives messages from the UART I proc.
+    Other processes can register themselves to the KCD with a keyword, and when the KCD receives a message with the keyword, it will forward that message to the registered process
+    KCD always forward the message to the CRT
+  CRT:
+    CRT only responds to CRT_DISPLAY messages, and it forwards the message to display
+Wall Clock Procs (medium priority)
+  Wall clock registers itself to the KCD. It accepts 3 commands:
+  WS: start clock and display every second. It sends a delayed message to itself every second to do this
+  WT: stop the clock
+  WR: reset the clock to 0
+
+Messages:
+  We created a new state Blocked on Receive for when a process requests receive and it has no messages. In this case the process gets put on block receive queue
+  We gave each PCB a linked list of messages and when it requests receives it gets all messages unless it has non in which case it gets blocked on Receive
+  If another process send a blocked process a message the blocked process gets unblock and we check for premption
+
+Test Procs:
+  Test procs are used to make sure 
+    1. Functionalities from P1 is still working properly
+    2. Test procs can be interrupted by the system and I procs
+
+------------------------------ P3 ------------------------------ 
+Set Priority Proc
+Set priority proc is similar to wall clock proc, except it has more strict error checking.
+Errors are:
+ - Invalid process id
+ - Invalid process priority
+ - If process id is an I proc
+ - Invalid number parameters
+
+User is allowed to set the priority of KCD and CRT
+
+Stress test
+- Process C will print "Process C" every 10 seconds
+- Stress test procs test the system under memory stress
+- Procs will reach a deadlock if all of the have the same priority because ProcC cannot request memory to hibernate, so it can't free memory blocks afterwards
+- We can fix the deadlock by setting the priority of ProcC to high

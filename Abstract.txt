@@ -59,4 +59,19 @@ Test Procs:
     1. Functionalities from P1 is still working properly
     2. Test procs can be interrupted by the system and I procs
 
+------------------------------ P3 ------------------------------ 
+Set Priority Proc
+Set priority proc is similar to wall clock proc, except it has more strict error checking.
+Errors are:
+ - Invalid process id
+ - Invalid process priority
+ - If process id is an I proc
+ - Invalid number parameters
 
+User is allowed to set the priority of KCD and CRT
+
+Stress test
+- Process C will print "Process C" every 10 seconds
+- Stress test procs test the system under memory stress
+- Procs will reach a deadlock if all of the have the same priority because ProcC cannot request memory to hibernate, so it can't free memory blocks afterwards
+- We can fix the deadlock by setting the priority of ProcC to high

@@ -207,15 +207,16 @@ void set_priority_proc(void) {
 				index ++;
 			}
 		}
-			index = 0;
-			if (errFlag) {
+		index = 0;
+		if (errFlag) {
+			send_error_msg("Error\n\r");
+		} else {
+			int retval = set_process_priority(id, newPri);
+			if (retval == RTX_ERR) {
 				send_error_msg("Error\n\r");
-			} else {
-				int retval = set_process_priority(id, newPri);
-				if (retval == RTX_ERR) {
-					send_error_msg("Error\n\r");
-				}
 			}
-			errFlag = 0;
- 		}
-	}
+		}
+		errFlag = 0;
+		release_memory_block((void*)msg);
+ 	}
+}

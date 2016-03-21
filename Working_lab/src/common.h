@@ -66,7 +66,7 @@
 typedef enum {NEW = 0, RDY, RUN, BLK, BLK_RCV} PROC_STATE_E;  
 
 #ifdef DEBUG_0
-#define ONE_SECOND 50
+#define ONE_SECOND 500
 #else
 #define ONE_SECOND 1000
 #endif
