@@ -40,15 +40,15 @@ void set_stress_test_procs() {
   
 	g_stress_test_procs[0].m_pid=PID_A;
 	g_stress_test_procs[0].mpf_start_pc = &procA;
-	g_stress_test_procs[0].m_priority = MEDIUM;
+	g_stress_test_procs[0].m_priority = HIGH-1;
 	
 	g_stress_test_procs[1].m_pid=PID_B;
 	g_stress_test_procs[1].mpf_start_pc = &procB;
-	g_stress_test_procs[1].m_priority = MEDIUM;
+	g_stress_test_procs[1].m_priority = HIGH;
 	
 	g_stress_test_procs[2].m_pid=PID_C;
 	g_stress_test_procs[2].mpf_start_pc = &procC;
-	g_stress_test_procs[2].m_priority = HIGH;
+	g_stress_test_procs[2].m_priority = MEDIUM;
 	
 }
 
