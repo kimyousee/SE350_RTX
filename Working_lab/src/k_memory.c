@@ -182,6 +182,14 @@ void *k_nonblocking_request_memory_block(void) {
 	return (void *) (free_mem);
 }
 
+void *k_time_request_memory_block(int* time){
+	void* mem;
+	start_new_timer(gp_current_process->m_pid);
+	mem = k_request_memory_block();
+	*time = end_timer();
+	return mem;
+}
+
 void *k_request_memory_block(void) {
 	Node *free_mem;
 	__disable_irq();

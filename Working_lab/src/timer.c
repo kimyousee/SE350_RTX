@@ -119,7 +119,7 @@ void c_TIMER0_IRQHandler(void)
 {
 	//__disable_irq();
 	/* ack inttrupt, see section  21.6.1 on pg 493 of LPC17XX_UM */
-	printf("----------------------%d \n\r", pTimer2->TC);
+	//printf("----------------------%d \n\r", pTimer2->TC);
 	LPC_TIM0->IR = BIT(0);  
 	
 	g_timer_count++;

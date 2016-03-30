@@ -21,9 +21,16 @@ extern void check_priority(void);
  */
  
  LPC_TIM_TypeDef *pTimer2;
+
+int start_time;
+int pause_start_time;
+int timed_process;
  
 uint32_t timer2_init(uint8_t n_timer) 
 {
+	timed_process = -1;
+	pause_start_time = 0;
+	start_time = 0;
 	if (n_timer == 0) {
 		/*
 		Steps 1 & 2: system control configuration.
@@ -91,4 +98,29 @@ uint32_t timer2_init(uint8_t n_timer)
 	/* Step 4.5: Enable the TCR. See table 427 on pg494 of LPC17xx_UM. */
 	pTimer2->TCR = 1;
 	return 0;
+}
+
+void start_new_timer(int curr_process){
+	pause_start_time = 0;
+	start_time = pTimer2->TC;
+	timed_process = curr_process;
+}
+
+// Use this after context switching. Only pauses when current process is not the one we are timing
+void pause_timer(int curr_process){
+	if (curr_process != timed_process){
+		pause_start_time = pTimer2->TC;
+	}
+}
+
+// only starts when curr_process is what we are timing
+void start_timer(int curr_process){
+	if (timed_process == curr_process){
+		int now = pTimer2->TC;
+		start_time = now - pause_start_time + start_time;
+	}
+}
+
+int end_timer(){
+	return pTimer2->TC - start_time;
 }

@@ -1,4 +1,5 @@
 #include "k_message.h"
+#include "timer2.h"
 #include "printf.h"
 
 extern void UART_i_Proc(void);
@@ -69,6 +70,11 @@ MSG_BUF* dequeue_msg(PCB *p) {
 	p->head_msg = p->head_msg->mp_next;
 	return n;
 }
+int k_time_send_message(int receiving_pid, void *p_msg){
+	start_new_timer(gp_current_process->m_pid);
+	k_send_message(receiving_pid, p_msg);
+	return end_timer();
+}
 
 void k_send_message(int receiving_pid, MSG_BUF *msg) {
 	__disable_irq();
@@ -107,6 +113,12 @@ void m_send_message(int receiving_pid, int sending_pid, MSG_BUF *msg) {
 		}
 	}
 	__enable_irq();
+}
+
+void *k_time_receive_message(int *pid, int* time){
+	start_new_timer(gp_current_process->m_pid);
+	k_receive_message(pid);
+	*time = end_timer();
 }
 
 void *receive_message_nonblocking(PCB *p) {

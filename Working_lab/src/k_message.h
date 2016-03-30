@@ -17,6 +17,7 @@ MSG_BUF* dequeue_msg(PCB *p);
 
 void *receive_message_nonblocking(PCB *p);
 void k_send_message(int receiving_pid, MSG_BUF *msg);
+int k_time_send_message(int pid, void *p_msg);
 void m_send_message(int receiving_pid, int sending_pid, MSG_BUF *msg);
 void *k_receive_message(int *p_pid);
 

@@ -20,6 +20,7 @@
 #include "priority_queue.h"
 #include "linkedList.h"
 #include "timer.h"
+#include "timer2.h"
 #include "system_proc.h"
 #include "real_user_proc.h"
 #include "stress_test_proc.h"
@@ -380,6 +381,8 @@ void check_priority(void){
 		printf("current process %d preempted\n", gp_current_process->m_pid);
 		#endif /* ! DEBUG_0 */
 		k_release_processor();
+		pause_timer(gp_current_process->m_pid); // will go here when timed process is preempted
+		start_timer(gp_current_process->m_pid); // will go here when we are back at timed process
 	}
 }
 

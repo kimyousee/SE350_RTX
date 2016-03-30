@@ -431,6 +431,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\timer.c</FilePath>
             </File>
+            <File>
+              <FileName>timer2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\timer2.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -492,9 +497,9 @@
               <FilePath>.\src\stress_test_proc.c</FilePath>
             </File>
             <File>
-              <FileName>usr_proc_WALL_CLOCK.c</FileName>
+              <FileName>usr_proc_C.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\usr_proc_WALL_CLOCK.c</FilePath>
+              <FilePath>.\src\usr_proc_C.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -935,6 +940,11 @@
               <FileType>1</FileType>
               <FilePath>.\src\timer.c</FilePath>
             </File>
+            <File>
+              <FileName>timer2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\timer2.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -996,9 +1006,9 @@
               <FilePath>.\src\stress_test_proc.c</FilePath>
             </File>
             <File>
-              <FileName>usr_proc_WALL_CLOCK.c</FileName>
+              <FileName>usr_proc_C.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\src\usr_proc_WALL_CLOCK.c</FilePath>
+              <FilePath>.\src\usr_proc_C.c</FilePath>
             </File>
           </Files>
         </Group>
