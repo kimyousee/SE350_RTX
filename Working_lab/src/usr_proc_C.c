@@ -42,7 +42,7 @@ void set_test_procs() {
 	}
   
 	g_test_procs[0].mpf_start_pc = &proc1;
-	g_test_procs[0].m_priority   = LOW;
+	g_test_procs[0].m_priority   = HIGH;
 	
 	g_test_procs[1].mpf_start_pc = &proc2;
 	g_test_procs[1].m_priority   = LOW;
@@ -72,17 +72,15 @@ void proc1(void)
 	int ret_val = 100;
 	char *c;
 	void *mem;
+	MSG_BUF *msg;
 	
 	while ( 1 ) {
 		
 		if ( i != 0 && i==5) {
-			for (j=0; j<2+1; j++) {
-				mem = request_memory_block();
+			for (j=0; j<10; j++) {
+				get_process_priority(1);
+				set_process_priority(1, HIGH);
 			}
-		}
-		
-		if (i!=0 && i==15) {
-			release_memory_block(mem);
 		}
 		
 		if ( i != 0 && i%5 == 0 ) {
@@ -115,6 +113,7 @@ void proc1(void)
 void proc2(void)
 {
 	int i = 0;
+	int j=0;
 	int ret_val = 20;
 	int counter = 0;
 	char* c;
@@ -122,7 +121,9 @@ void proc2(void)
 	
 	while ( 1) {
 		if ( i!=0 && i==10 ) {
-			mem = (MSG_BUF *) receive_message((int *)PID_P2);
+			for (j=0; j<10; j++) {
+				mem = (MSG_BUF *) receive_message((int *)PID_P2);
+			}
 		}
 		if ( i != 0 && i%5 == 0 ) {
 			uart0_put_string("\n\r");

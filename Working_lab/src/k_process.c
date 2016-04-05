@@ -20,12 +20,15 @@
 #include "priority_queue.h"
 #include "linkedList.h"
 #include "timer.h"
-#include "timer2.h"
 #include "system_proc.h"
 #include "real_user_proc.h"
 #include "stress_test_proc.h"
 #include "k_message.h"
 #include "uart.h"
+
+#ifdef TIMING
+#include "timer2.h"
+#endif
 
 #ifdef DEBUG_0
 #include "printf.h"
@@ -329,6 +332,10 @@ int process_switch(PCB *p_pcb_old)
 int k_release_processor(void)
 {
 	PCB *p_pcb_old = NULL;
+	int time;
+	#ifdef TIMING
+	start_timer();
+	#endif
 	
 	if (gp_current_process != NULL && gp_current_process->m_priority < pq_peak(ready_queue)->m_priority && gp_current_process->m_state!=BLK && gp_current_process->m_state!=BLK_RCV) {
 	#ifdef DEBUG_0 
@@ -350,6 +357,9 @@ int k_release_processor(void)
 	}
 	
 	process_switch(p_pcb_old);
+	#ifdef TIMING
+	time = end_timer();
+	#endif
 	return RTX_OK;
 }
 
@@ -365,13 +375,20 @@ PCB* get_process(int pid, PCB **queue) {
 }
 
 int k_get_process_priority(int pid){
+	int time;
 	PCB *p = get_process(pid, gp_pcbs);
+	#ifdef TIMING
+	start_timer();
+	#endif
 	#ifdef DEBUG_0 
 	printf("getting priority for process %d\n", p->m_pid);
 	#endif /* ! DEBUG_0 */
 	if (p == NULL) {
 		return -1;
 	}
+	#ifdef TIMING
+	time = end_timer();
+	#endif
 	return p->m_priority;
 }
 
@@ -381,13 +398,15 @@ void check_priority(void){
 		printf("current process %d preempted\n", gp_current_process->m_pid);
 		#endif /* ! DEBUG_0 */
 		k_release_processor();
-		pause_timer(gp_current_process->m_pid); // will go here when timed process is preempted
-		start_timer(gp_current_process->m_pid); // will go here when we are back at timed process
 	}
 }
 
 int k_set_process_priority(int pid, int prio){
 	PCB *p;
+	int time;
+	#ifdef TIMING
+	start_timer();
+	#endif
 	
 	// TODO: add check
 	if (pid == PID_NULL || pid == PID_TIMER_IPROC || pid == PID_UART_IPROC || prio < HIGH || prio > LOWEST) {
@@ -406,5 +425,8 @@ int k_set_process_priority(int pid, int prio){
 	
 	pq_sort(ready_queue);
 	check_priority();
+	#ifdef TIMING
+	time = end_timer();
+	#endif
 	return RTX_OK;
 }

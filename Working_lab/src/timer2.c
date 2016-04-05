@@ -23,13 +23,9 @@ extern void check_priority(void);
  LPC_TIM_TypeDef *pTimer2;
 
 int start_time;
-int pause_start_time;
-int timed_process;
  
 uint32_t timer2_init(uint8_t n_timer) 
 {
-	timed_process = -1;
-	pause_start_time = 0;
 	start_time = 0;
 	if (n_timer == 0) {
 		/*
@@ -76,11 +72,11 @@ uint32_t timer2_init(uint8_t n_timer)
 
 	/* Step 4.1: Prescale Register PR setting 
 	   CCLK = 100 MHZ, PCLK = CCLK/4 = 25 MHZ
-	   2*(12499 + 1)*(1/25) * 10^(-6) s = 10^(-3) s = 1 ms
+	   2*(12 + 1)*(1/25) * 10^(-6) s = 1.04*10^(-6) s = 1 microsecond
 	   TC (Timer Counter) toggles b/w 0 and 1 every 12500 PCLKs
 	   see MR setting below 
 	*/
-	pTimer2->PR = 12499;  
+	pTimer2->PR = 12;  
 
 	/* Step 4.2: MR setting, see section 21.6.7 on pg496 of LPC17xx_UM. */
 	//pTimer2->MR0 = 1000;
@@ -100,27 +96,11 @@ uint32_t timer2_init(uint8_t n_timer)
 	return 0;
 }
 
-void start_new_timer(int curr_process){
-	pause_start_time = 0;
+void start_timer(){
 	start_time = pTimer2->TC;
-	timed_process = curr_process;
-}
-
-// Use this after context switching. Only pauses when current process is not the one we are timing
-void pause_timer(int curr_process){
-	if (curr_process != timed_process){
-		pause_start_time = pTimer2->TC;
-	}
-}
-
-// only starts when curr_process is what we are timing
-void start_timer(int curr_process){
-	if (timed_process == curr_process){
-		int now = pTimer2->TC;
-		start_time = now - pause_start_time + start_time;
-	}
 }
 
 int end_timer(){
-	return pTimer2->TC - start_time;
+	int time = pTimer2->TC - start_time;
+	return time;
 }

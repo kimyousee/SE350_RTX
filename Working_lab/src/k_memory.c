@@ -8,6 +8,10 @@
 #include "k_memory.h"
 #include "k_process.h"
 
+#ifdef TIMING
+#include "timer2.h"
+#endif
+
 #ifdef DEBUG_0
 #include "printf.h"
 #endif /* ! DEBUG_0 */
@@ -182,17 +186,13 @@ void *k_nonblocking_request_memory_block(void) {
 	return (void *) (free_mem);
 }
 
-void *k_time_request_memory_block(int* time){
-	void* mem;
-	start_new_timer(gp_current_process->m_pid);
-	mem = k_request_memory_block();
-	*time = end_timer();
-	return mem;
-}
-
 void *k_request_memory_block(void) {
 	Node *free_mem;
+	int time;
 	__disable_irq();
+	#ifdef TIMING
+	start_timer();
+	#endif
 	
 #ifdef DEBUG_0 
 	printf("k_request_memory_block: entering...\n\r");
@@ -225,12 +225,19 @@ void *k_request_memory_block(void) {
 	#ifdef DEBUG_0  
 	printf("********Process %d is requesting memory. Count: %d\n\r", gp_current_process->m_pid, c);
 	#endif /* ! DEBUG_0 */
+	#ifdef TIMING
+	time = end_timer();
+	#endif
 	__enable_irq();
 	return (void *) (free_mem);
 }
 
 int k_release_memory_block(void *p_mem_blk) {
+	int time;
 	__disable_irq();
+	#ifdef TIMING
+	start_timer();
+	#endif
 #ifdef DEBUG_0 
 	printf("k_release_memory_block: releasing block @ 0x%x\n\r", p_mem_blk);
 #endif /* ! DEBUG_0 */
@@ -256,6 +263,9 @@ int k_release_memory_block(void *p_mem_blk) {
 	c --;
 	#ifdef DEBUG_0  
 	printf("********Process %d is releasing memory. Count: %d\n\r", gp_current_process->m_pid, c);
+	#endif
+	#ifdef TIMING
+	time = end_timer();
 	#endif
 	__enable_irq();
 	return RTX_OK;

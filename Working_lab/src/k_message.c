@@ -1,6 +1,12 @@
 #include "k_message.h"
+
+#ifdef TIMING
 #include "timer2.h"
+#endif
+
+#ifdef DEBUG_0
 #include "printf.h"
+#endif
 
 extern void UART_i_Proc(void);
 
@@ -70,11 +76,6 @@ MSG_BUF* dequeue_msg(PCB *p) {
 	p->head_msg = p->head_msg->mp_next;
 	return n;
 }
-int k_time_send_message(int receiving_pid, void *p_msg){
-	start_new_timer(gp_current_process->m_pid);
-	k_send_message(receiving_pid, p_msg);
-	return end_timer();
-}
 
 void k_send_message(int receiving_pid, MSG_BUF *msg) {
 	__disable_irq();
@@ -84,7 +85,11 @@ void k_send_message(int receiving_pid, MSG_BUF *msg) {
 
 void m_send_message(int receiving_pid, int sending_pid, MSG_BUF *msg) {
 	PCB *p;
+	int time;
 	__disable_irq();
+	#ifdef TIMING
+	start_timer();
+	#endif
 	
 	msg->m_send_pid = sending_pid;
 	msg->m_recv_pid = receiving_pid;
@@ -112,13 +117,10 @@ void m_send_message(int receiving_pid, int sending_pid, MSG_BUF *msg) {
 			check_priority();
 		}
 	}
+	#ifdef TIMING
+	time = end_timer();
+	#endif
 	__enable_irq();
-}
-
-void *k_time_receive_message(int *pid, int* time){
-	start_new_timer(gp_current_process->m_pid);
-	k_receive_message(pid);
-	*time = end_timer();
 }
 
 void *receive_message_nonblocking(PCB *p) {
@@ -131,10 +133,14 @@ void *receive_message_nonblocking(PCB *p) {
 
 void *k_receive_message(int *p_pid) {
 	MSG_BUF *msg;
+	int time;
 	#ifdef DEBUG_0 
 	printf("process %d attempting to receive messages\n\r", gp_current_process->m_pid);
 	#endif /* ! DEBUG_0 */
 	__disable_irq();
+	#ifdef TIMING
+	start_timer();
+	#endif
 	while(gp_current_process->head_msg == NULL) {
 		#ifdef DEBUG_0 
 		printf("process %d blocked on receive\n\r", gp_current_process->m_pid);
@@ -146,14 +152,21 @@ void *k_receive_message(int *p_pid) {
 		__disable_irq();
 	}
 	msg = dequeue_msg(gp_current_process);
+	#ifdef TIMING
+	time = end_timer();
+	#endif
 	__enable_irq();
 	return (void *)msg;
 }
 
 void k_delayed_send(int pid, void *p_msg, int delay) {
 	PCB *p;
+	int time;
 	MSG_BUF *msg = (MSG_BUF*) p_msg;
 	__disable_irq();
+	#ifdef TIMING
+	start_timer();
+	#endif
 	msg->m_send_pid = gp_current_process->m_pid;
 	msg->m_recv_pid = pid;
 	msg->m_kdata[0] = (int)delay;
@@ -167,5 +180,8 @@ void k_delayed_send(int pid, void *p_msg, int delay) {
 	printf("process %d sending message(%s) to process %d\n\r", gp_current_process->m_pid, msg->mtext, p->m_pid);
 	#endif /* ! DEBUG_0 */
 	enqueue_msg(p, msg);
+	#ifdef TIMING
+	time = end_timer();
+	#endif
 	__enable_irq();
 }
